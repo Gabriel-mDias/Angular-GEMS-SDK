@@ -27,6 +27,7 @@
               }
             ],
             "styles": [
+              "projects/gems-sdk/src/lib/styles/gems-global.css",
               "src/styles.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/prismjs/themes/prism-tomorrow.css"

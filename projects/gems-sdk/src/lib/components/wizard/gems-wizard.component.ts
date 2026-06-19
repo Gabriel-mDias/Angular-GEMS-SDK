@@ -12,38 +12,32 @@ export interface GemsWizardStep {
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="gems-wizard-container">
-      <div class="gems-wizard-header">
-        <div class="gems-wizard-stepper">
-          <ng-container *ngFor="let step of steps(); let i = index">
+    <div class="gems-wizard-header">
+      <div class="gems-wizard-stepper">
+        <ng-container *ngFor="let step of steps(); let i = index">
+          
+          <!-- Step Item -->
+          <div class="gems-step-item" 
+               [class.gems-active]="currentStep() === (i + 1)"
+               [class.gems-completed]="currentStep() > (i + 1)"
+               (click)="onStepClick(i + 1)">
             
-            <!-- Step Item -->
-            <div class="gems-step-item" 
-                 [class.gems-active]="currentStep() === i"
-                 [class.gems-completed]="currentStep() > i"
-                 (click)="onStepClick(i)">
-              
-              <div class="gems-step-circle">
-                <i *ngIf="currentStep() > i" class="fa-solid fa-check"></i>
-                <i *ngIf="currentStep() <= i && step.icon" [class]="step.icon"></i>
-                <span *ngIf="currentStep() <= i && !step.icon">{{ i + 1 }}</span>
-              </div>
-              
-              <span class="gems-step-label">{{ step.label }}</span>
+            <div class="gems-step-circle">
+              <i *ngIf="currentStep() > (i + 1)" class="fa-solid fa-check"></i>
+              <i *ngIf="currentStep() <= (i + 1) && step.icon" [class]="step.icon"></i>
+              <span *ngIf="currentStep() <= (i + 1) && !step.icon">{{ i + 1 }}</span>
             </div>
+            
+            <span class="gems-step-label">{{ step.label }}</span>
+          </div>
 
-            <!-- Connector Line -->
-            <div class="gems-step-connector" 
-                 *ngIf="i < steps().length - 1"
-                 [class.gems-active]="currentStep() > i">
-            </div>
+          <!-- Connector Line -->
+          <div class="gems-step-connector" 
+               *ngIf="i < steps().length - 1"
+               [class.gems-active]="currentStep() > (i + 1)">
+          </div>
 
-          </ng-container>
-        </div>
-      </div>
-
-      <div class="gems-wizard-content">
-        <ng-content></ng-content>
+        </ng-container>
       </div>
     </div>
   `,
@@ -51,7 +45,7 @@ export interface GemsWizardStep {
 })
 export class GemsWizardComponent {
   steps = input<GemsWizardStep[]>([]);
-  currentStep = input<number>(0);
+  currentStep = input<number>(1);
   
   stepChange = output<number>();
 

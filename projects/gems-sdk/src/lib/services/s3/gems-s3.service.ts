@@ -9,10 +9,11 @@ import { GemsGenerateUploadUrlRequestDTO, GemsPresignedUrlResponseDTO } from './
 })
 export class GemsS3Service {
   private readonly bypassHttp: HttpClient;
-  private readonly s3Store = inject(GemsS3Store);
-  private readonly handler = inject(HttpBackend);
 
-  constructor() {
+  constructor(
+    private readonly s3Store: GemsS3Store,
+    private readonly handler: HttpBackend
+  ) {
     this.bypassHttp = new HttpClient(this.handler);
   }
 

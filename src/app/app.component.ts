@@ -7,8 +7,14 @@ import { GemsSideMenuComponent, GemsSideMenuConfig } from '@gabriel-mdias/angula
   standalone: true,
   imports: [RouterOutlet, GemsSideMenuComponent],
   template: `
-    <div class="showcase-layout">
-      <gems-side-menu [config]="menuConfig"></gems-side-menu>
+    <div class="showcase-layout" [class.mobile-menu-open]="mobileMenuOpen">
+      <gems-side-menu 
+        [config]="menuConfig"
+        [userName]="mockUserName"
+        [userEmail]="mockUserEmail"
+        [userInitials]="mockUserInitials"
+        (logoutClick)="handleLogout()"
+      ></gems-side-menu>
       
       <main class="showcase-content">
         <router-outlet></router-outlet>
@@ -39,7 +45,31 @@ export class AppComponent {
         label: 'Alertas e Notificações',
         icon: 'fa-solid fa-bell',
         route: '/showcase/alerts'
+      },
+      {
+        label: 'Botões',
+        icon: 'fa-solid fa-square-caret-right',
+        route: '/showcase/buttons'
+      },
+      {
+        label: 'List Select',
+        icon: 'fa-solid fa-list-check',
+        route: '/showcase/list-select'
+      },
+      {
+        label: 'File Upload',
+        icon: 'fa-solid fa-cloud-arrow-up',
+        route: '/showcase/file-upload'
       }
     ]
   };
+
+  mockUserName = 'Administrador Sistema';
+  mockUserEmail = 'admin@gems.com';
+  mockUserInitials = 'AS';
+  mobileMenuOpen = false;
+
+  handleLogout() {
+    console.log('Logout clicked');
+  }
 }

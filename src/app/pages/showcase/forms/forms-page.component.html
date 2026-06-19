@@ -1,55 +1,61 @@
 <div class="showcase-page fade-in">
-  <div class="page-header">
-    <h1>Formulários Simples</h1>
-    <p class="gems-text-muted">Apresentação de campos de entrada e formulários padrão utilizando o componente <code>gems-form-card</code>.</p>
+  <div class="header">
+    <div class="header-titles">
+      <h2>Formulários Simples</h2>
+      <p class="subtitle">Apresentação de campos de entrada e formulários padrão utilizando o componente <code>gems-form-card</code>.</p>
+    </div>
   </div>
   
   <div class="demo-section">
     <div class="demo-preview">
-      <gems-form-card title="Cadastro de Usuário" icon="fa-solid fa-user-plus">
-        <form (ngSubmit)="onSubmit()" #form="ngForm">
-          <div class="form-grid">
-            <gems-input-mask 
-              label="CPF" 
-              mask="000.000.000-00"
-              [(ngModel)]="formData.cpf"
-              name="cpf"
-              required>
-            </gems-input-mask>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <gems-form-card title="Cadastro de Usuário" icon="fa-solid fa-user-plus">
+          <div class="row mb-3">
+            <div class="col-md-6 mb-3">
+              <gems-input-document 
+                label="CPF" 
+                documentType="cpf"
+                formControlName="cpf"
+                required>
+              </gems-input-document>
+            </div>
       
-            <gems-input-date 
-              label="Data de Nascimento"
-              [(ngModel)]="formData.dataNascimento"
-              name="dataNascimento"
-              required>
-            </gems-input-date>
+            <div class="col-md-6 mb-3">
+              <gems-input-date 
+                label="Data de Nascimento"
+                formControlName="dataNascimento"
+                required>
+              </gems-input-date>
+            </div>
       
-            <gems-input-password 
-              label="Senha de Acesso"
-              [(ngModel)]="formData.senha"
-              name="senha"
-              required>
-            </gems-input-password>
+            <div class="col-md-6 mb-3">
+              <gems-input-password 
+                label="Senha de Acesso"
+                formControlName="senha"
+                required>
+              </gems-input-password>
+            </div>
           </div>
       
-          <div class="checkbox-container">
-            <gems-input-checkbox 
-              label="Aceito os termos de uso e política de privacidade"
-              [(ngModel)]="formData.aceitoTermos"
-              name="termos">
-            </gems-input-checkbox>
+          <div class="row mb-4">
+            <div class="col-12">
+              <gems-input-checkbox 
+                label="Aceito os termos de uso e política de privacidade"
+                formControlName="aceitoTermos">
+              </gems-input-checkbox>
+            </div>
           </div>
       
-          <div class="footer-actions">
-            <button type="button" class="gems-btn-secondary" (click)="onCancel()">
-              <i class="fa-solid fa-xmark"></i> Cancelar
+          <div gems-form-card-footer style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+            <button type="button" class="btn-cancel" (click)="onCancel()">
+              Cancelar <i class="fa-solid fa-xmark"></i>
             </button>
-            <button type="submit" class="gems-btn-primary" [disabled]="!formData.aceitoTermos">
-              <i class="fa-solid fa-check"></i> Salvar
+            <button type="submit" class="btn-save" [disabled]="form.invalid">
+              Salvar <i class="fa-solid fa-check"></i>
             </button>
           </div>
-        </form>
-      </gems-form-card>
+        </gems-form-card>
+      </form>
     </div>
 
     <div class="demo-code">

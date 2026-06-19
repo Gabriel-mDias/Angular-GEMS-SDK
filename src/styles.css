@@ -1,3 +1,4 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap-grid.min.css");
 @import "../projects/gems-sdk/src/lib/core/tokens/gems-design-tokens.css";
 @import "../projects/gems-sdk/src/lib/core/tokens/gems-animations.css";
 @import "../projects/gems-sdk/src/lib/core/tokens/gems-utilities.css";
@@ -57,6 +58,13 @@ body {
   height: 100vh;
   overflow: hidden;
 }
+
+@media screen and (max-width: 768px) {
+  .showcase-layout {
+    flex-direction: column;
+  }
+}
+
 
 .showcase-content {
   flex: 1;

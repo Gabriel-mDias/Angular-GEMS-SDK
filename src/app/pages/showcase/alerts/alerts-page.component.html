@@ -1,7 +1,9 @@
 <div class="showcase-page fade-in">
-  <div class="page-header">
-    <h1>Alertas e Notificações</h1>
-    <p class="gems-text-muted">Apresentação dos métodos nativos do <code>GemsAlertService</code> baseados em SweetAlert2.</p>
+  <div class="header">
+    <div class="header-titles">
+      <h2>Alertas e Notificações</h2>
+      <p class="subtitle">Apresentação dos métodos nativos do <code>GemsAlertService</code> baseados em SweetAlert2.</p>
+    </div>
   </div>
   
   <div class="demo-section">
@@ -10,42 +12,42 @@
         
         <div class="alerts-grid">
           <div class="alert-item">
-            <button class="gems-btn-alert gems-btn-success" (click)="showSuccess()">
+            <button class="btn-success" (click)="showSuccess()">
               <i class="fa-solid fa-check-circle"></i> Sucesso
             </button>
             <span class="gems-text-muted"><code>alertService.success(...)</code></span>
           </div>
 
           <div class="alert-item">
-            <button class="gems-btn-alert gems-btn-error" (click)="showError()">
+            <button class="btn-danger" (click)="showError()">
               <i class="fa-solid fa-circle-xmark"></i> Erro
             </button>
             <span class="gems-text-muted"><code>alertService.error(...)</code></span>
           </div>
 
           <div class="alert-item">
-            <button class="gems-btn-alert gems-btn-warning" (click)="showWarning()">
+            <button class="btn-warning" (click)="showWarning()">
               <i class="fa-solid fa-triangle-exclamation"></i> Aviso
             </button>
             <span class="gems-text-muted"><code>alertService.warning(...)</code></span>
           </div>
 
           <div class="alert-item">
-            <button class="gems-btn-alert gems-btn-info" (click)="showInfo()">
+            <button class="btn-info" (click)="showInfo()">
               <i class="fa-solid fa-circle-info"></i> Informação
             </button>
             <span class="gems-text-muted"><code>alertService.info(...)</code></span>
           </div>
 
           <div class="alert-item">
-            <button class="gems-btn-alert gems-btn-confirm" (click)="askConfirmation()">
+            <button class="btn-save" (click)="askConfirmation()">
               <i class="fa-solid fa-question-circle"></i> Confirmação
             </button>
             <span class="gems-text-muted"><code>alertService.confirm(...)</code></span>
           </div>
 
           <div class="alert-item">
-            <button class="gems-btn-alert gems-btn-api" (click)="handleApiError()">
+            <button class="btn-danger" (click)="handleApiError()">
               <i class="fa-solid fa-server"></i> Erro de API
             </button>
             <span class="gems-text-muted"><code>alertService.errorFromApi(...)</code></span>

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -25,7 +25,7 @@ import { CodeSnippetComponent, CodeTab } from '../../../components/code-snippet'
   styleUrls: ['./search-page.component.css']
 })
 export class SearchPageComponent {
-  private alertService = inject(GemsAlertService);
+  constructor(private alertService: GemsAlertService) {}
 
   filterParams = {
     nome: '',
@@ -58,21 +58,21 @@ export class SearchPageComponent {
       actionName: 'view', 
       icon: 'fa-solid fa-eye', 
       tooltip: 'Visualizar', 
-      colorClass: 'gems-text-primary',
+      colorClass: 'btn-info',
       visible: () => true
     },
     { 
       actionName: 'suspend', 
       icon: 'fa-solid fa-pause', 
       tooltip: 'Suspender', 
-      colorClass: 'gems-text-warning',
+      colorClass: 'btn-warning',
       visible: (row: any) => row.situacaoDesc === 'Ativa'
     },
     { 
       actionName: 'cancel', 
       icon: 'fa-solid fa-ban', 
       tooltip: 'Cancelar', 
-      colorClass: 'gems-text-error',
+      colorClass: 'btn-danger',
       visible: (row: any) => row.situacaoDesc !== 'Cancelada'
     }
   ];
@@ -107,8 +107,8 @@ export class SearchPageComponent {
     </div>
   </div>
   <div class="filter-actions">
-    <button class="gems-btn-secondary" (click)="clearFilters()">Limpar</button>
-    <button class="gems-btn-primary" (click)="search()">Buscar</button>
+    <button class="btn-secondary" (click)="clearFilters()">Limpar</button>
+    <button class="btn-primary" (click)="search()">Buscar</button>
   </div>
 </gems-form-card>
 

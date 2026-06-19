@@ -7,13 +7,13 @@ import { GemsSessionService } from '../session/gems-session.service';
   providedIn: 'root'
 })
 export class GemsNavigationService {
-  private readonly router = inject(Router);
-  private readonly sessionService = inject(GemsSessionService);
-
   private readonly HISTORY_KEY = 'gems_route_history';
   private readonly NEXT_ROUTE_DATA_KEY = 'gems_next_route_data';
 
-  constructor() {
+  constructor(
+    private readonly router: Router,
+    private readonly sessionService: GemsSessionService
+  ) {
     this.initHistoryTracker();
   }
 

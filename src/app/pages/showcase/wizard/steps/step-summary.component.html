@@ -1,0 +1,23 @@
+<gems-form-card title="Resumo do Cadastro" subtitle="Revise os dados antes de finalizar o cadastro." icon="fa-solid fa-list-check">
+  <div class="summary-grid">
+    <gems-summary-card title="Dados Pessoais" icon="fa-solid fa-user">
+      <div summary>{{ state.nome || 'Não informado' }}</div>
+      <div details>
+        <p><strong>CPF:</strong> {{ state.cpf || 'Não informado' }}</p>
+        <p><strong>Data de Nasc.:</strong> {{ state.dataNascimento || 'Não informado' }}</p>
+      </div>
+    </gems-summary-card>
+
+    <gems-summary-card title="Endereço" icon="fa-solid fa-map-location-dot">
+      <div summary>{{ state.logradouro ? state.logradouro + ', ' + state.numero : 'Não informado' }}</div>
+      <div details>
+        <p><strong>CEP:</strong> {{ state.cep || 'Não informado' }}</p>
+      </div>
+    </gems-summary-card>
+  </div>
+
+  <div gems-form-card-footer style="display: flex; gap: 0.5rem; justify-content: space-between;">
+    <button type="button" class="btn-cancel" (click)="onPrev()"><i class="fa-solid fa-arrow-left"></i> Voltar</button>
+    <button type="button" class="btn-save" (click)="onFinish()">Finalizar Cadastro <i class="fa-solid fa-check"></i></button>
+  </div>
+</gems-form-card>

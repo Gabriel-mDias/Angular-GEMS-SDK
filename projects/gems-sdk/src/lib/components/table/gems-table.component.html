@@ -1,77 +1,71 @@
-<div class="gems-table-container">
-  <div class="gems-table-wrapper">
-    <table class="gems-table">
-      <thead>
-        <tr>
-          <th *ngFor="let col of columns()"
-              [class.gems-sortable]="col.sortable !== false && col.type !== 'actions'"
-              (click)="sortBy(col.field)">
-            <div class="gems-th-content">
-              <span>{{ col.header }}</span>
-              <i *ngIf="sortField() === (col.sortParam || col.field)" 
-                 class="fa-solid gems-sort-icon" 
-                 [ngClass]="{'fa-sort-up': sortDirection() === 'asc', 'fa-sort-down': sortDirection() === 'desc'}">
-              </i>
-              <i *ngIf="col.sortable !== false && col.type !== 'actions' && sortField() !== (col.sortParam || col.field)" 
-                 class="fa-solid fa-sort gems-sort-icon gems-text-muted">
-              </i>
-            </div>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Estado Vazio -->
-        <tr *ngIf="data().length === 0">
-          <td [attr.colspan]="columns().length" class="gems-empty-state">
-            <div class="gems-empty-content">
-              <i class="fa-solid fa-folder-open"></i>
-              <p>{{ emptyMessage() }}</p>
-            </div>
-          </td>
-        </tr>
+<div class="table-container">
+  <table class="gems-table">
+    <thead>
+      <tr>
+        <th *ngFor="let col of columns()"
+            [class.sortable]="col.sortable !== false && col.type !== 'actions'"
+            (click)="sortBy(col.field)">
+          {{ col.header }}
+          <i *ngIf="sortField() === (col.sortParam || col.field)" 
+             class="fa-solid sort-icon" 
+             [ngClass]="{'fa-sort-up': sortDirection() === 'asc', 'fa-sort-down': sortDirection() === 'desc'}">
+          </i>
+          <i *ngIf="col.sortable !== false && col.type !== 'actions' && sortField() !== (col.sortParam || col.field)" 
+             class="fa-solid fa-sort sort-icon text-muted">
+          </i>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Estado Vazio -->
+      <tr *ngIf="data().length === 0">
+        <td [attr.colspan]="columns().length" class="empty-state">
+          <i class="fa-solid fa-folder-open"></i>
+          <p>{{ emptyMessage() }}</p>
+        </td>
+      </tr>
 
-        <!-- Linhas de Dados -->
-        <tr *ngFor="let row of data()">
-          <td *ngFor="let col of columns()" [attr.data-label]="col.header">
-            <!-- Renderização Texto Comum -->
-            <ng-container *ngIf="!col.type || col.type === 'text'">
-              {{ row[col.field] }}
+      <!-- Linhas de Dados -->
+      <tr *ngFor="let row of data()">
+        <td *ngFor="let col of columns()" [attr.data-label]="col.header">
+          <!-- Renderização Texto Comum -->
+          <ng-container *ngIf="!col.type || col.type === 'text'">
+            {{ row[col.field] }}
+          </ng-container>
+          
+          <!-- Renderização Documento (CPF/CNPJ) -->
+          <ng-container *ngIf="col.type === 'document'">
+            {{ row[col.field] | gemsDocument:(row[col.docTypeField || 'tipoDocumento']) }}
+          </ng-container>
+
+          <!-- Renderização Badge de Status -->
+          <span *ngIf="col.type === 'badge'" class="status-badge" [ngStyle]="getBadgeStyle(col, row[col.field])">
+            {{ row[col.field] }}
+          </span>
+
+          <!-- Renderização Ações -->
+          <div *ngIf="col.type === 'actions'" class="action-buttons">
+            <ng-container *ngFor="let action of actions()">
+              <button *ngIf="!action.visible || action.visible(row)" (click)="onActionClick(action.actionName, row)" [title]="action.tooltip" [class]="action.colorClass || 'btn-default'">
+                <i [class]="action.icon"></i>
+              </button>
             </ng-container>
-            
-            <!-- Renderização Documento (CPF/CNPJ) -->
-            <ng-container *ngIf="col.type === 'document'">
-              {{ row[col.field] | gemsDocument:(row[col.docTypeField || 'tipoDocumento']) }}
-            </ng-container>
-
-            <!-- Renderização Badge de Status -->
-            <span *ngIf="col.type === 'badge'" class="gems-status-badge" [ngStyle]="getBadgeStyle(col, row[col.field])">
-              {{ row[col.field] }}
-            </span>
-
-            <!-- Renderização Ações -->
-            <div *ngIf="col.type === 'actions'" class="gems-action-buttons">
-              <ng-container *ngFor="let action of actions()">
-                <button *ngIf="!action.visible || action.visible(row)" (click)="onActionClick(action.actionName, row)" [title]="action.tooltip" [class]="action.colorClass || 'gems-btn-action-default'">
-                  <i [class]="action.icon"></i>
-                </button>
-              </ng-container>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
   <!-- Pagination -->
-  <div class="gems-pagination-container" *ngIf="totalRecords() > 0">
-    <div class="gems-pagination-info">
+  <div class="pagination-container" *ngIf="totalRecords() > 0">
+    <div class="pagination-info">
       Mostrando {{ page() * size() + 1 }} até {{ (page() + 1) * size() > totalRecords() ? totalRecords() : (page() + 1) * size() }} de {{ totalRecords() }} registros
     </div>
     
-    <div class="gems-pagination-controls">
-      <div class="gems-page-size">
-        <label for="gemsPageSize">Itens por página:</label>
-        <select id="gemsPageSize" class="gems-select" [value]="size()" (change)="changeSize($event)">
+    <div class="pagination-controls">
+      <div class="page-size">
+        <label for="pageSize">Itens por página:</label>
+        <select id="pageSize" [value]="size()" (change)="changeSize($event)">
           <option [value]="5">5</option>
           <option [value]="10">10</option>
           <option [value]="20">20</option>
@@ -79,12 +73,12 @@
         </select>
       </div>
       
-      <div class="gems-page-buttons">
-        <button class="gems-btn-icon" [disabled]="!hasPreviousPage()" (click)="changePage(page() - 1)" title="Página Anterior">
+      <div class="page-buttons">
+        <button class="btn-icon" [disabled]="!hasPreviousPage()" (click)="changePage(page() - 1)" title="Página Anterior">
           <i class="fa-solid fa-chevron-left"></i>
         </button>
-        <span class="gems-page-indicator">Página {{ page() + 1 }} de {{ totalPages() }}</span>
-        <button class="gems-btn-icon" [disabled]="!hasNextPage()" (click)="changePage(page() + 1)" title="Próxima Página">
+        <span class="page-indicator">Página {{ page() + 1 }} de {{ totalPages() }}</span>
+        <button class="btn-icon" [disabled]="!hasNextPage()" (click)="changePage(page() + 1)" title="Próxima Página">
           <i class="fa-solid fa-chevron-right"></i>
         </button>
       </div>

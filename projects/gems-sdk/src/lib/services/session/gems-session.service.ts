@@ -1,11 +1,11 @@
-import { Injectable, PLATFORM_ID, inject } from '@angular/core';
+import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GemsSessionService {
-  private readonly platformId = inject(PLATFORM_ID);
+  constructor(@Inject(PLATFORM_ID) private readonly platformId: Object) {}
   
   private get isBrowser(): boolean {
     return isPlatformBrowser(this.platformId);

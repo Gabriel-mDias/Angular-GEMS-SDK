@@ -1,33 +1,39 @@
 <div class="showcase-page fade-in">
-  <div class="page-header">
-    <h1>Busca e Listagem</h1>
-    <p class="gems-text-muted">Padrão de tela com filtros de busca (<code>gems-form-card</code>) integrados a uma tabela de resultados (<code>gems-table</code>).</p>
+  <div class="header">
+    <div class="header-titles">
+      <h2>Busca e Listagem</h2>
+      <p class="subtitle">Padrão de tela com filtros de busca (<code>gems-form-card</code>) integrados a uma tabela de resultados (<code>gems-table</code>).</p>
+    </div>
   </div>
   
   <div class="demo-section">
     <div class="demo-preview search-preview">
       <gems-form-card title="Filtros de Busca" icon="fa-solid fa-filter">
-        <div class="filter-grid">
-          <div class="filter-field">
+        <div class="form-grid">
+          <div class="form-group">
             <label>Nome do Aluno</label>
-            <input type="text" [(ngModel)]="filterParams.nome" class="gems-input" placeholder="Ex: João">
+            <input type="text" [(ngModel)]="filterParams.nome" class="form-control" placeholder="Ex: João">
           </div>
-          <div class="filter-field">
+          <div class="form-group">
             <label>Situação</label>
-            <select [(ngModel)]="filterParams.situacao" class="gems-input">
+            <select [(ngModel)]="filterParams.situacao" class="form-control">
               <option value="">Todas as situações</option>
               <option *ngFor="let opt of situacaoOptions" [value]="opt">{{ opt }}</option>
             </select>
           </div>
         </div>
         
-        <div class="filter-actions">
-          <button type="button" class="gems-btn-secondary" (click)="clearFilters()">Limpar</button>
-          <button type="button" class="gems-btn-primary" (click)="search()">Buscar</button>
+        <div gems-form-card-footer style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+          <button type="button" class="btn-cancel" (click)="clearFilters()">
+            Limpar <i class="fa-solid fa-eraser"></i>
+          </button>
+          <button type="button" class="btn-save" (click)="search()">
+            Buscar <i class="fa-solid fa-search"></i>
+          </button>
         </div>
       </gems-form-card>
 
-      <div class="table-container">
+      <div class="content-card">
         <gems-table 
           [columns]="tableColumns" 
           [data]="tableData" 

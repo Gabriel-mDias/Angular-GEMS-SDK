@@ -17,5 +17,17 @@ export const routes: Routes = [
   { 
     path: 'showcase/alerts', 
     loadComponent: () => import('./pages/showcase/alerts/alerts-page.component').then(m => m.AlertsPageComponent) 
+  },
+  { 
+    path: 'showcase/buttons', 
+    loadComponent: () => import('./pages/showcase/buttons/buttons-page.component').then(m => m.ButtonsPageComponent) 
+  },
+  { 
+    path: 'showcase/list-select', 
+    loadComponent: () => import('./pages/showcase/list-select/list-select-page.component').then(m => m.ListSelectPageComponent) 
+  },
+  { 
+    path: 'showcase/file-upload', 
+    loadComponent: () => import('./pages/showcase/file-upload/file-upload-page.component').then(m => m.FileUploadPageComponent) 
   }
 ];

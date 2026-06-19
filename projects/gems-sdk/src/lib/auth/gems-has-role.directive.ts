@@ -1,4 +1,4 @@
-import { Directive, Input, TemplateRef, ViewContainerRef, OnInit, inject } from '@angular/core';
+import { Directive, Input, TemplateRef, ViewContainerRef, OnInit, Optional } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 
 @Directive({
@@ -9,9 +9,11 @@ export class GemsHasRoleDirective implements OnInit {
   private requiredRoles: string[] = [];
   private hasView = false;
 
-  private readonly templateRef = inject(TemplateRef<any>);
-  private readonly viewContainer = inject(ViewContainerRef);
-  private readonly keycloak = inject(KeycloakService, { optional: true });
+  constructor(
+    private readonly templateRef: TemplateRef<any>,
+    private readonly viewContainer: ViewContainerRef,
+    @Optional() private readonly keycloak: KeycloakService
+  ) {}
 
   @Input()
   set gemsHasRole(val: string | string[] | undefined) {

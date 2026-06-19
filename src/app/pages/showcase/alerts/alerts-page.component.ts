@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GemsFormCardComponent, GemsAlertService } from '@gabriel-mdias/angular-gems-sdk';
 import { CodeSnippetComponent, CodeTab } from '../../../components/code-snippet';
@@ -11,7 +11,7 @@ import { CodeSnippetComponent, CodeTab } from '../../../components/code-snippet'
   styleUrls: ['./alerts-page.component.css']
 })
 export class AlertsPageComponent {
-  alertService = inject(GemsAlertService);
+  constructor(private alertService: GemsAlertService) {}
 
   codeTabs: CodeTab[] = [
     {
@@ -22,7 +22,7 @@ import { GemsAlertService } from 'gems-sdk';
 
 @Component({ ... })
 export class MeuComponente {
-  private alertService = inject(GemsAlertService);
+  constructor(private alertService: GemsAlertService) {}
 
   showSuccess() {
     this.alertService.success('Operação Concluída', 'Registro salvo com sucesso no banco de dados.');

@@ -1,4 +1,4 @@
-import { Injectable, inject, DOCUMENT } from '@angular/core';
+import { Injectable, Inject, DOCUMENT } from '@angular/core';
 import { InjectionToken } from '@angular/core';
 import { GemsThemeConfig, GEMS_DEFAULT_THEME } from './gems-theme.config';
 import { generatePalette, generateBackgroundPalette } from './gems-palette.util';
@@ -23,10 +23,14 @@ export const GEMS_THEME_CONFIG = new InjectionToken<GemsThemeConfig>('GEMS_THEME
   providedIn: 'root',
 })
 export class GemsThemeService {
-  private readonly document = inject(DOCUMENT);
-  private readonly config = inject(GEMS_THEME_CONFIG);
+  private currentTheme: GemsThemeConfig;
 
-  private currentTheme: GemsThemeConfig = this.config;
+  constructor(
+    @Inject(DOCUMENT) private readonly document: Document,
+    @Inject(GEMS_THEME_CONFIG) private readonly config: GemsThemeConfig
+  ) {
+    this.currentTheme = this.config;
+  }
 
   /**
    * Aplica o tema no DOM. Chamado automaticamente via APP_INITIALIZER

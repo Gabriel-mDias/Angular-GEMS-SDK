@@ -1,0 +1,101 @@
+<!-- Mobile Overlay Backdrop -->
+<div class="mobile-overlay" *ngIf="isMobileOpen && isMobileView" (click)="closeMobileMenu()"></div>
+
+<!-- Mobile Top Bar (Only visible on small screens) -->
+<div class="mobile-top-bar" *ngIf="isMobileView" [style.background-color]="'var(--cor-secundaria)'" [style.color]="'var(--cor-terciaria)'">
+  <div class="mobile-brand">
+    <ng-container *ngIf="logoFull() || config()?.headerLogoUrl; else textLogoMobile">
+      <img [src]="logoFull() || config()!.headerLogoUrl" alt="Logo" class="logo-img-mobile" />
+    </ng-container>
+    <ng-template #textLogoMobile>
+      <span class="logo-text-mobile">{{ config()?.headerTitle || 'G&Ms SDK' }}</span>
+    </ng-template>
+  </div>
+  <button class="hamburger-btn" (click)="toggleMobileMenu()" [style.color]="'var(--cor-terciaria)'">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+</div>
+
+<!-- Main Side Menu -->
+<div
+  class="gems-side-menu-container"
+  [class.collapsed]="isCollapsed && !isMobileView"
+  [class.mobile-open]="isMobileOpen && isMobileView"
+  [style.background-color]="'var(--cor-secundaria)'"
+  [style.color]="'var(--cor-terciaria)'"
+>
+  <div class="menu-header">
+    <ng-container *ngIf="(!isCollapsed || isMobileView) && (logoFull() || config()?.headerLogoUrl)">
+      <img [src]="logoFull() || config()!.headerLogoUrl" alt="Logo" class="logo-img" />
+    </ng-container>
+
+    <ng-container *ngIf="(isCollapsed && !isMobileView) && (logoCollapsed() || logoFull() || config()?.headerLogoUrl)">
+      <img [src]="logoCollapsed() || logoFull() || config()!.headerLogoUrl" alt="Logo" class="logo-img-collapsed" />
+    </ng-container>
+
+    <ng-container *ngIf="!(logoFull() || config()?.headerLogoUrl) && (!isCollapsed || isMobileView)">
+      <span class="logo-text">{{ config()?.headerTitle || 'G&Ms SDK' }}</span>
+    </ng-container>
+
+    <ng-container *ngIf="!(logoCollapsed() || logoFull() || config()?.headerLogoUrl) && (isCollapsed && !isMobileView)">
+      <span class="logo-text-collapsed">{{ config()?.headerTitle?.charAt(0) || 'G' }}</span>
+    </ng-container>
+  </div>
+
+  <ul class="menu-list">
+    <li *ngFor="let item of filteredItems" class="menu-item-wrapper">
+      <a class="menu-item" 
+         [class.active]="item.isExpanded || (item.route && rla.isActive)"
+         (click)="onItemClick(item)"
+         [routerLink]="item.route ? item.route : null"
+         routerLinkActive="active"
+         #rla="routerLinkActive">
+        <i [class]="item.icon" class="menu-icon"></i>
+        <span class="menu-title" *ngIf="!isCollapsed || isMobileView">{{ item.label }}</span>
+        <i
+          *ngIf="item.children && (!isCollapsed || isMobileView)"
+          class="fa-solid fa-chevron-down toggle-icon"
+          [class.rotated]="item.isExpanded"
+        ></i>
+      </a>
+
+      <!-- Sub-items -->
+      <ul class="sub-menu-list" *ngIf="item.children && item.isExpanded && (!isCollapsed || isMobileView)">
+        <li
+          *ngFor="let child of item.children"
+          class="sub-menu-item"
+          [routerLink]="child.route"
+          routerLinkActive="active"
+          (click)="onSubItemClick()"
+        >
+          <i [class]="child.icon" class="sub-menu-icon"></i>
+          <span class="sub-menu-title">{{ child.label }}</span>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <!-- User Profile Section -->
+  <div class="user-profile-section" [class.collapsed]="isCollapsed && !isMobileView" *ngIf="showUserProfile()">
+    <div class="user-avatar-wrapper">
+      <div class="user-avatar" (click)="isCollapsed && !isMobileView ? logout() : null" [title]="isCollapsed && !isMobileView ? 'Sair' : ''">
+        {{ userInitials() }}
+        <div class="logout-overlay" *ngIf="isCollapsed && !isMobileView">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </div>
+      </div>
+    </div>
+    <div class="user-info" *ngIf="!isCollapsed || isMobileView">
+      <span class="user-name" [title]="userName()">{{ userName() }}</span>
+      <span class="user-email" [title]="userEmail()">{{ userEmail() }}</span>
+    </div>
+    <button class="btn-logout" *ngIf="!isCollapsed || isMobileView" (click)="logout()" title="Sair do Sistema">
+      <i class="fa-solid fa-right-from-bracket"></i>
+    </button>
+  </div>
+
+  <!-- Toggle Footer (Desktop only) -->
+  <div class="menu-footer" (click)="toggleCollapse()" *ngIf="!isMobileView">
+    <i class="fa-solid" [class.fa-chevron-left]="!isCollapsed" [class.fa-chevron-right]="isCollapsed"></i>
+  </div>
+</div>

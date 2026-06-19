@@ -39,11 +39,7 @@
   gap: var(--gems-spacing-xs);
 }
 
-.filter-field label {
-  font-size: var(--gems-font-size-sm);
-  color: var(--gems-text-color);
-  font-weight: 500;
-}
+
 
 .gems-input {
   padding: 10px;
@@ -69,33 +65,3 @@
   border-top: 1px solid var(--gems-border-color);
 }
 
-.gems-btn-primary, .gems-btn-secondary {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  border-radius: var(--gems-border-radius-md);
-  font-weight: 500;
-  cursor: pointer;
-  border: none;
-  transition: all 0.2s ease;
-}
-
-.gems-btn-primary {
-  background-color: var(--gems-primary-500);
-  color: white;
-}
-
-.gems-btn-primary:hover {
-  background-color: var(--gems-primary-600);
-}
-
-.gems-btn-secondary {
-  background-color: white;
-  border: 1px solid var(--gems-border-color);
-  color: var(--gems-text-color);
-}
-
-.gems-btn-secondary:hover {
-  background-color: var(--gems-background-color);
-}

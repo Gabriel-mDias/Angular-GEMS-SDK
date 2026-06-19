@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   GemsFormCardComponent,
   GemsInputDateComponent,
   GemsInputMaskComponent,
   GemsInputPasswordComponent,
   GemsInputCheckboxComponent,
-  GemsAlertService
+  GemsAlertService,
+  GemsInputDocumentComponent
 } from '@gabriel-mdias/angular-gems-sdk';
 import { CodeSnippetComponent, CodeTab } from '../../../components/code-snippet';
 
@@ -15,25 +16,20 @@ import { CodeSnippetComponent, CodeTab } from '../../../components/code-snippet'
   selector: 'app-forms-page',
   standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule,
+    CommonModule,
+    ReactiveFormsModule,
     GemsFormCardComponent,
     GemsInputDateComponent,
-    GemsInputMaskComponent,
     GemsInputPasswordComponent,
     GemsInputCheckboxComponent,
+    GemsInputDocumentComponent,
     CodeSnippetComponent
   ],
   templateUrl: './forms-page.component.html',
   styleUrls: ['./forms-page.component.css']
 })
 export class FormsPageComponent {
-  formData = {
-    cpf: '',
-    dataNascimento: '',
-    senha: '',
-    aceitoTermos: false
-  };
+  form: FormGroup;
 
   codeTabs: CodeTab[] = [
     {
@@ -87,14 +83,14 @@ export class FormsPageComponent {
     {
       name: 'TypeScript',
       language: 'typescript',
-      code: `import { Component, inject } from '@angular/core';
+      code: `import { Component } from '@angular/core';
 import { GemsAlertService } from '@gabriel-mdias/angular-gems-sdk';
 
 @Component({
   // ...
 })
 export class MeuFormularioComponent {
-  private alertService = inject(GemsAlertService);
+  constructor(private alertService: GemsAlertService) {}
 
   formData = {
     cpf: '',
@@ -120,11 +116,18 @@ export class MeuFormularioComponent {
     }
   ];
 
-  constructor(private alertService: GemsAlertService) {}
+  constructor(private alertService: GemsAlertService, private fb: FormBuilder) {
+    this.form = this.fb.group({
+      cpf: ['', Validators.required],
+      dataNascimento: ['', Validators.required],
+      senha: ['', Validators.required],
+      aceitoTermos: [false, Validators.requiredTrue]
+    });
+  }
 
   onSubmit() {
-    if (!this.formData.cpf || !this.formData.dataNascimento || !this.formData.senha) {
-      this.alertService.warning('Atenção', 'Preencha todos os campos obrigatórios.');
+    if (this.form.invalid) {
+      this.alertService.warning('Atenção', 'Preencha todos os campos obrigatórios e aceite os termos.');
       return;
     }
 
@@ -133,11 +136,6 @@ export class MeuFormularioComponent {
 
   onCancel() {
     this.alertService.info('Operação Cancelada', 'O formulário foi limpo.');
-    this.formData = {
-      cpf: '',
-      dataNascimento: '',
-      senha: '',
-      aceitoTermos: false
-    };
+    this.form.reset({ aceitoTermos: false });
   }
 }

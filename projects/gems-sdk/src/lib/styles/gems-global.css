@@ -1,0 +1,258 @@
+/* Estrutura Global e Cores */
+:root {
+  --cor-fundo: #f8f9fa;
+  --cor-principal: #ffffff;
+  --cor-secundaria: #ffffff;
+  --cor-terciaria: #111827;
+  --cor-terciaria-clara: #33497a;
+  --cor-terciaria-hover: #1e293b;
+  --cor-quartenaria: #e17827;
+
+  --cor-alerta: #dc2626;
+  --cor-alerta-clara: #ef4444;
+
+  --cor-sucesso: #22c55e;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--cor-fundo);
+  color: #333333;
+}
+
+/* Global Select, Inputs */
+select, .form-select, .gems-select, .form-control, .gems-input {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  background-color: var(--cor-principal);
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  padding: 0.625rem 1rem;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  color: #1e293b;
+  width: 100%;
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+select:hover, .form-select:hover, .gems-select:hover, .form-control:hover, .gems-input:hover {
+  border-color: #9ca3af;
+}
+
+select:focus, .form-select:focus, .gems-select:focus, .form-control:focus, .gems-input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+select:disabled, .form-select:disabled, .gems-select:disabled, .form-control:disabled, .gems-input:disabled {
+  background-color: #f1f5f9;
+  color: #94a3b8;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Botoes Globais Padronizados */
+.btn-novo, .btn-save, .btn-cancel, .btn-danger, .btn-info, .btn-warning, .btn-success, .btn-primary, .btn-secondary {
+  border: none;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.btn-novo:disabled, .btn-save:disabled, .btn-cancel:disabled, .btn-danger:disabled, .btn-info:disabled, .btn-warning:disabled, .btn-success:disabled, button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(80%);
+}
+
+.btn-novo, .btn-save {
+  background-color: var(--cor-terciaria);
+  color: var(--cor-principal);
+}
+
+.btn-novo:hover, .btn-save:hover {
+  background-color: var(--cor-terciaria-hover);
+  transform: translateY(-1px);
+}
+
+.btn-cancel {
+  background-color: var(--cor-principal);
+  color: #4b5563;
+  border: 1px solid #d1d5db;
+}
+
+.btn-cancel:hover {
+  background-color: var(--cor-alerta, #dc2626);
+  color: var(--cor-principal, #ffffff);
+  border-color: var(--cor-alerta, #dc2626);
+}
+
+.btn-primary {
+  background-color: var(--cor-terciaria-clara, #33497a);
+  color: var(--cor-principal, #ffffff);
+}
+
+.btn-primary:hover {
+  background-color: var(--cor-terciaria, #111827);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background-color: var(--cor-principal, #ffffff);
+  border: 1px solid #d1d5db;
+  color: #4b5563;
+}
+
+.btn-secondary:hover {
+  background-color: #f9fafb;
+  color: var(--cor-terciaria, #111827);
+  border-color: #9ca3af;
+}
+
+.btn-danger {
+  background-color: var(--cor-alerta);
+  color: var(--cor-principal);
+}
+
+.btn-danger:hover {
+  background-color: var(--cor-alerta-clara);
+  transform: translateY(-1px);
+}
+
+.btn-success {
+  background-color: var(--cor-sucesso);
+  color: var(--cor-principal);
+}
+
+.btn-info {
+  background-color: #3b82f6;
+  color: var(--cor-principal);
+}
+
+.btn-warning {
+  background-color: #f59e0b;
+  color: var(--cor-principal);
+}
+
+/* Estrutura Global de Telas */
+.list-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.header-titles h2 {
+  margin: 0;
+  color: var(--cor-terciaria);
+  font-size: 1.875rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.subtitle {
+  margin: 0.25rem 0 0 0;
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.content-card {
+  background-color: var(--cor-principal);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  margin-top: 2rem;
+}
+
+/* Inputs e Grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.75rem 2rem;
+  align-items: start;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+label, .gems-label, .form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #374151;
+}
+
+/* Classes para os Steps do Wizard (Meduc Style) */
+.selection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.selection-card {
+  position: relative;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 20px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: white;
+  text-align: center;
+}
+
+.selection-card:hover:not(.readonly) {
+  border-color: var(--cor-terciaria);
+  box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.06);
+  transform: translateY(-2px);
+}
+
+.selection-card.selected {
+  border-color: var(--cor-terciaria);
+  background: rgba(17, 24, 39, 0.03);
+}
+
+.selection-card.readonly { cursor: default; }
+
+.selection-icon { font-size: 1.8rem; color: var(--cor-terciaria); opacity: 0.7; }
+.selection-label { font-size: 0.875rem; font-weight: 600; color: #1e293b; line-height: 1.3; }
+.selection-sublabel { font-size: 0.78rem; color: #6b7280; }
+
+.step-empty {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 12px; padding: 40px; color: #9ca3af; text-align: center;
+}
+.step-empty i { font-size: 2.5rem; }
+

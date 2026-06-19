@@ -1,0 +1,22 @@
+<form [formGroup]="form" (ngSubmit)="onNext()">
+  <gems-form-card title="Endereço" subtitle="Preencha o endereço de residência." icon="fa-solid fa-map-location-dot">
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <gems-input-mask label="CEP" maskType="cep" formControlName="cep"></gems-input-mask>
+      </div>
+      <div class="col-md-8 mb-3">
+        <label class="fw-bold mb-1 gems-label">Logradouro</label>
+        <input type="text" class="form-control" formControlName="logradouro">
+      </div>
+      <div class="col-md-4 mb-3">
+        <label class="fw-bold mb-1 gems-label">Número</label>
+        <input type="text" class="form-control" formControlName="numero">
+      </div>
+    </div>
+
+    <div gems-form-card-footer style="display: flex; gap: 0.5rem; justify-content: space-between;">
+      <button type="button" class="btn-cancel" (click)="onPrev()"><i class="fa-solid fa-arrow-left"></i> Voltar</button>
+      <button type="submit" class="btn-save" [disabled]="form.invalid">Próximo Passo <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+  </gems-form-card>
+</form>

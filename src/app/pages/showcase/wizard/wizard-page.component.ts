@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GemsWizardComponent } from '@gabriel-mdias/angular-gems-sdk';
 import { StepPersonalComponent } from './steps/step-personal.component';
@@ -22,7 +22,7 @@ import { CodeSnippetComponent, CodeTab } from '../../../components/code-snippet'
   styleUrls: ['./wizard-page.component.css']
 })
 export class WizardPageComponent {
-  patientService = inject(PatientStateService);
+  constructor(private patientService: PatientStateService) {}
   
   currentStep = 1;
 

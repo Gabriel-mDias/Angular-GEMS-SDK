@@ -1,114 +1,127 @@
-import { Component, input, output, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Component, input, output, HostListener, PLATFORM_ID, Inject, OnInit, signal, OnChanges, SimpleChanges } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { GemsSideMenuConfig, GemsSideMenuItem } from './gems-side-menu.config';
 
 @Component({
   selector: 'gems-side-menu',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  template: `
-    <aside class="gems-side-menu" [class.gems-collapsed]="isCollapsed()">
-      
-      <div class="gems-side-menu-header">
-        <div class="gems-logo-container" *ngIf="!isCollapsed()">
-          <img *ngIf="config()?.headerLogoUrl" [src]="config()?.headerLogoUrl" alt="Logo" class="gems-logo-img">
-          <h2 *ngIf="config()?.headerTitle" class="gems-logo-title">{{ config()?.headerTitle }}</h2>
-        </div>
-        
-        <button class="gems-toggle-btn" (click)="toggleCollapse()" title="Alternar Menu">
-          <i class="fa-solid fa-bars"></i>
-        </button>
-      </div>
-
-      <nav class="gems-side-menu-nav">
-        <ul class="gems-menu-list">
-          <ng-container *ngFor="let item of config()?.items">
-            <li class="gems-menu-item" [class.gems-has-children]="item.children?.length">
-              
-              <!-- Item without children -->
-              <a *ngIf="!item.children?.length" 
-                 [routerLink]="item.route" 
-                 routerLinkActive="gems-active" 
-                 class="gems-menu-link" 
-                 [title]="isCollapsed() ? item.label : ''"
-                 (click)="onItemClick(item)">
-                <i *ngIf="item.icon" [class]="item.icon + ' gems-menu-icon'"></i>
-                <span class="gems-menu-label" *ngIf="!isCollapsed()">{{ item.label }}</span>
-              </a>
-
-              <!-- Item with children -->
-              <div *ngIf="item.children?.length" 
-                   class="gems-menu-link gems-menu-parent" 
-                   (click)="toggleExpand(item)"
-                   [class.gems-parent-expanded]="item.isExpanded && !isCollapsed()"
-                   [title]="isCollapsed() ? item.label : ''">
-                <i *ngIf="item.icon" [class]="item.icon + ' gems-menu-icon'"></i>
-                <span class="gems-menu-label" *ngIf="!isCollapsed()">{{ item.label }}</span>
-                <i class="fa-solid fa-chevron-down gems-chevron" *ngIf="!isCollapsed()"></i>
-              </div>
-
-              <!-- Children list -->
-              <ul class="gems-submenu-list" 
-                  *ngIf="item.children?.length && !isCollapsed()" 
-                  [@expandCollapse]="item.isExpanded ? 'expanded' : 'collapsed'">
-                <li class="gems-submenu-item" *ngFor="let child of item.children">
-                  <a [routerLink]="child.route" 
-                     routerLinkActive="gems-active" 
-                     class="gems-submenu-link"
-                     (click)="onItemClick(child)">
-                    <i *ngIf="child.icon" [class]="child.icon + ' gems-menu-icon'"></i>
-                    <span class="gems-menu-label">{{ child.label }}</span>
-                  </a>
-                </li>
-              </ul>
-
-            </li>
-          </ng-container>
-        </ul>
-      </nav>
-      
-      <div class="gems-side-menu-footer">
-        <ng-content select="[footer]"></ng-content>
-      </div>
-
-    </aside>
-  `,
-  styleUrls: ['./gems-side-menu.component.css'],
-  animations: [
-    trigger('expandCollapse', [
-      state('collapsed', style({ height: '0px', opacity: 0, overflow: 'hidden' })),
-      state('expanded', style({ height: '*', opacity: 1 })),
-      transition('collapsed <=> expanded', animate('250ms ease-in-out'))
-    ])
-  ]
+  templateUrl: './gems-side-menu.component.html',
+  styleUrls: ['./gems-side-menu.component.css']
 })
-export class GemsSideMenuComponent {
+export class GemsSideMenuComponent implements OnInit, OnChanges {
   config = input<GemsSideMenuConfig>();
-  isCollapsed = signal<boolean>(false);
+  logoFull = input<string>();
+  logoCollapsed = input<string>();
   
-  menuClick = output<GemsSideMenuItem>();
+  // New flexible inputs for user profile
+  userName = input<string>('');
+  userEmail = input<string>('');
+  userInitials = input<string>('');
+  showUserProfile = input<boolean>(true);
 
-  constructor(private router: Router) {}
+  collapsedChange = output<boolean>();
+  itemClicked = output<void>();
+  logoutClick = output<void>();
 
-  toggleCollapse() {
-    this.isCollapsed.update(c => !c);
+  filteredItems: GemsSideMenuItem[] = [];
+  isCollapsed = false;
+  isMobileOpen = false;
+  isMobileView = false;
+
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    this.checkScreenSize();
   }
 
-  toggleExpand(item: GemsSideMenuItem) {
-    if (this.isCollapsed()) {
-      // If expanding a parent while collapsed, open the menu first
-      this.isCollapsed.set(false);
-      item.isExpanded = true;
-    } else {
-      item.isExpanded = !item.isExpanded;
+  ngOnInit() {
+    this.filterMenu();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['config']) {
+      this.filterMenu();
     }
   }
 
-  onItemClick(item: GemsSideMenuItem) {
-    this.menuClick.emit(item);
-    
-    // Optionally close menu on mobile (would need viewport detection, skipping for now)
+  logout(): void {
+    this.logoutClick.emit();
+  }
+
+  private filterMenu(): void {
+    const currentConfig = this.config();
+    if (!currentConfig || !currentConfig.items) {
+      this.filteredItems = [];
+      return;
+    }
+    // In SDK we don't assume role/claim parsing inside the visual component.
+    // We assume the items passed in the config are already filtered, or we let the caller do it.
+    // If the config items are passed, we just use them.
+    this.filteredItems = JSON.parse(JSON.stringify(currentConfig.items)); 
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.checkScreenSize();
+  }
+
+  private checkScreenSize() {
+    if (isPlatformBrowser(this.platformId)) {
+      const wasMobile = this.isMobileView;
+      this.isMobileView = window.innerWidth <= 768;
+
+      if (this.isMobileView && !wasMobile) {
+        if (!this.isCollapsed) {
+          this.isCollapsed = true;
+          this.collapsedChange.emit(this.isCollapsed);
+        }
+      }
+    }
+  }
+
+  toggleCollapse(): void {
+    if (this.isMobileView) {
+      return;
+    }
+
+    this.isCollapsed = !this.isCollapsed;
+    this.collapsedChange.emit(this.isCollapsed);
+
+    if (this.isCollapsed) {
+      this.filteredItems.forEach(item => item.isExpanded = false);
+    }
+  }
+
+  toggleMobileMenu(): void {
+    this.isMobileOpen = !this.isMobileOpen;
+  }
+
+  closeMobileMenu(): void {
+    this.isMobileOpen = false;
+  }
+
+  onItemClick(item: GemsSideMenuItem): void {
+    if (this.isCollapsed && !this.isMobileView && item.children && item.children.length > 0) {
+      this.isCollapsed = false;
+      this.collapsedChange.emit(this.isCollapsed);
+      item.isExpanded = true;
+      return;
+    }
+
+    if (item.children && item.children.length > 0) {
+      item.isExpanded = !item.isExpanded;
+    } else {
+      this.itemClicked.emit();
+      if (this.isMobileView) {
+        this.closeMobileMenu();
+      }
+    }
+  }
+
+  onSubItemClick(): void {
+    this.itemClicked.emit();
+    if (this.isMobileView) {
+      this.closeMobileMenu();
+    }
   }
 }

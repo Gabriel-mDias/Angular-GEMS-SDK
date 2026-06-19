@@ -1,4 +1,4 @@
-import { Component, input, signal, effect, ElementRef, viewChild } from '@angular/core';
+import { Component, input, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // @ts-ignore
@@ -42,7 +42,7 @@ export interface CodeTab {
           <i class="fa-regular" [class.fa-copy]="!copied()" [class.fa-check]="copied()"></i>
         </button>
 
-        <pre [ngClass]="'language-' + currentTab()?.language"><code #codeElement [ngClass]="'language-' + currentTab()?.language">{{ currentTab()?.code }}</code></pre>
+        <pre [ngClass]="'language-' + currentTab().language"><code [ngClass]="'language-' + currentTab().language" [innerHTML]="highlightedCode()"></code></pre>
       </div>
 
     </div>
@@ -51,25 +51,21 @@ export interface CodeTab {
 })
 export class CodeSnippetComponent {
   tabs = input<CodeTab[]>([]);
-  codeElement = viewChild<ElementRef<HTMLElement>>('codeElement');
-  
+
   activeTabIndex = signal<number>(0);
   copied = signal<boolean>(false);
 
-  constructor() {
-    effect(() => {
-      const el = this.codeElement();
-      const current = this.currentTab();
-      if (el && current) {
-        // Use Prism.highlightElement instead of highlightAll to only highlight the current block
-        setTimeout(() => Prism.highlightElement(el.nativeElement), 0);
-      }
-    });
-  }
+  currentTab = computed(() => this.tabs()[this.activeTabIndex()]);
 
-  get currentTab(): () => CodeTab | undefined {
-    return () => this.tabs()[this.activeTabIndex()];
-  }
+  highlightedCode = computed(() => {
+    const tab = this.currentTab();
+    if (!tab) return '';
+    try {
+      return Prism.highlight(tab.code, Prism.languages[tab.language], tab.language);
+    } catch (e) {
+      return tab.code;
+    }
+  });
 
   selectTab(index: number) {
     this.activeTabIndex.set(index);

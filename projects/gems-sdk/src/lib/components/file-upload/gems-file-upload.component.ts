@@ -1,4 +1,4 @@
-import { Component, input, output, inject, signal } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GemsS3Service } from '../../services/s3/gems-s3.service';
 import { GemsAlertService } from '../../services/alert/gems-alert.service';
@@ -63,10 +63,10 @@ export class GemsFileUploadComponent {
   isUploaded = signal<boolean>(false);
   fileName = signal<string>('');
 
-  private s3Service = inject(GemsS3Service);
-  private alertService = inject(GemsAlertService);
-
-  constructor() {
+  constructor(
+    private s3Service: GemsS3Service,
+    private alertService: GemsAlertService
+  ) {
     // We could use an effect to react to existingFileKey, but this is simpler
     // and standard input handling.
     // In Angular 20 we'd use effect or just set it on init if the inputs are available.

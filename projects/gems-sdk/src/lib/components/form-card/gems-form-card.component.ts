@@ -9,7 +9,10 @@ import { CommonModule } from '@angular/common';
     <div class="gems-form-card-wrapper">
       <div class="gems-form-card-header">
         <div class="header-content">
-          <h2 *ngIf="title(); else titleProjection" class="gems-form-card-title">{{ title() }}</h2>
+          <h2 *ngIf="title(); else titleProjection" class="gems-form-card-title">
+            <i *ngIf="icon()" [class]="icon()"></i>
+            {{ title() }}
+          </h2>
           <ng-template #titleProjection>
             <ng-content select="[gems-form-card-title]"></ng-content>
           </ng-template>
@@ -35,4 +38,5 @@ import { CommonModule } from '@angular/common';
 export class GemsFormCardComponent {
   title = input<string>();
   subtitle = input<string>();
+  icon = input<string>();
 }
