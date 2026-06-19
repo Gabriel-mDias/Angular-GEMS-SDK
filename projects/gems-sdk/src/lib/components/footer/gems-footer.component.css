@@ -1,0 +1,50 @@
+.gems-footer {
+  background-color: var(--gems-bg-inverse, #111827);
+  color: var(--gems-primary-contrast, #ffffff);
+  padding: var(--gems-spacing-xl, 2rem) var(--gems-spacing-lg, 1.5rem) var(--gems-spacing-md, 1rem);
+  border-top: var(--gems-border-width, 1px) solid var(--gems-border-color);
+  margin-top: auto;
+}
+
+.gems-footer-content {
+  margin-bottom: var(--gems-spacing-lg, 1.5rem);
+}
+
+.gems-footer-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: var(--gems-spacing-md, 1rem);
+  gap: var(--gems-spacing-md, 1rem);
+}
+
+@media (min-width: 768px) {
+  .gems-footer-bottom {
+    flex-direction: row;
+  }
+}
+
+.gems-footer-copyright {
+  margin: 0;
+  font-size: var(--gems-font-size-sm, 0.875rem);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.gems-footer-links {
+  display: flex;
+  gap: var(--gems-spacing-md, 1rem);
+}
+
+.gems-footer-links a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: var(--gems-font-size-sm, 0.875rem);
+  transition: var(--gems-transition-fast);
+}
+
+.gems-footer-links a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}

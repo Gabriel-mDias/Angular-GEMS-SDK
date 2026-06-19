@@ -1,0 +1,103 @@
+.gems-wizard-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.gems-wizard-header {
+  padding: var(--gems-spacing-lg, 1.5rem) 0;
+  margin-bottom: var(--gems-spacing-lg, 1.5rem);
+  overflow-x: auto;
+}
+
+.gems-wizard-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: max-content;
+  padding: 0 var(--gems-spacing-md, 1rem);
+}
+
+.gems-step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gems-spacing-sm, 0.5rem);
+  position: relative;
+  z-index: 2;
+  transition: var(--gems-transition-fast);
+}
+
+.gems-step-item.gems-completed {
+  cursor: pointer;
+}
+
+.gems-step-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--gems-radius-full, 9999px);
+  background-color: var(--gems-bg-subtle, #f8fafc);
+  border: 2px solid var(--gems-border-color-emphasis);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--gems-font-weight-bold, 700);
+  color: var(--gems-text-muted, #64748b);
+  transition: var(--gems-transition-fast);
+}
+
+.gems-step-label {
+  font-size: var(--gems-font-size-sm, 0.875rem);
+  font-weight: var(--gems-font-weight-medium, 500);
+  color: var(--gems-text-muted, #64748b);
+  transition: var(--gems-transition-fast);
+}
+
+/* Active State */
+.gems-step-item.gems-active .gems-step-circle {
+  border-color: var(--gems-primary-600, #2563eb);
+  background-color: var(--gems-primary-600, #2563eb);
+  color: var(--gems-primary-contrast, #ffffff);
+  box-shadow: 0 0 0 4px var(--gems-primary-50, #eff6ff);
+}
+
+.gems-step-item.gems-active .gems-step-label {
+  color: var(--gems-primary-600, #2563eb);
+  font-weight: var(--gems-font-weight-semibold, 600);
+}
+
+/* Completed State */
+.gems-step-item.gems-completed .gems-step-circle {
+  border-color: var(--gems-success-600, #16a34a);
+  background-color: var(--gems-success-600, #16a34a);
+  color: var(--gems-primary-contrast, #ffffff);
+}
+
+.gems-step-item.gems-completed .gems-step-label {
+  color: var(--gems-text-main, #334155);
+}
+
+/* Connector Line */
+.gems-step-connector {
+  flex: 1;
+  height: 2px;
+  background-color: var(--gems-border-color-emphasis);
+  margin: 0 var(--gems-spacing-md, 1rem);
+  position: relative;
+  top: -12px; /* Aline with center of circle */
+  z-index: 1;
+  min-width: 40px;
+  transition: var(--gems-transition-fast);
+}
+
+.gems-step-connector.gems-active {
+  background-color: var(--gems-success-600, #16a34a);
+}
+
+.gems-wizard-content {
+  background-color: var(--gems-bg, #ffffff);
+  border-radius: var(--gems-radius-md, 12px);
+  padding: var(--gems-spacing-xl, 2rem);
+  box-shadow: var(--gems-shadow-sm);
+  border: var(--gems-border-width, 1px) solid var(--gems-border-color);
+}

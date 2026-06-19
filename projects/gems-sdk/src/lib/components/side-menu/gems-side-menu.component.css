@@ -1,0 +1,204 @@
+:host {
+  display: block;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  z-index: var(--gems-z-fixed, 300);
+}
+
+.gems-side-menu {
+  display: flex;
+  flex-direction: column;
+  width: 260px;
+  height: 100%;
+  background-color: var(--gems-bg-inverse, #111827);
+  color: var(--gems-primary-contrast, #ffffff);
+  transition: width var(--gems-transition-normal);
+  overflow-x: hidden;
+  box-shadow: var(--gems-shadow-lg);
+}
+
+.gems-side-menu.gems-collapsed {
+  width: 72px;
+}
+
+.gems-side-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  padding: 0 var(--gems-spacing-md, 1rem);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gems-logo-container {
+  display: flex;
+  align-items: center;
+  gap: var(--gems-spacing-sm, 0.5rem);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.gems-logo-img {
+  height: 32px;
+  width: auto;
+}
+
+.gems-logo-title {
+  margin: 0;
+  font-size: var(--gems-font-size-lg, 1.125rem);
+  font-weight: var(--gems-font-weight-bold, 700);
+  color: var(--gems-primary-contrast, #ffffff);
+  letter-spacing: 0.5px;
+}
+
+.gems-toggle-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: var(--gems-font-size-lg, 1.125rem);
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--gems-radius-md, 8px);
+  transition: var(--gems-transition-fast);
+}
+
+.gems-toggle-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.gems-side-menu.gems-collapsed .gems-side-menu-header {
+  justify-content: center;
+}
+
+.gems-side-menu-nav {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--gems-spacing-md, 1rem) 0;
+}
+
+/* Custom Scrollbar for Nav */
+.gems-side-menu-nav::-webkit-scrollbar {
+  width: 4px;
+}
+.gems-side-menu-nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.gems-menu-list, .gems-submenu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.gems-menu-item {
+  margin-bottom: var(--gems-spacing-xs, 0.25rem);
+  padding: 0 var(--gems-spacing-sm, 0.5rem);
+}
+
+.gems-menu-link {
+  display: flex;
+  align-items: center;
+  padding: var(--gems-spacing-sm, 0.75rem) var(--gems-spacing-md, 1rem);
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  border-radius: var(--gems-radius-md, 8px);
+  transition: var(--gems-transition-fast);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.gems-menu-link:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+.gems-menu-link.gems-active {
+  background-color: var(--gems-primary-600, #2563eb);
+  color: #ffffff;
+  font-weight: var(--gems-font-weight-medium, 500);
+}
+
+.gems-menu-icon {
+  width: 24px;
+  text-align: center;
+  font-size: var(--gems-font-size-md, 1rem);
+  margin-right: var(--gems-spacing-md, 1rem);
+  flex-shrink: 0;
+}
+
+.gems-side-menu.gems-collapsed .gems-menu-icon {
+  margin-right: 0;
+}
+
+.gems-side-menu.gems-collapsed .gems-menu-link {
+  justify-content: center;
+  padding: var(--gems-spacing-md, 1rem) 0;
+}
+
+.gems-menu-label {
+  flex: 1;
+  font-size: var(--gems-font-size-sm, 0.875rem);
+}
+
+.gems-chevron {
+  font-size: 0.75rem;
+  transition: transform var(--gems-transition-fast);
+}
+
+.gems-menu-parent.gems-parent-expanded .gems-chevron {
+  transform: rotate(-180deg);
+}
+
+/* Submenu */
+.gems-submenu-list {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: var(--gems-radius-md, 8px);
+  margin: var(--gems-spacing-xs, 0.25rem) 0;
+  padding: var(--gems-spacing-xs, 0.25rem) 0;
+}
+
+.gems-submenu-item {
+  padding: 0 var(--gems-spacing-sm, 0.5rem);
+}
+
+.gems-submenu-link {
+  display: flex;
+  align-items: center;
+  padding: var(--gems-spacing-sm, 0.5rem) var(--gems-spacing-md, 1rem);
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  border-radius: var(--gems-radius-md, 8px);
+  transition: var(--gems-transition-fast);
+  font-size: var(--gems-font-size-sm, 0.875rem);
+  padding-left: 3rem; /* Indent for submenu */
+}
+
+.gems-submenu-link:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.gems-submenu-link.gems-active {
+  color: #ffffff;
+  font-weight: var(--gems-font-weight-medium, 500);
+}
+
+.gems-submenu-link .gems-menu-icon {
+  margin-right: var(--gems-spacing-sm, 0.5rem);
+  width: 16px;
+  font-size: 0.875rem;
+}
+
+.gems-side-menu-footer {
+  padding: var(--gems-spacing-md, 1rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}

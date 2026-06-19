@@ -1,0 +1,22 @@
+/* Utilities CSS */
+.gems-text-center { text-align: center; }
+.gems-text-left { text-align: left; }
+.gems-text-right { text-align: right; }
+
+.gems-m-0 { margin: 0; }
+.gems-mt-sm { margin-top: var(--gems-spacing-sm, 0.5rem); }
+.gems-mb-md { margin-bottom: var(--gems-spacing-md, 1rem); }
+
+.gems-p-0 { padding: 0; }
+.gems-p-md { padding: var(--gems-spacing-md, 1rem); }
+
+.gems-flex { display: flex; }
+.gems-flex-col { flex-direction: column; }
+.gems-items-center { align-items: center; }
+.gems-justify-between { justify-content: space-between; }
+.gems-justify-center { justify-content: center; }
+
+.gems-w-full { width: 100%; }
+.gems-h-full { height: 100%; }
+
+.gems-hidden { display: none !important; }

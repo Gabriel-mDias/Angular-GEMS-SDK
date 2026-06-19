@@ -1,0 +1,45 @@
+<div class="gems-card-list-select-container">
+  <div class="gems-selection-grid">
+    <div class="gems-selection-card" 
+         *ngFor="let item of paginatedItems()" 
+         [class.gems-selected]="isSelected(item)"
+         [class.gems-readonly]="isReadOnly()" 
+         (click)="selectItem(item)">
+
+      <!-- Check/Radio Indicator -->
+      <div class="gems-selection-indicator" *ngIf="!isReadOnly()">
+        <i class="fa-solid fa-circle-check gems-check-icon-selected" *ngIf="!multiple() && isSelected(item)"></i>
+        <i class="fa-regular fa-circle gems-check-icon-empty" *ngIf="!multiple() && !isSelected(item)"></i>
+        <i class="fa-solid fa-square-check gems-check-icon-selected" *ngIf="multiple() && isSelected(item)"></i>
+        <i class="fa-regular fa-square gems-check-icon-empty" *ngIf="multiple() && !isSelected(item)"></i>
+      </div>
+
+      <div class="gems-selection-indicator-readonly" *ngIf="isReadOnly() && isSelected(item)">
+        <i class="fa-solid fa-circle-check gems-check-icon-selected" *ngIf="!multiple()"></i>
+        <i class="fa-solid fa-square-check gems-check-icon-selected" *ngIf="multiple()"></i>
+      </div>
+
+      <i [class]="icon() + ' gems-selection-icon'" *ngIf="icon()"></i>
+      <div class="gems-selection-label">{{ getItemTitle(item) }}</div>
+      <div class="gems-selection-sublabel" *ngIf="getItemSubtitle(item)">{{ getItemSubtitle(item) }}</div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="gems-pagination-container" *ngIf="hasPagination()">
+    <button type="button" class="gems-btn-pagination" [disabled]="page() === 0" (click)="prevPage($event)"
+      title="Página Anterior">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+
+    <span class="gems-pagination-info">
+      Página <strong>{{ page() + 1 }}</strong> de <strong>{{ totalPages() }}</strong>
+      <span class="gems-pagination-total-items">({{ items().length }} itens)</span>
+    </span>
+
+    <button type="button" class="gems-btn-pagination" [disabled]="page() === totalPages() - 1" (click)="nextPage($event)"
+      title="Próxima Página">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+  </div>
+</div>

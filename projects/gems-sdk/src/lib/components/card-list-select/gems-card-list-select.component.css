@@ -1,0 +1,126 @@
+.gems-card-list-select-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.gems-selection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--gems-spacing-md, 1rem);
+  width: 100%;
+}
+
+.gems-selection-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--gems-spacing-lg, 1.5rem) var(--gems-spacing-md, 1rem);
+  background-color: var(--gems-bg, #ffffff);
+  border: 2px solid var(--gems-border-color);
+  border-radius: var(--gems-radius-md, 12px);
+  cursor: pointer;
+  transition: var(--gems-transition-fast);
+  min-height: 120px;
+}
+
+.gems-selection-card:hover:not(.gems-readonly) {
+  border-color: var(--gems-primary-300, #93c5fd);
+  background-color: var(--gems-primary-50, #eff6ff);
+}
+
+.gems-selection-card.gems-selected {
+  border-color: var(--gems-primary-600, #2563eb);
+  background-color: var(--gems-primary-50, #eff6ff);
+  box-shadow: 0 0 0 1px var(--gems-primary-600, #2563eb);
+}
+
+.gems-selection-card.gems-readonly {
+  cursor: default;
+  opacity: 0.8;
+}
+
+.gems-selection-indicator,
+.gems-selection-indicator-readonly {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  font-size: var(--gems-font-size-xl, 1.25rem);
+}
+
+.gems-check-icon-empty {
+  color: var(--gems-text-muted, #94a3b8);
+}
+
+.gems-check-icon-selected {
+  color: var(--gems-primary-600, #2563eb);
+}
+
+.gems-selection-icon {
+  font-size: var(--gems-font-size-3xl, 2rem);
+  color: var(--gems-primary-600, #2563eb);
+  margin-bottom: var(--gems-spacing-sm, 0.5rem);
+}
+
+.gems-selection-card:not(.gems-selected) .gems-selection-icon {
+  color: var(--gems-text-muted, #64748b);
+}
+
+.gems-selection-label {
+  font-size: var(--gems-font-size-sm, 0.875rem);
+  font-weight: var(--gems-font-weight-semibold, 600);
+  color: var(--gems-text-main, #1e293b);
+  margin-bottom: var(--gems-spacing-xs, 0.25rem);
+}
+
+.gems-selection-sublabel {
+  font-size: var(--gems-font-size-xs, 0.75rem);
+  color: var(--gems-text-muted, #64748b);
+}
+
+/* Pagination */
+.gems-pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gems-spacing-md, 1rem);
+  margin-top: var(--gems-spacing-lg, 1.5rem);
+}
+
+.gems-btn-pagination {
+  background-color: var(--gems-bg, #ffffff);
+  border: var(--gems-border-width, 1px) solid var(--gems-border-color);
+  color: var(--gems-text-main, #334155);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--gems-radius-full, 9999px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--gems-transition-fast);
+}
+
+.gems-btn-pagination:hover:not(:disabled) {
+  background-color: var(--gems-bg-subtle, #f8fafc);
+  color: var(--gems-primary-600, #2563eb);
+}
+
+.gems-btn-pagination:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  color: var(--gems-text-muted, #94a3b8);
+}
+
+.gems-pagination-info {
+  font-size: var(--gems-font-size-sm, 0.875rem);
+  color: var(--gems-text-main, #334155);
+}
+
+.gems-pagination-total-items {
+  color: var(--gems-text-muted, #64748b);
+  margin-left: var(--gems-spacing-xs, 0.25rem);
+}
