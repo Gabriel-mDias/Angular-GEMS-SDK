@@ -1,0 +1,46 @@
+<div class="showcase-page fade-in">
+  <div class="page-header">
+    <h1>Busca e Listagem</h1>
+    <p class="gems-text-muted">Padrão de tela com filtros de busca (<code>gems-form-card</code>) integrados a uma tabela de resultados (<code>gems-table</code>).</p>
+  </div>
+  
+  <div class="demo-section">
+    <div class="demo-preview search-preview">
+      <gems-form-card title="Filtros de Busca" icon="fa-solid fa-filter">
+        <div class="filter-grid">
+          <div class="filter-field">
+            <label>Nome do Aluno</label>
+            <input type="text" [(ngModel)]="filterParams.nome" class="gems-input" placeholder="Ex: João">
+          </div>
+          <div class="filter-field">
+            <label>Situação</label>
+            <select [(ngModel)]="filterParams.situacao" class="gems-input">
+              <option value="">Todas as situações</option>
+              <option *ngFor="let opt of situacaoOptions" [value]="opt">{{ opt }}</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="filter-actions">
+          <button type="button" class="gems-btn-secondary" (click)="clearFilters()">Limpar</button>
+          <button type="button" class="gems-btn-primary" (click)="search()">Buscar</button>
+        </div>
+      </gems-form-card>
+
+      <div class="table-container">
+        <gems-table 
+          [columns]="tableColumns" 
+          [data]="tableData" 
+          [actions]="tableActions"
+          [totalRecords]="totalRecords"
+          (actionClick)="handleAction($event)"
+          (pageChange)="onPageChange($event)">
+        </gems-table>
+      </div>
+    </div>
+
+    <div class="demo-code">
+      <app-code-snippet [tabs]="codeTabs"></app-code-snippet>
+    </div>
+  </div>
+</div>

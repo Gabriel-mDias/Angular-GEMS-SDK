@@ -1,4 +1,4 @@
-import { Component, input, output, computed, OnInit, signal } from '@angular/core';
+import { Component, input, output, computed, OnInit, signal, booleanAttribute } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -63,11 +63,15 @@ export class GemsCardListSelectComponent {
   selectedIds = input<string[]>([]);
   selectedIdsChange = output<string[]>();
 
-  multiple = input<boolean>(false);
+  multiple = input<boolean, boolean | string>(false, { transform: booleanAttribute });
+  
+  // Custom properties
+  colorSelected = input<string>('var(--gems-primary-50)');
+  isReadOnly = input<boolean, boolean | string>(false, { transform: booleanAttribute });
+  
   icon = input<string>('');
   titleKey = input<string | ((item: any) => string)>('');
   subtitleKey = input<string | ((item: any) => string)>('');
-  isReadOnly = input<boolean>(false);
   pageSize = input<number>(10);
   idKey = input<string>('id');
 

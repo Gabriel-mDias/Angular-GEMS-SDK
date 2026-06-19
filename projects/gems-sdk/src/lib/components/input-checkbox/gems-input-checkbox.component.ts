@@ -1,4 +1,4 @@
-import { Component, input, output, forwardRef, signal, computed } from '@angular/core';
+import { Component, input, output, forwardRef, signal, computed, booleanAttribute } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
@@ -19,8 +19,8 @@ import { FormsModule, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/f
 export class GemsInputCheckboxComponent implements ControlValueAccessor {
   label = input<string>('');
   topLabel = input<string>('');
-  alignWithInputs = input<boolean>(false);
-  isSwitch = input<boolean>(true);
+  alignWithInputs = input<boolean, boolean | string>(false, { transform: booleanAttribute });
+  isSwitch = input<boolean, boolean | string>(true, { transform: booleanAttribute });
   
   // Use signal for internal state
   disabled = signal<boolean>(false);

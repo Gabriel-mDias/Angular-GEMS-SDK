@@ -1,0 +1,84 @@
+.code-snippet-container {
+  background-color: #2d2d2d;
+  border-radius: var(--gems-border-radius-md);
+  overflow: hidden;
+  margin: var(--gems-spacing-md) 0;
+  box-shadow: var(--gems-shadow-md);
+  position: relative;
+}
+
+.tabs-header {
+  display: flex;
+  background-color: #1e1e1e;
+  border-bottom: 1px solid #333;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  color: #888;
+  padding: 10px 16px;
+  font-family: var(--gems-font-family);
+  font-size: var(--gems-font-size-sm);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+  color: #ccc;
+}
+
+.tab-btn.active {
+  color: #fff;
+  border-bottom-color: var(--gems-primary-500);
+  background-color: #2d2d2d;
+}
+
+.tab-spacer {
+  flex: 1;
+}
+
+.code-area {
+  position: relative;
+}
+
+.code-area pre {
+  margin: 0;
+  padding: 16px;
+  background: transparent !important; /* Prism override */
+  font-size: 14px;
+  overflow-x: auto;
+}
+
+.code-area code {
+  font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+  text-shadow: none;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ccc;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--gems-border-radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.copy-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.copy-btn .fa-check {
+  color: #4ade80; /* green */
+}

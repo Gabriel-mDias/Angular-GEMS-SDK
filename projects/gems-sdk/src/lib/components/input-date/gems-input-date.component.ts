@@ -1,4 +1,4 @@
-import { Component, input, output, forwardRef, signal, computed, OnInit, viewChild, ElementRef } from '@angular/core';
+import { Component, input, output, forwardRef, signal, computed, OnInit, viewChild, ElementRef, booleanAttribute } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NG_VALUE_ACCESSOR, ControlValueAccessor, NG_VALIDATORS, Validator, AbstractControl, ValidationErrors } from '@angular/forms';
 
@@ -27,7 +27,7 @@ export class GemsInputDateComponent implements ControlValueAccessor, OnInit, Val
   label = input<string>('Data');
   placeholder = input<string>('');
   id = input<string>('date-input-' + Math.random().toString(36).substring(2, 9));
-  required = input<boolean>(false);
+  required = input<boolean, boolean | string>(false, { transform: booleanAttribute });
   formato = input<GemsDateFormat>('diaMesAno');
   
   valueChange = output<string>();

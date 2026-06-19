@@ -1,9 +1,21 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'components', pathMatch: 'full' },
+  { path: '', redirectTo: 'showcase/forms', pathMatch: 'full' },
   { 
-    path: 'components', 
-    loadComponent: () => import('./pages/components-page/components-page.component').then(m => m.ComponentsPageComponent) 
+    path: 'showcase/forms', 
+    loadComponent: () => import('./pages/showcase/forms/forms-page.component').then(m => m.FormsPageComponent) 
+  },
+  { 
+    path: 'showcase/search', 
+    loadComponent: () => import('./pages/showcase/search/search-page.component').then(m => m.SearchPageComponent) 
+  },
+  { 
+    path: 'showcase/wizard', 
+    loadComponent: () => import('./pages/showcase/wizard/wizard-page.component').then(m => m.WizardPageComponent) 
+  },
+  { 
+    path: 'showcase/alerts', 
+    loadComponent: () => import('./pages/showcase/alerts/alerts-page.component').then(m => m.AlertsPageComponent) 
   }
 ];

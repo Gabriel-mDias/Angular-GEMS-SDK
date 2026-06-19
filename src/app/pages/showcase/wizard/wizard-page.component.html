@@ -1,0 +1,39 @@
+<div class="showcase-page fade-in">
+  <div class="page-header">
+    <h1>Fluxo Wizard</h1>
+    <p class="gems-text-muted">Gerenciamento de fluxos longos divididos em passos com o <code>gems-wizard</code>.</p>
+  </div>
+  
+  <div class="demo-section">
+    <div class="demo-preview">
+      
+      <gems-wizard [steps]="steps" [currentStep]="currentStep"></gems-wizard>
+
+      <div class="wizard-content card-container">
+        
+        <app-step-personal 
+          *ngIf="currentStep === 1" 
+          (next)="goToStep(2)">
+        </app-step-personal>
+        
+        <app-step-address 
+          *ngIf="currentStep === 2" 
+          (prev)="goToStep(1)" 
+          (next)="goToStep(3)">
+        </app-step-address>
+        
+        <app-step-summary 
+          *ngIf="currentStep === 3" 
+          (prev)="goToStep(2)" 
+          (finish)="finishFlow()">
+        </app-step-summary>
+
+      </div>
+
+    </div>
+
+    <div class="demo-code">
+      <app-code-snippet [tabs]="codeTabs"></app-code-snippet>
+    </div>
+  </div>
+</div>

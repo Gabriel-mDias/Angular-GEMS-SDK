@@ -1,4 +1,4 @@
-import { Component, input, output, forwardRef, signal, computed } from '@angular/core';
+import { Component, input, output, forwardRef, signal, computed, booleanAttribute } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
@@ -43,7 +43,7 @@ export class GemsInputMaskComponent implements ControlValueAccessor {
   label = input<string>('');
   placeholder = input<string>('');
   id = input<string>('mask-input-' + Math.random().toString(36).substring(2, 9));
-  required = input<boolean>(false);
+  required = input<boolean, boolean | string>(false, { transform: booleanAttribute });
   maskType = input<GemsMaskType>('cep');
   icon = input<string>();
 

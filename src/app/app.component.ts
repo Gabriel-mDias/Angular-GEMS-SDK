@@ -21,9 +21,24 @@ export class AppComponent {
     headerTitle: 'GEMS SDK',
     items: [
       {
-        label: 'Componentes',
-        icon: 'fa-solid fa-puzzle-piece',
-        route: '/components'
+        label: 'Formulários',
+        icon: 'fa-solid fa-keyboard',
+        route: '/showcase/forms'
+      },
+      {
+        label: 'Busca e Listagem',
+        icon: 'fa-solid fa-table-list',
+        route: '/showcase/search'
+      },
+      {
+        label: 'Fluxo Wizard',
+        icon: 'fa-solid fa-wand-magic-sparkles',
+        route: '/showcase/wizard'
+      },
+      {
+        label: 'Alertas e Notificações',
+        icon: 'fa-solid fa-bell',
+        route: '/showcase/alerts'
       }
     ]
   };
