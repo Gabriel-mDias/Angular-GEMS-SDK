@@ -27,11 +27,13 @@ export const routes: Routes = [
   { path: 'showcase/loading/skeleton', loadComponent: () => import('./pages/showcase/loading-skeleton/loading-skeleton-page.component').then(m => m.LoadingSkeletonPageComponent) },
 
   // ── Navegação / Layout ────────────────────────────────────────────
+  { path: 'showcase/side-menu', loadComponent: () => import('./pages/showcase/side-menu/side-menu-page.component').then(m => m.SideMenuPageComponent) },
   { path: 'showcase/wizard', loadComponent: () => import('./pages/showcase/wizard/wizard-page.component').then(m => m.WizardPageComponent) },
   { path: 'showcase/tabs', loadComponent: () => import('./pages/showcase/tabs/tabs-page.component').then(m => m.TabsPageComponent) },
   { path: 'showcase/file-upload', loadComponent: () => import('./pages/showcase/file-upload/file-upload-page.component').then(m => m.FileUploadPageComponent) },
 
   // ── Recursos da SDK ───────────────────────────────────────────────
+  { path: 'showcase/resources/installation', loadComponent: () => import('./pages/showcase/resources/installation/installation-page.component').then(m => m.InstallationPageComponent) },
   { path: 'showcase/resources/theming', loadComponent: () => import('./pages/showcase/resources/theming/theming-page.component').then(m => m.ThemingPageComponent) },
   { path: 'showcase/resources/base-store', loadComponent: () => import('./pages/showcase/resources/base-store/base-store-page.component').then(m => m.BaseStorePageComponent) },
   { path: 'showcase/resources/http-loading', loadComponent: () => import('./pages/showcase/resources/http-loading/http-loading-page.component').then(m => m.HttpLoadingPageComponent) },

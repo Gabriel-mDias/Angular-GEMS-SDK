@@ -91,10 +91,20 @@ export class HomePageComponent {
       icon: 'fa-solid fa-compass',
       type: 'component',
       items: [
-        { label: 'Side Menu', description: 'Menu lateral colapsável', icon: 'fa-solid fa-sidebar', route: '/showcase/forms' },
+        { label: 'Side Menu', description: 'Menu lateral colapsável', icon: 'fa-solid fa-sidebar', route: '/showcase/side-menu' },
         { label: 'Tabs', description: 'Navegação por abas acessível', icon: 'fa-solid fa-folder', route: '/showcase/tabs' },
         { label: 'Wizard', description: 'Fluxo passo a passo', icon: 'fa-solid fa-list-check', route: '/showcase/wizard' },
         { label: 'File Upload', description: 'Upload com S3 e preview', icon: 'fa-solid fa-cloud-arrow-up', route: '/showcase/file-upload' },
+      ],
+    },
+    {
+      title: 'Integração e Uso',
+      description: 'Manuais de instalação e guias de inteligência artificial.',
+      icon: 'fa-solid fa-book-open',
+      type: 'resource',
+      items: [
+        { label: 'Instalação', description: 'Como configurar a SDK no seu projeto', icon: 'fa-solid fa-download', route: '/showcase/resources/installation' },
+        { label: 'Integração IA', description: 'Contexto para Claude, Cursor e afins', icon: 'fa-solid fa-robot', route: '/showcase/resources/ai-integration' },
       ],
     },
     {
