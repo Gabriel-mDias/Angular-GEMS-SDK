@@ -23,6 +23,13 @@ jobs:
       - name: Build Library
         run: npm run build gems-sdk
       - name: Publish Package
-        run: cd dist/gems-sdk && npm publish
+        run: |
+          cd dist/gems-sdk
+          VERSION=$(node -p "require('./package.json').version")
+          if [[ "$VERSION" == *"-"* ]]; then
+            npm publish --tag next
+          else
+            npm publish
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
