@@ -1,0 +1,715 @@
+# Angular GEMS SDK — Comprehensive AI Context (llms.txt)
+
+> VERSION: 1.0.0 | ANGULAR: 20+ | PACKAGE: @gabriel-mdias/angular-gems-sdk
+
+This document is the single source of truth for any AI model generating code
+that uses or integrates with the GEMS SDK. Read it in full before producing
+any Angular template, component, or service.
+
+---
+
+## 1. IRON RULES (never violate)
+
+1. **Standalone only** — every component you create must be `standalone: true`.
+   Never generate or reference `NgModule`.
+2. **Constructor injection** — always inject services via `constructor(private svc: MyService)`.
+   NEVER use the `inject()` function in components or services you create.
+3. **Signals API** — use `input<T>()`, `output<T>()`, `model<T>()`, `computed()`, `signal()`.
+   Never use the legacy `@Input()` / `@Output()` decorators.
+4. **Separate files** — if template or styles exceed 5 lines, they MUST be
+   in their own `.html` / `.css` file. No giant inline templates.
+5. **CSS Variables only** — never hardcode hex colors (`#3b82f6`). Use
+   `var(--gems-primary-500)`, `var(--gems-danger-500)`, `var(--gems-spacing-md)`, etc.
+6. **Use SDK components** — never render raw `<input>`, `<select>`, `<textarea>`, `<button>`,
+   or `<table>` elements when an equivalent GEMS component exists.
+7. **ReactiveForms** — all form fields must use `[formGroup]` + `formControlName`.
+   Template-driven `[(ngModel)]` is acceptable only inside SDK internals.
+
+---
+
+## 2. IMPORT PATHS
+
+```typescript
+// Main barrel — use for most imports
+import { GemsInputTextComponent, GemsAlertService } from '@gabriel-mdias/angular-gems-sdk';
+
+// Secondary entry points (tree-shaking)
+import { ... } from '@gabriel-mdias/angular-gems-sdk/components';
+import { ... } from '@gabriel-mdias/angular-gems-sdk/services';
+import { ... } from '@gabriel-mdias/angular-gems-sdk/http';
+import { ... } from '@gabriel-mdias/angular-gems-sdk/auth';
+import { provideGemsTheme } from '@gabriel-mdias/angular-gems-sdk/core/theme';
+```
+
+---
+
+## 3. THEMING & SETUP
+
+### 3.1 Bootstrap (app.config.ts)
+```typescript
+import { provideGemsTheme } from '@gabriel-mdias/angular-gems-sdk/core/theme';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideGemsTheme({
+      primary: '#0B5FFF',
+      secondary: '#4A5568',
+      tertiary: '#E2E8F0',
+      background: '#F7FAFC',
+      // optional: success, danger, warning, info
+    }),
+  ],
+};
+```
+
+### 3.2 Global styles (styles.css)
+```css
+@import "@gabriel-mdias/angular-gems-sdk/core/tokens/gems-design-tokens.css";
+@import "@gabriel-mdias/angular-gems-sdk/core/tokens/gems-utilities.css";
+@import "@gabriel-mdias/angular-gems-sdk/core/tokens/gems-animations.css";
+```
+
+### 3.3 Key CSS Variables
+| Token | Purpose |
+|---|---|
+| `--gems-primary-500` … `--gems-primary-900` | Primary palette |
+| `--gems-danger-500` | Error / destructive |
+| `--gems-warning-500` | Warning |
+| `--gems-success-500` | Success |
+| `--gems-info-500` | Informational |
+| `--gems-spacing-xs` … `--gems-spacing-xl` | Layout spacing |
+| `--gems-radius-sm` / `--gems-radius-md` | Border radius |
+| `--gems-font-size-sm` / `--gems-font-size-md` | Typography |
+| `--gems-transition-fast` / `--gems-transition-normal` | Animation speed |
+
+---
+
+## 4. FORM COMPONENTS (ControlValueAccessor)
+
+All form components implement `ControlValueAccessor`. Use with `formControlName`
+inside a `[formGroup]`. Each one automatically shows `:host.ng-invalid.ng-touched`
+styling (red border + red label).
+
+### 4.1 gems-input-text
+```html
+<gems-input-text
+  label="E-mail"
+  formControlName="email"
+  type="email"
+  icon="fa-solid fa-envelope"
+  placeholder="user@example.com"
+  [required]="true"
+  [maxlength]="100"
+  hint="Informe o e-mail corporativo">
+</gems-input-text>
+<gems-field-error [control]="form.get('email')"></gems-field-error>
+```
+**Inputs:** `label`, `placeholder`, `type` (text|email|number|tel|url|search),
+`icon` (FontAwesome class), `disabled`, `required`, `maxlength`, `hint`.
+**Value type:** `string`
+
+### 4.2 gems-input-password
+```html
+<gems-input-password
+  label="Senha"
+  formControlName="password"
+  placeholder="Digite sua senha"
+  [required]="true">
+</gems-input-password>
+```
+**Inputs:** `label`, `placeholder`, `id`, `required`.
+**Outputs:** `valueChange`.
+**Value type:** `string`. Has built-in visibility toggle button.
+
+### 4.3 gems-input-date
+```html
+<gems-input-date
+  label="Data de Nascimento"
+  formControlName="birthDate"
+  formato="diaMesAno"
+  [required]="true">
+</gems-input-date>
+```
+**Inputs:** `label`, `placeholder`, `id`, `required`, `formato`.
+**Formats:** `'diaMesAno'` (DD/MM/YYYY → YYYY-MM-DD), `'fullData'` (DD/MM/YYYY HH:mm → ISO),
+`'mesAno'` (MM/YYYY → YYYY-MM), `'ano'` (YYYY).
+**Value type:** `string` (always ISO backend format).
+Built-in validation: `incompleteDate`, `invalidDate`.
+
+### 4.4 gems-input-mask
+```html
+<gems-input-mask
+  label="Telefone"
+  formControlName="phone"
+  maskType="telefone"
+  icon="fa-solid fa-phone"
+  [required]="true">
+</gems-input-mask>
+```
+**Inputs:** `label`, `placeholder`, `id`, `required`, `maskType`, `icon`.
+**Mask types:** `'cep'` (99999-999), `'telefone'` ((99) 99999-9999),
+`'rg'` (99.999.999-9), `'email'` (no mask, pass-through).
+**Value type:** `string` (raw digits, no formatting).
+
+### 4.5 gems-input-document
+```html
+<gems-input-document
+  label="CPF/CNPJ"
+  formControlName="document"
+  documentType="auto"
+  [required]="true">
+</gems-input-document>
+```
+**Inputs:** `label`, `placeholder`, `id`, `required`, `documentType`, `icon`.
+**Document types:** `'auto'` (detects by length), `'cpf'`, `'cnpj'`.
+**Value type:** `string` (raw digits). Shares CSS from `gems-input-mask`.
+
+### 4.6 gems-select
+```html
+<gems-select
+  label="Status"
+  formControlName="status"
+  [options]="statusOptions"
+  placeholder="Selecione..."
+  [required]="true">
+</gems-select>
+```
+**Inputs:** `label`, `placeholder`, `disabled`, `required`, `options`.
+**Options model:** `GemsSelectOption { label: string; value: unknown; disabled?: boolean }`.
+**Value type:** `unknown` (the selected option's `value`).
+
+### 4.7 gems-textarea
+```html
+<gems-textarea
+  label="Observações"
+  formControlName="notes"
+  [rows]="5"
+  [maxlength]="500"
+  [autoResize]="true">
+</gems-textarea>
+```
+**Inputs:** `label`, `placeholder`, `rows`, `maxlength`, `disabled`, `required`, `autoResize`.
+**Value type:** `string`. Shows character counter when `maxlength` is set.
+
+### 4.8 gems-input-checkbox
+```html
+<!-- Switch (default) -->
+<gems-input-checkbox
+  label="Ativo"
+  formControlName="active"
+  [isSwitch]="true">
+</gems-input-checkbox>
+
+<!-- Classic checkbox -->
+<gems-input-checkbox
+  label="Aceito os termos"
+  formControlName="terms"
+  [isSwitch]="false"
+  topLabel="Termos de uso">
+</gems-input-checkbox>
+```
+**Inputs:** `label`, `topLabel`, `alignWithInputs`, `isSwitch` (default true).
+**Outputs:** `valueChange`.
+**Value type:** `boolean`.
+
+### 4.9 gems-input-range
+```html
+<gems-input-range
+  formControlName="priceRange"
+  type="number"
+  placeholderMin="Min"
+  placeholderMax="Max"
+  separator="até">
+</gems-input-range>
+```
+**Inputs:** `type` ('number'|'date'), `placeholderMin`, `placeholderMax`, `separator`.
+**Value type:** `GemsRangeValue { min: string|number|null; max: string|number|null }`.
+
+### 4.10 gems-field-error
+```html
+<gems-field-error
+  [control]="form.get('fieldName')"
+  [messages]="{ required: 'Campo obrigatório' }">
+</gems-field-error>
+```
+**Always** place this immediately after any input that has validators.
+**Inputs:** `control` (AbstractControl), `messages` (optional override map).
+**Default messages (PT-BR):** required, email, minlength, maxlength, min, max, pattern.
+Shows message only when control is `invalid` AND (`touched` OR `dirty`).
+
+---
+
+## 5. FORM LAYOUT
+
+### 5.1 gems-form-card
+```html
+<gems-form-card title="Dados Pessoais" icon="fa-solid fa-user" [isLoading]="loading">
+  <div gems-form-card-actions>
+    <button class="btn-primary" (click)="save()">Salvar</button>
+  </div>
+
+  <!-- default slot = body -->
+  <form [formGroup]="form">
+    <gems-input-text label="Nome" formControlName="name"></gems-input-text>
+  </form>
+
+  <div gems-form-card-footer>
+    <button class="btn-cancel" (click)="cancel()">Cancelar</button>
+    <button class="btn-save" type="submit" (click)="save()">Salvar</button>
+  </div>
+</gems-form-card>
+```
+**Inputs:** `title`, `subtitle`, `icon`, `isLoading`.
+**Slots:** `[gems-form-card-title]`, `[gems-form-card-subtitle]`,
+`[gems-form-card-actions]`, `[gems-form-card-footer]`, default (body).
+
+### 5.2 Button CSS classes (gems-global.css)
+Use these classes directly on `<button>` elements for standard actions:
+- `btn-primary` — primary action (save, submit)
+- `btn-secondary` — secondary action
+- `btn-cancel` — cancel / back
+- `btn-save` — alias for primary save
+- `btn-danger` — destructive action
+Never create custom `.my-button` classes.
+
+---
+
+## 6. GEMS-BUTTON COMPONENT
+
+```html
+<gems-button label="Salvar" variant="primary" [loading]="isSaving" (click)="save()"></gems-button>
+<gems-button label="Excluir" variant="danger" icon="fa-solid fa-trash"></gems-button>
+<gems-button icon="fa-solid fa-plus" ariaLabel="Adicionar" variant="ghost"></gems-button>
+```
+**Inputs:** `label`, `variant` (primary|secondary|tertiary|danger|ghost|link),
+`type` (button|submit|reset), `icon`, `iconPosition` (left|right),
+`loading`, `disabled`, `ariaLabel`.
+
+---
+
+## 7. DATA DISPLAY
+
+### 7.1 gems-table
+```html
+<gems-table
+  [columns]="columns"
+  [data]="rows"
+  [actions]="tableActions"
+  [totalRecords]="total"
+  [page]="page"
+  [size]="size"
+  [isLoading]="loading"
+  (pageChange)="onPageChange($event)"
+  (actionClick)="onAction($event)">
+</gems-table>
+```
+
+**Column model:**
+```typescript
+interface GemsTableColumn {
+  field: string;           // key in the row object
+  header: string;          // column header text
+  type?: 'text' | 'badge' | 'actions' | 'document';
+  sortable?: boolean;
+  sortParam?: string;      // backend sort parameter (defaults to field)
+  docTypeField?: string;   // for document type columns
+  badgeColors?: Record<string, { bg: string; text: string }>;
+}
+```
+
+**Action model:**
+```typescript
+interface GemsTableAction {
+  icon: string;
+  tooltip: string;
+  colorClass?: string;
+  actionName: string;
+  visible?: (row: GemsTableRow) => boolean;
+}
+```
+
+**Outputs:** `pageChange` emits `GemsPageable { page, size, sort }`.
+`actionClick` emits `{ action: string; row: GemsTableRow }`.
+
+### 7.2 gems-badge
+```html
+<gems-badge label="Ativo" variant="success" icon="fa-solid fa-check"></gems-badge>
+```
+**Variants:** `neutral`, `success`, `warning`, `danger`, `info`, `primary`.
+
+### 7.3 gems-empty-state
+```html
+<gems-empty-state
+  icon="fa-solid fa-inbox"
+  title="Nenhum registro"
+  description="Tente ajustar os filtros."
+  actionLabel="Adicionar"
+  (actionClick)="onCreate()">
+</gems-empty-state>
+```
+
+### 7.4 gems-card-list-select
+Visual card-based selection component.
+
+---
+
+## 8. FEEDBACK & OVERLAY
+
+### 8.1 gems-modal
+```html
+<gems-modal [(open)]="isOpen" title="Confirmar exclusão" size="sm">
+  <p>Tem certeza que deseja excluir?</p>
+  <div gems-modal-footer>
+    <button class="btn-cancel" (click)="isOpen = false">Cancelar</button>
+    <button class="btn-save" (click)="confirmDelete()">Confirmar</button>
+  </div>
+</gems-modal>
+```
+**Inputs:** `open` (two-way model), `title`, `size` (sm|md|lg|xl),
+`closeOnBackdrop`. Closes on ESC key automatically.
+
+### 8.2 GemsAlertService (SweetAlert2)
+```typescript
+constructor(private alertService: GemsAlertService) {}
+
+// Success
+this.alertService.success('Sucesso!', 'Registro salvo.');
+
+// Error
+this.alertService.error('Erro', 'Falha ao processar.');
+
+// Error from API response
+this.alertService.errorFromApi(err);
+
+// Confirm dialog
+const result = await this.alertService.confirm('Excluir?', 'Esta ação é irreversível.');
+if (result.isConfirmed) { /* proceed */ }
+
+// Warning / Info
+this.alertService.warning('Atenção', 'Dados incompletos.');
+this.alertService.info('Informação', 'Novo recurso disponível.');
+```
+
+### 8.3 GemsToastService
+```typescript
+constructor(private toastService: GemsToastService) {}
+
+this.toastService.success('Salvo com sucesso!');
+this.toastService.error('Erro ao processar.', { duration: 6000 });
+this.toastService.info('Novidade disponível.');
+this.toastService.warning('Verifique os dados.');
+```
+**Prerequisite:** add `<gems-toast-container></gems-toast-container>` in app root.
+
+### 8.4 gems-loading (Full-page spinner)
+```html
+<!-- app.component.html -->
+<gems-loading></gems-loading>
+```
+Controlled by `GemsLoadingService` (show/hide/forceHide).
+Auto-triggered by `gemsLoadingInterceptor` on every HTTP request.
+
+---
+
+## 9. NAVIGATION & LAYOUT
+
+### 9.1 gems-side-menu
+```html
+<gems-side-menu
+  [config]="menuConfig"
+  [userName]="'Admin'"
+  [userEmail]="'admin@app.com'"
+  [userInitials]="'AD'"
+  (logoutClick)="logout()">
+</gems-side-menu>
+```
+
+**Config model:**
+```typescript
+interface GemsSideMenuConfig {
+  headerLogoUrl?: string;
+  headerTitle?: string;
+  items: GemsSideMenuItem[];
+}
+
+interface GemsSideMenuItem {
+  label: string;
+  icon?: string;      // FontAwesome class
+  route?: string;     // Angular router path
+  roles?: string[];   // Keycloak roles for visibility
+  children?: GemsSideMenuItem[];
+  isExpanded?: boolean;
+}
+```
+
+### 9.2 gems-tabs
+```html
+<gems-tabs [tabs]="tabs" [(activeId)]="activeTab">
+  @if (activeTab === 'dados') { <app-dados /> }
+  @if (activeTab === 'config') { <app-config /> }
+</gems-tabs>
+```
+**Tab model:** `GemsTab { id: string; label: string; icon?: string; disabled?: boolean }`.
+
+### 9.3 gems-wizard
+```html
+<gems-wizard [steps]="steps" [currentStep]="step" (stepChange)="onStep($event)">
+</gems-wizard>
+```
+**Step model:** `GemsWizardStep { label: string; icon?: string }`.
+Steps before `currentStep` are clickable (back navigation).
+
+---
+
+## 10. HTTP & STATE MANAGEMENT
+
+### 10.1 GemsBaseStore (abstract service)
+```typescript
+@Injectable({ providedIn: 'root' })
+export class UserStore extends GemsBaseStore {
+  constructor() { super('users'); } // controller path → /api/users
+
+  findAll(pageable: GemsPageable) {
+    return this.get<Page<User>>('', { pageable });
+  }
+
+  findById(id: number) {
+    return this.get<User>(`${id}`);
+  }
+
+  create(user: User) {
+    return this.post<User, User>('', user);
+  }
+
+  update(id: number, user: User) {
+    return this.put<User, User>(`${id}`, user);
+  }
+
+  remove(id: number) {
+    return this.delete<void>(`${id}`);
+  }
+}
+```
+Provides: `get`, `post`, `put`, `delete`, `patch`.
+Auto-injects Keycloak Bearer token when `KeycloakService` is available.
+
+### 10.2 GEMS_API_URL token
+```typescript
+providers: [
+  { provide: GEMS_API_URL, useValue: 'https://api.example.com' },
+]
+```
+
+### 10.3 GemsPageable
+```typescript
+interface GemsPageable {
+  page?: number;
+  size?: number;
+  sort?: string[]; // e.g. ["name,asc", "createdAt,desc"]
+}
+```
+
+---
+
+## 11. AUTH (Keycloak)
+
+### 11.1 Route guard
+```typescript
+{
+  path: 'admin',
+  canActivate: [gemsRoleGuard],
+  data: { roles: ['ADMIN'] },
+  loadComponent: () => import('./admin.component').then(m => m.AdminComponent),
+}
+```
+
+### 11.2 Structural directive
+```html
+<button *gemsHasRole="'ADMIN'" class="btn-danger">Excluir</button>
+<div *gemsHasRole="['EDITOR', 'ADMIN']">Conteúdo restrito</div>
+```
+
+---
+
+## 12. UTILITY SERVICES
+
+### 12.1 GemsNavigationService
+```typescript
+constructor(private nav: GemsNavigationService) {}
+
+// Navigate with data
+this.nav.navigateWithData(['/edit', id], { entity: myObj });
+
+// Consume data on the target page
+const data = this.nav.consumeRouteData<MyType>();
+
+// Go back (session-based history)
+this.nav.back();
+```
+
+### 12.2 GemsSessionService
+```typescript
+constructor(private session: GemsSessionService) {}
+
+this.session.setItem('key', { complex: 'object' });
+const val = this.session.getItem<MyType>('key');
+this.session.removeItem('key');
+this.session.clear();
+```
+SSR-safe (checks `isPlatformBrowser` internally).
+
+---
+
+## 13. COMPLETE FORM EXAMPLE
+
+```typescript
+@Component({
+  selector: 'app-user-form',
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    GemsFormCardComponent,
+    GemsInputTextComponent,
+    GemsInputDateComponent,
+    GemsInputMaskComponent,
+    GemsInputDocumentComponent,
+    GemsSelectComponent,
+    GemsTextareaComponent,
+    GemsInputCheckboxComponent,
+    GemsFieldErrorComponent,
+    GemsButtonComponent,
+  ],
+  templateUrl: './user-form.component.html',
+})
+export class UserFormComponent {
+  constructor(
+    private fb: FormBuilder,
+    private alertService: GemsAlertService,
+    private toastService: GemsToastService,
+  ) {}
+
+  readonly statusOptions: GemsSelectOption[] = [
+    { label: 'Ativo', value: 'ACTIVE' },
+    { label: 'Inativo', value: 'INACTIVE' },
+  ];
+
+  readonly form = this.fb.group({
+    name:      ['', Validators.required],
+    email:     ['', [Validators.required, Validators.email]],
+    birthDate: [''],
+    phone:     ['', Validators.required],
+    document:  ['', Validators.required],
+    status:    ['ACTIVE', Validators.required],
+    notes:     [''],
+    active:    [true],
+  });
+
+  async save(): Promise<void> {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+    this.toastService.success('Salvo com sucesso!');
+  }
+}
+```
+
+```html
+<gems-form-card title="Cadastro de Usuário" icon="fa-solid fa-user-plus">
+  <form [formGroup]="form">
+    <gems-input-text label="Nome" formControlName="name" icon="fa-solid fa-user" [required]="true"></gems-input-text>
+    <gems-field-error [control]="form.get('name')"></gems-field-error>
+
+    <gems-input-text label="E-mail" formControlName="email" type="email" icon="fa-solid fa-envelope" [required]="true"></gems-input-text>
+    <gems-field-error [control]="form.get('email')"></gems-field-error>
+
+    <gems-input-date label="Data de Nascimento" formControlName="birthDate" formato="diaMesAno"></gems-input-date>
+
+    <gems-input-mask label="Telefone" formControlName="phone" maskType="telefone" [required]="true"></gems-input-mask>
+    <gems-field-error [control]="form.get('phone')"></gems-field-error>
+
+    <gems-input-document label="CPF/CNPJ" formControlName="document" [required]="true"></gems-input-document>
+    <gems-field-error [control]="form.get('document')"></gems-field-error>
+
+    <gems-select label="Status" formControlName="status" [options]="statusOptions" [required]="true"></gems-select>
+    <gems-field-error [control]="form.get('status')"></gems-field-error>
+
+    <gems-textarea label="Observações" formControlName="notes" [rows]="4" [maxlength]="500"></gems-textarea>
+
+    <gems-input-checkbox label="Ativo" formControlName="active"></gems-input-checkbox>
+  </form>
+
+  <div gems-form-card-footer>
+    <button class="btn-cancel">Cancelar</button>
+    <gems-button label="Salvar" variant="primary" (click)="save()"></gems-button>
+  </div>
+</gems-form-card>
+```
+
+---
+
+## 14. COMPLETE TABLE + SEARCH EXAMPLE
+
+```typescript
+@Component({
+  selector: 'app-user-list',
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    GemsFormCardComponent,
+    GemsInputTextComponent,
+    GemsSelectComponent,
+    GemsTableComponent,
+    GemsEmptyStateComponent,
+    GemsButtonComponent,
+  ],
+  templateUrl: './user-list.component.html',
+})
+export class UserListComponent {
+  constructor(private userStore: UserStore) {}
+
+  readonly columns: GemsTableColumn[] = [
+    { field: 'name', header: 'Nome', sortable: true },
+    { field: 'email', header: 'E-mail', sortable: true },
+    { field: 'document', header: 'Documento', type: 'document' },
+    { field: 'status', header: 'Status', type: 'badge', badgeColors: {
+      ACTIVE: { bg: '#dcfce7', text: '#166534' },
+      INACTIVE: { bg: '#fee2e2', text: '#991b1b' },
+    }},
+  ];
+
+  readonly actions: GemsTableAction[] = [
+    { actionName: 'edit', icon: 'fa-solid fa-pen', tooltip: 'Editar' },
+    { actionName: 'delete', icon: 'fa-solid fa-trash', tooltip: 'Excluir', colorClass: 'danger' },
+  ];
+
+  rows: any[] = [];
+  total = 0;
+  page = 0;
+  size = 10;
+  loading = false;
+
+  onPageChange(pageable: GemsPageable): void {
+    this.page = pageable.page ?? 0;
+    this.size = pageable.size ?? 10;
+    this.loadData(pageable);
+  }
+
+  onAction(event: { action: string; row: any }): void {
+    if (event.action === 'edit') { /* navigate */ }
+    if (event.action === 'delete') { /* confirm and delete */ }
+  }
+}
+```
+
+---
+
+## 15. ICONS
+
+The SDK uses **Font Awesome 6** (free solid/regular). All `icon` inputs expect
+a FA class string like `'fa-solid fa-user'` or `'fa-regular fa-envelope'`.
+Never use Material Icons or other icon libraries unless explicitly told.
+
+---
+
+END OF DOCUMENT

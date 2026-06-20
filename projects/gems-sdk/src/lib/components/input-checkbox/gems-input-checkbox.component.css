@@ -5,10 +5,24 @@
 }
 
 .gems-top-label {
-  margin-bottom: var(--gems-spacing-xs, 0.25rem);
-  font-size: var(--gems-font-size-sm, 0.875rem);
-  color: var(--gems-text-main, #334155);
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  font-size: 0.850rem;
+  color: #374151;
   min-height: 21px; 
+}
+
+:host.ng-invalid.ng-touched .gems-box {
+  border-color: var(--gems-danger-500, #dc2626);
+}
+
+:host.ng-invalid.ng-touched .gems-slider {
+  background-color: var(--gems-danger-500, #dc2626);
+}
+
+:host.ng-invalid.ng-touched .gems-top-label {
+  color: var(--gems-danger-500, #dc2626);
 }
 
 .gems-font-semibold {

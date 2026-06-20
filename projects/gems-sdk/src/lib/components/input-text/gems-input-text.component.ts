@@ -4,12 +4,17 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { GemsInputTextType } from './gems-input-text.model';
 
 /**
+ * @description
  * Campo de entrada de texto genérico com suporte a ControlValueAccessor (Reactive Forms e Template-Driven).
- *
- * Uso:
+ * 
+ * @example
  * ```html
  * <gems-input-text label="Nome" formControlName="nome" placeholder="Digite seu nome"></gems-input-text>
  * ```
+ * 
+ * @ai_context
+ * SEMPRE utilize este componente ou os componentes irmãos (input-date, input-password) para campos de formulário.
+ * NUNCA utilize inputs nativos do HTML. Este componente já gerencia estado, acessibilidade e erros de validação (através do :host.ng-invalid) de forma automatizada.
  */
 @Component({
   selector: 'gems-input-text',
@@ -27,8 +32,20 @@ import { GemsInputTextType } from './gems-input-text.model';
 })
 export class GemsInputTextComponent implements ControlValueAccessor {
   // ── Inputs ────────────────────────────────────────────────────────
+  
+  /** 
+   * Rótulo de texto renderizado acima do campo. 
+   * Ele obedecerá à tipografia global (font-weight: 700). 
+   */
   readonly label = input<string>('');
+  
+  /** Placeholder exibido quando o campo está vazio. */
   readonly placeholder = input<string>('');
+  
+  /** 
+   * Tipo do input nativo. 
+   * Use gems-input-password ou gems-input-date para casos especializados. 
+   */
   readonly type = input<GemsInputTextType>('text');
   readonly icon = input<string>('');
   readonly disabled = input<boolean>(false);

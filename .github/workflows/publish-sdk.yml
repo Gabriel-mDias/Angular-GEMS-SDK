@@ -1,4 +1,4 @@
-name: Publish SDK to GitHub Packages
+name: 📦 Publicação GEMS SDK - GitHub Packages
 
 on:
   push:
@@ -12,17 +12,18 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js 24
+      - name: 📦 Checkout do Código-fonte
+        uses: actions/checkout@v4
+      - name: ⚙️ Configuração Ambiente Node.js 24 e Registry
         uses: actions/setup-node@v4
         with:
           node-version: '24'
           registry-url: 'https://npm.pkg.github.com'
-      - name: Install dependencies
+      - name: 📥 Instalação de Dependências
         run: npm install --legacy-peer-deps
-      - name: Build Library
+      - name: 🏗️ Build da Biblioteca GEMS SDK
         run: npm run build gems-sdk
-      - name: Publish Package
+      - name: 🚀 Empacotamento e Publicação (NPM Publish)
         run: |
           cd dist/gems-sdk
           VERSION=$(node -p "require('./package.json').version")

@@ -1,4 +1,4 @@
-name: CI
+name: 🚀 Integração Contínua (CI) - Validação de Pull Request
 
 on:
   pull_request:
@@ -8,14 +8,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js 24
+      - name: 📦 Checkout do Código-fonte
+        uses: actions/checkout@v4
+      - name: ⚙️ Configuração Ambiente Node.js 24
         uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - name: Install dependencies
+      - name: 📥 Instalação de Dependências (Angular)
         run: npm install --legacy-peer-deps
-      - name: Build Library (GEMS SDK)
+      - name: 🏗️ Build da Biblioteca GEMS SDK
         run: npm run build gems-sdk
-      - name: Build Showcase App
+      - name: 🏗️ Build do Showcase App
         run: npm run build gems-showcase

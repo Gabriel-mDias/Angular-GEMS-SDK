@@ -1,0 +1,35 @@
+<div class="showcase-page fade-in">
+  <div class="header">
+    <div class="header-titles">
+      <h2>Integração IA</h2>
+      <p class="subtitle">Guia de acessibilidade para configurar modelos de Inteligência Artificial no consumo da SDK.</p>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <gems-form-card title="Visão Geral" icon="fa-solid fa-robot">
+      <div style="padding: var(--gems-spacing-md); line-height: 1.6;">
+        <p>A GEMS SDK foi construída pensando na escalabilidade do uso de IAs generativas (como Cursor, Claude Code, GitHub Copilot). Possuímos três mecanismos principais para ensinar seu assistente a consumir nossos componentes nativamente.</p>
+        
+        <h3 style="margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--gems-primary-700);">1. Padrão llms.txt</h3>
+        <p>Nossa documentação fornece um mapa estruturado em <strong>llms.txt</strong>. Quando quiser que a IA conheça nossa SDK do zero, forneça a URL no prompt:</p>
+        <code style="display: block; padding: 10px; background: #f1f5f9; border-radius: 4px; margin-top: 5px;">https://Gabriel-mDias.github.io/Angular-GEMS-SDK/llms.txt</code>
+
+        <h3 style="margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--gems-primary-700);">2. Guia de Consumo Embutido (NPM)</h3>
+        <p>Ao instalar a SDK via npm, baixamos automaticamente o arquivo de contexto na pasta do pacote. Adicione esta instrução no prompt da sua IA ou em regras globais do projeto:</p>
+        <code style="display: block; padding: 10px; background: #f1f5f9; border-radius: 4px; margin-top: 5px;">Leia as diretrizes de código contidas no pacote em: /node_modules/@gabriel-mdias/angular-gems-sdk/AI-CONSUMER-GUIDE.md</code>
+
+        <h3 style="margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--gems-primary-700);">3. .cursorrules / AGENTS.md</h3>
+        <p>Para projetos em editores IA-native, como o Cursor, cole o snippet abaixo no arquivo <strong>.cursorrules</strong> na raiz do seu projeto consumidor:</p>
+        <pre style="padding: 15px; background: #1e293b; color: #fff; border-radius: 4px; margin-top: 10px; overflow-x: auto;">
+# Integração GEMS SDK
+Este projeto consome a biblioteca de componentes GEMS SDK. 
+Antes de criar formulários, tabelas ou interfaces, LEIA OBRIGATORIAMENTE o guia de uso nativo da biblioteca disponível no seu próprio node_modules:
+Caminho: `node_modules/@gabriel-mdias/angular-gems-sdk/AI-CONSUMER-GUIDE.md`
+
+Utilize as regras contidas lá como verdade absoluta para a construção de telas e lógica neste projeto.
+        </pre>
+      </div>
+    </gems-form-card>
+  </div>
+</div>

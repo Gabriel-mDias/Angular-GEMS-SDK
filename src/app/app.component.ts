@@ -118,6 +118,11 @@ export class AppComponent {
       },
       // ── Navegação / Layout ────────────────────────────────────────
       {
+        label: 'Side Menu',
+        icon: 'fa-solid fa-sidebar',
+        route: '/showcase/side-menu',
+      },
+      {
         label: 'Tabs',
         icon: 'fa-solid fa-folder',
         route: '/showcase/tabs',
@@ -131,6 +136,17 @@ export class AppComponent {
         label: 'File Upload',
         icon: 'fa-solid fa-cloud-arrow-up',
         route: '/showcase/file-upload',
+      },
+      // ── Integração e Uso ─────────────────────────────────────────
+      {
+        label: 'Instalação da SDK',
+        icon: 'fa-solid fa-download',
+        route: '/showcase/resources/installation',
+      },
+      {
+        label: 'Integração IA',
+        icon: 'fa-solid fa-robot',
+        route: '/showcase/resources/ai-integration',
       },
       // ── Recursos ─────────────────────────────────────────────────
       {

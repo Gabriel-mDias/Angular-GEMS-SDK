@@ -1,0 +1,47 @@
+<div class="showcase-page fade-in">
+  <div class="header">
+    <div class="header-titles">
+      <h2>Side Menu</h2>
+      <p class="subtitle">Guia de configuração do menu lateral da aplicação.</p>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <gems-form-card title="GemsSideMenuComponent" icon="fa-solid fa-sidebar">
+      <div style="padding: var(--gems-spacing-md); line-height: 1.6;">
+        <p>O componente <code>&lt;gems-side-menu&gt;</code> é o pilar de navegação principal em aplicações corporativas.</p>
+
+        <h3 style="margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--gems-primary-700);">Configuração (config)</h3>
+        <p>A propriedade <code>[config]</code> recebe um objeto do tipo <code>GemsSideMenuConfig</code> que define o título e os itens do menu:</p>
+        <pre style="padding: 15px; background: #1e293b; color: #fff; border-radius: 4px; margin-top: 10px; overflow-x: auto;">
+menuConfig: GemsSideMenuConfig = &#123;
+  headerTitle: 'GEMS SDK',
+  items: [
+    &#123; label: 'Início', icon: 'fa-solid fa-house', route: '/' &#125;
+  ]
+&#125;;
+        </pre>
+
+        <h3 style="margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--gems-primary-700);">Dados de Usuário</h3>
+        <p>Na parte inferior do menu, você pode fornecer os dados do usuário autenticado:</p>
+        <ul style="margin-top: 5px; margin-left: 20px;">
+          <li><code>[userName]</code>: O nome exibido (ex: 'Administrador')</li>
+          <li><code>[userEmail]</code>: O email exibido (ex: 'admin&#64;gems.com')</li>
+          <li><code>[userInitials]</code>: Sigla para o avatar (ex: 'AD')</li>
+          <li><code>(logoutClick)</code>: Evento disparado no botão de sair</li>
+        </ul>
+
+        <h3 style="margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--gems-primary-700);">Responsividade (Desktop vs Mobile)</h3>
+        <p>O comportamento mobile é ativado pela classe <code>.mobile-menu-open</code> aplicada em uma div <code>.showcase-layout</code>. No <code>app.component.html</code>, este controle é manual para permitir interação com um possível navbar superior:</p>
+        <pre style="padding: 15px; background: #1e293b; color: #fff; border-radius: 4px; margin-top: 10px; overflow-x: auto;">
+&lt;div class="showcase-layout" [class.mobile-menu-open]="mobileMenuOpen"&gt;
+  &lt;gems-side-menu ...&gt;&lt;/gems-side-menu&gt;
+  &lt;main class="showcase-content"&gt;
+    &lt;router-outlet&gt;&lt;/router-outlet&gt;
+  &lt;/main&gt;
+&lt;/div&gt;
+        </pre>
+      </div>
+    </gems-form-card>
+  </div>
+</div>
