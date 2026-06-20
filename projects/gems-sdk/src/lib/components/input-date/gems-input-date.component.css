@@ -6,10 +6,19 @@
 }
 
 .gems-label {
-  font-size: var(--gems-font-size-sm, 0.875rem);
-  font-weight: var(--gems-font-weight-medium, 500);
-  color: var(--gems-text-main, #334155);
-  margin-bottom: var(--gems-spacing-xs, 0.25rem);
+  display: block;
+  font-size: 0.850rem;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+:host(.ng-invalid.ng-touched) .gems-input {
+  border-color: var(--gems-danger-500, #dc2626);
+}
+
+:host(.ng-invalid.ng-touched) .gems-label {
+  color: var(--gems-danger-500, #dc2626);
 }
 
 .gems-label.gems-required::after {

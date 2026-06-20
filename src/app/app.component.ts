@@ -158,6 +158,11 @@ export class AppComponent {
         icon: 'fa-solid fa-shield-halved',
         route: '/showcase/resources/auth',
       },
+      {
+        label: 'Integração IA',
+        icon: 'fa-solid fa-robot',
+        route: '/showcase/resources/ai-integration',
+      },
     ],
   };
 

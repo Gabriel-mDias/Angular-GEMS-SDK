@@ -91,3 +91,17 @@ export class MeuComponente {
 
 A SDK também exporta serviços na rota `@gabriel-mdias/angular-gems-sdk/services` e estrutura base HTTP na rota `@gabriel-mdias/angular-gems-sdk/http`.
 Consulte a aplicação Showcase localmente neste repositório para ver todos os componentes e guias de uso na prática.
+
+## 5. Integração com IAs e Assistentes de Código
+
+Se você utiliza ferramentas como Cursor, Copilot ou Claude no seu projeto, você pode ensinar essas IAs a usarem a SDK automaticamente.
+Basta criar (ou editar) o arquivo `.cursorrules` (ou equivalente da sua IA) na raiz do seu repositório consumidor e colar o seguinte snippet:
+
+```md
+# Integração GEMS SDK
+Este projeto consome a biblioteca de componentes GEMS SDK. 
+Antes de criar formulários, tabelas ou interfaces, LEIA OBRIGATORIAMENTE o guia de uso nativo da biblioteca disponível no seu próprio node_modules:
+Caminho: \`node_modules/@gabriel-mdias/angular-gems-sdk/AI-CONSUMER-GUIDE.md\`
+
+Utilize as regras contidas lá como verdade absoluta para a construção de telas e lógica neste projeto.
+```

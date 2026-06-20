@@ -6,10 +6,11 @@
 }
 
 .gems-label {
-  font-size: var(--gems-font-size-sm, 0.875rem);
-  font-weight: var(--gems-font-weight-medium, 500);
-  color: var(--gems-text-main, #334155);
-  margin-bottom: var(--gems-spacing-xs, 0.25rem);
+  display: block;
+  font-size: 0.850rem;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 0.5rem;
 }
 
 .gems-label.gems-required::after {
@@ -65,12 +66,16 @@
 }
 
 :host(.ng-invalid.ng-touched) .gems-input {
-  border-color: var(--gems-error, #ef4444) !important;
+  border-color: var(--gems-danger-500, #dc2626) !important;
 }
 
 :host(.ng-invalid.ng-touched) .gems-input:focus {
-  border-color: var(--gems-danger-500, #ef4444) !important;
-  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3) !important;
+  border-color: var(--gems-danger-500, #dc2626) !important;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.3) !important;
+}
+
+:host(.ng-invalid.ng-touched) .gems-label {
+  color: var(--gems-danger-500, #dc2626);
 }
 
 @media (max-width: 768px) {

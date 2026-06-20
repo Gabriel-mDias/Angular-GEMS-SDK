@@ -21,6 +21,10 @@
   outline: none;
 }
 
+:host(.ng-invalid.ng-touched) .gems-input {
+  border-color: var(--gems-danger-500, #dc2626);
+}
+
 .gems-input:hover:not(:disabled) {
   border-color: var(--gems-border-color-emphasis);
 }

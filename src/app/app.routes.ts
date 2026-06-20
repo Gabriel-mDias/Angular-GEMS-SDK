@@ -36,5 +36,12 @@ export const routes: Routes = [
   { path: 'showcase/resources/base-store', loadComponent: () => import('./pages/showcase/resources/base-store/base-store-page.component').then(m => m.BaseStorePageComponent) },
   { path: 'showcase/resources/http-loading', loadComponent: () => import('./pages/showcase/resources/http-loading/http-loading-page.component').then(m => m.HttpLoadingPageComponent) },
   { path: 'showcase/resources/services', loadComponent: () => import('./pages/showcase/resources/services/services-page.component').then(m => m.ServicesPageComponent) },
+  {
+    path: 'showcase/resources/ai-integration',
+    loadComponent: () =>
+      import(
+        './pages/showcase/resources/ai-integration/ai-integration-page.component'
+      ).then((m) => m.AiIntegrationPageComponent),
+  },
   { path: 'showcase/resources/auth', loadComponent: () => import('./pages/showcase/resources/auth/auth-page.component').then(m => m.AuthPageComponent) },
 ];
