@@ -1,0 +1,48 @@
+<div class="showcase-page fade-in">
+  <div class="header">
+    <div class="header-titles">
+      <h2>Field Error</h2>
+      <p class="subtitle">Exibição padronizada de erros de validação integrada a Reactive Forms.</p>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <div class="demo-preview">
+      <gems-form-card title="Validação de Formulário" icon="fa-solid fa-triangle-exclamation">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" style="display: grid; gap: 1.5rem;">
+          <div>
+            <gems-input-text
+              label="Nome (obrigatório)"
+              formControlName="nome"
+              placeholder="Digite seu nome"
+              [required]="true"
+            ></gems-input-text>
+            <gems-field-error [control]="form.get('nome')"></gems-field-error>
+          </div>
+
+          <div>
+            <gems-input-text
+              label="E-mail (obrigatório + formato)"
+              type="email"
+              formControlName="email"
+              placeholder="exemplo@email.com"
+            ></gems-input-text>
+            <gems-field-error
+              [control]="form.get('email')"
+              [messages]="{ email: 'Informe um e-mail válido.' }"
+            ></gems-field-error>
+          </div>
+
+          <div gems-form-card-footer style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+            <button type="button" class="btn-cancel" (click)="form.reset()">Limpar</button>
+            <button type="submit" class="btn-save">Validar</button>
+          </div>
+        </form>
+      </gems-form-card>
+    </div>
+
+    <div class="demo-code">
+      <app-code-snippet [tabs]="codeTabs"></app-code-snippet>
+    </div>
+  </div>
+</div>

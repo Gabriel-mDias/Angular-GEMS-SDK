@@ -1,0 +1,23 @@
+<div class="gems-empty-state">
+  @if (icon()) {
+    <div class="gems-empty-icon" aria-hidden="true">
+      <i [class]="icon()"></i>
+    </div>
+  }
+
+  @if (title()) {
+    <h3 class="gems-empty-title">{{ title() }}</h3>
+  }
+
+  @if (description()) {
+    <p class="gems-empty-description">{{ description() }}</p>
+  }
+
+  <ng-content></ng-content>
+
+  @if (actionLabel()) {
+    <button type="button" class="btn-primary gems-empty-action" (click)="actionClick.emit()">
+      {{ actionLabel() }}
+    </button>
+  }
+</div>

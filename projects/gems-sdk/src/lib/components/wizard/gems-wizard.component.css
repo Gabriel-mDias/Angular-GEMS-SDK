@@ -1,0 +1,108 @@
+.gems-wizard-header {
+  padding: 1rem 0 2rem 0;
+  width: 100%;
+}
+
+.gems-wizard-stepper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+}
+
+.gems-step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+  flex: 1; /* evenly distribute */
+}
+
+.gems-step-item.gems-completed {
+  cursor: pointer;
+}
+
+.gems-step-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 2px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #94a3b8;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.gems-step-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #64748b;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+/* Active State */
+.gems-step-item.gems-active .gems-step-circle {
+  border-color: var(--cor-quartenaria, #2563eb);
+  background-color: var(--cor-quartenaria, #2563eb);
+  color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(225, 120, 39, 0.15); /* Orange hue based on meduc primary */
+  transform: scale(1.05);
+}
+
+.gems-step-item.gems-active .gems-step-label {
+  color: var(--cor-quartenaria, #2563eb);
+  font-weight: 700;
+}
+
+/* Completed State */
+.gems-step-item.gems-completed .gems-step-circle {
+  border-color: #16a34a;
+  background-color: #16a34a;
+  color: #ffffff;
+}
+
+.gems-step-item.gems-completed .gems-step-label {
+  color: #334155;
+}
+
+/* Connector Line */
+.gems-step-connector {
+  flex: 1; /* Stretch between items */
+  position: relative; /* override any potential inheritance */
+  height: 3px;
+  background-color: #e2e8f0;
+  margin: 23px 0.5rem 0 0.5rem;
+  z-index: 1;
+  min-width: 20px;
+  transition: all 0.3s ease;
+}
+
+.gems-step-connector.gems-active {
+  background-color: #16a34a;
+}
+
+@media screen and (max-width: 640px) {
+  .gems-step-label {
+    display: none; /* Hide labels on mobile to keep circles proportional */
+  }
+  
+  .gems-step-circle {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+  
+  .gems-step-connector {
+    margin-top: 19px;
+  }
+}

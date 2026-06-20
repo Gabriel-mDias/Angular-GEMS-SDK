@@ -1,0 +1,77 @@
+<div class="gems-card-list-select-container">
+  @if (isLoading()) {
+    <div class="gems-selection-grid">
+      @for (skeleton of [1, 2, 3, 4]; track skeleton) {
+        <div class="gems-selection-card">
+          <div class="gems-skeleton gems-skeleton-title" style="margin-bottom: 0.5rem; width: 60%"></div>
+          <div class="gems-skeleton gems-skeleton-text" style="width: 80%"></div>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="gems-selection-grid">
+      @for (item of paginatedItems(); track getItemId(item)) {
+        <div
+          class="gems-selection-card"
+          [class.gems-selected]="isSelected(item)"
+          [class.gems-readonly]="isReadOnly()"
+          role="option"
+          tabindex="0"
+          [attr.aria-selected]="isSelected(item)"
+          (click)="selectItem(item)"
+          (keydown.enter)="selectItem(item)"
+          (keydown.space)="selectItem(item)"
+        >
+          @if (isSelected(item)) {
+            <div class="gems-selection-indicator" aria-hidden="true">
+              @if (!multiple()) {
+                <i class="fa-solid fa-circle-check gems-check-icon-selected"></i>
+              } @else {
+                <i class="fa-solid fa-square-check gems-check-icon-selected"></i>
+              }
+            </div>
+          }
+
+          @if (icon()) {
+            <i [class]="icon() + ' gems-selection-icon'" aria-hidden="true"></i>
+          }
+
+          <div class="gems-selection-label">{{ getItemTitle(item) }}</div>
+
+          @if (getItemSubtitle(item)) {
+            <div class="gems-selection-sublabel">{{ getItemSubtitle(item) }}</div>
+          }
+        </div>
+      }
+    </div>
+
+    @if (hasPagination()) {
+      <div class="gems-pagination-container">
+        <button
+          type="button"
+          class="gems-btn-pagination"
+          [disabled]="page() === 0"
+          title="Página Anterior"
+          (click)="prevPage($event)"
+        >
+          <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+        </button>
+
+        <span class="gems-pagination-info">
+          Página <strong>{{ page() + 1 }}</strong> de <strong>{{ totalPages() }}</strong>
+          <span class="gems-pagination-total-items">({{ items().length }} itens)</span>
+        </span>
+
+        <button
+          type="button"
+          class="gems-btn-pagination"
+          [disabled]="page() === totalPages() - 1"
+          title="Próxima Página"
+          (click)="nextPage($event)"
+        >
+          <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+        </button>
+      </div>
+    }
+  }
+</div>

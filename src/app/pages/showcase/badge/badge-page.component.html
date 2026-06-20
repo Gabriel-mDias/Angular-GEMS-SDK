@@ -1,0 +1,37 @@
+<div class="showcase-page fade-in">
+  <div class="header">
+    <div class="header-titles">
+      <h2>Badge</h2>
+      <p class="subtitle">Indicador de status inline para tabelas, cards e listagens.</p>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <div class="demo-preview">
+      <gems-form-card title="Variantes de Badge" icon="fa-solid fa-tag">
+        <div class="badge-grid">
+          <div class="badge-row">
+            <gems-badge label="Ativo" variant="success" icon="fa-solid fa-check"></gems-badge>
+            <gems-badge label="Inativo" variant="neutral"></gems-badge>
+            <gems-badge label="Pendente" variant="warning" icon="fa-solid fa-clock"></gems-badge>
+            <gems-badge label="Erro" variant="danger" icon="fa-solid fa-xmark"></gems-badge>
+            <gems-badge label="Informação" variant="info" icon="fa-solid fa-circle-info"></gems-badge>
+            <gems-badge label="Principal" variant="primary"></gems-badge>
+          </div>
+
+          <h4 style="color: #64748b; font-size: 0.85rem; margin: 1rem 0 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">Sem ícone</h4>
+          <div class="badge-row">
+            <gems-badge label="Aprovado" variant="success"></gems-badge>
+            <gems-badge label="Rascunho" variant="neutral"></gems-badge>
+            <gems-badge label="Revisão" variant="warning"></gems-badge>
+            <gems-badge label="Rejeitado" variant="danger"></gems-badge>
+          </div>
+        </div>
+      </gems-form-card>
+    </div>
+
+    <div class="demo-code">
+      <app-code-snippet [tabs]="codeTabs"></app-code-snippet>
+    </div>
+  </div>
+</div>

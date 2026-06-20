@@ -1,0 +1,40 @@
+<div class="showcase-page fade-in">
+  <div class="header">
+    <div class="header-titles">
+      <h2>Empty State</h2>
+      <p class="subtitle">Componente para exibir estados vazios em listas, tabelas e seções sem dados.</p>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <div class="demo-preview">
+      <gems-form-card title="Exemplos de Empty State" icon="fa-solid fa-inbox">
+        <div class="examples-grid">
+          <div class="example-box">
+            <h4>Com ação</h4>
+            <gems-empty-state
+              icon="fa-solid fa-users"
+              title="Nenhum usuário encontrado"
+              description="Adicione o primeiro usuário para começar a trabalhar."
+              actionLabel="Adicionar Usuário"
+              (actionClick)="onAddUser()"
+            ></gems-empty-state>
+          </div>
+
+          <div class="example-box">
+            <h4>Apenas informativo</h4>
+            <gems-empty-state
+              icon="fa-solid fa-magnifying-glass"
+              title="Sem resultados"
+              description="Tente ajustar os filtros de busca ou ampliar o período selecionado."
+            ></gems-empty-state>
+          </div>
+        </div>
+      </gems-form-card>
+    </div>
+
+    <div class="demo-code">
+      <app-code-snippet [tabs]="codeTabs"></app-code-snippet>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="showcase-page fade-in">
+  <div class="header">
+    <h1>Tema dinâmico</h1>
+    <p class="subtitle">Configure cores, paletas e troque o tema em runtime com <code>provideGemsTheme</code>.</p>
+  </div>
+
+  <gems-form-card title="Configuração inicial">
+    <p class="resource-intro">
+      A SDK aplica automaticamente CSS custom properties (<code>--gems-*</code>) no <code>:root</code>
+      a partir de poucas cores base. Não é necessário configurar cada shade manualmente.
+    </p>
+    <app-code-snippet [tabs]="codeTabs" />
+  </gems-form-card>
+
+  <gems-form-card title="Tokens disponíveis">
+    <p class="resource-intro">
+      Após chamar <code>provideGemsTheme</code>, as seguintes variáveis ficam disponíveis globalmente:
+    </p>
+    <div class="token-grid">
+      <div class="token-group">
+        <h4>Paleta primária</h4>
+        <code>--gems-primary-50</code> → <code>--gems-primary-900</code>
+      </div>
+      <div class="token-group">
+        <h4>Semânticos</h4>
+        <code>--gems-danger-*</code>, <code>--gems-success-*</code>,
+        <code>--gems-warning-*</code>, <code>--gems-info-*</code>
+      </div>
+      <div class="token-group">
+        <h4>Tipografia</h4>
+        <code>--gems-font-size-xs</code> → <code>--gems-font-size-4xl</code><br>
+        <code>--gems-font-weight-*</code>, <code>--gems-line-height-*</code>
+      </div>
+      <div class="token-group">
+        <h4>Espaçamento</h4>
+        <code>--gems-spacing-xs</code> → <code>--gems-spacing-2xl</code>
+      </div>
+      <div class="token-group">
+        <h4>Bordas & sombras</h4>
+        <code>--gems-radius-*</code>, <code>--gems-shadow-*</code><br>
+        <code>--gems-border-color</code>
+      </div>
+      <div class="token-group">
+        <h4>Z-index</h4>
+        <code>--gems-z-modal</code> (500), <code>--gems-z-toast</code> (800)<br>
+        <code>--gems-z-modal-backdrop</code> (400)
+      </div>
+    </div>
+  </gems-form-card>
+</div>

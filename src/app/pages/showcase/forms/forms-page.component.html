@@ -1,0 +1,65 @@
+<div class="showcase-page fade-in">
+  <div class="header">
+    <div class="header-titles">
+      <h2>Formulários Simples</h2>
+      <p class="subtitle">Apresentação de campos de entrada e formulários padrão utilizando o componente <code>gems-form-card</code>.</p>
+    </div>
+  </div>
+  
+  <div class="demo-section">
+    <div class="demo-preview">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <gems-form-card title="Cadastro de Usuário" icon="fa-solid fa-user-plus">
+          <div class="row mb-3">
+            <div class="col-md-6 mb-3">
+              <gems-input-document 
+                label="CPF" 
+                documentType="cpf"
+                formControlName="cpf"
+                required>
+              </gems-input-document>
+            </div>
+      
+            <div class="col-md-6 mb-3">
+              <gems-input-date 
+                label="Data de Nascimento"
+                formControlName="dataNascimento"
+                required>
+              </gems-input-date>
+            </div>
+      
+            <div class="col-md-6 mb-3">
+              <gems-input-password 
+                label="Senha de Acesso"
+                formControlName="senha"
+                required>
+              </gems-input-password>
+            </div>
+          </div>
+      
+          <div class="row mb-4">
+            <div class="col-12">
+              <gems-input-checkbox 
+                label="Aceito os termos de uso e política de privacidade"
+                formControlName="aceitoTermos">
+              </gems-input-checkbox>
+            </div>
+          </div>
+      
+          <div gems-form-card-footer style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+            <button type="button" class="btn-cancel" (click)="onCancel()">
+              Cancelar <i class="fa-solid fa-xmark"></i>
+            </button>
+            <button type="submit" class="btn-save" [disabled]="form.invalid">
+              Salvar <i class="fa-solid fa-check"></i>
+            </button>
+          </div>
+        </gems-form-card>
+      </form>
+    </div>
+
+    <div class="demo-code">
+      <app-code-snippet [tabs]="codeTabs"></app-code-snippet>
+    </div>
+  </div>
+</div>

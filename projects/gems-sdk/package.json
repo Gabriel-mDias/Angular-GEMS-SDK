@@ -1,0 +1,32 @@
+{
+  "name": "@gabriel-mdias/angular-gems-sdk",
+  "version": "1.0.0-alpha.1",
+  "description": "Kit de desenvolvimento Angular para projetos G&Ms — componentes, serviços e theming configurável.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Gabriel-mDias/Angular-GEMS-SDK.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "peerDependencies": {
+    "@angular/common": "^20.0.0",
+    "@angular/core": "^20.0.0",
+    "@angular/forms": "^20.0.0",
+    "@angular/router": "^20.0.0",
+    "rxjs": "^7.8.0",
+    "sweetalert2": "^11.0.0"
+  },
+  "peerDependenciesMeta": {
+    "keycloak-angular": {
+      "optional": true
+    }
+  },
+  "optionalDependencies": {
+    "keycloak-angular": "^16.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

@@ -1,0 +1,80 @@
+.showcase-page {
+  animation: fadeIn 0.3s ease;
+}
+
+.page-header {
+  margin-bottom: var(--gems-spacing-2xl);
+  border-bottom: 1px solid var(--gems-border-color);
+  padding-bottom: var(--gems-spacing-md);
+}
+
+.page-header h1 {
+  font-size: var(--gems-font-size-2xl);
+  color: var(--gems-primary-700);
+  margin-bottom: var(--gems-spacing-xs);
+}
+
+.demo-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gems-spacing-2xl);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--gems-spacing-lg);
+  margin-bottom: var(--gems-spacing-xl);
+}
+
+.checkbox-container {
+  margin-bottom: var(--gems-spacing-xl);
+}
+
+.footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--gems-spacing-md);
+  margin-top: var(--gems-spacing-lg);
+  padding-top: var(--gems-spacing-lg);
+  border-top: 1px solid var(--gems-border-color);
+}
+
+.gems-btn-primary, .gems-btn-secondary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: var(--gems-border-radius-md);
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.gems-btn-primary {
+  background-color: var(--gems-primary-500);
+  color: white;
+}
+
+.gems-btn-primary:hover:not(:disabled) {
+  background-color: var(--gems-primary-600);
+}
+
+.gems-btn-primary:disabled {
+  background-color: var(--gems-primary-200, #cbd5e1);
+  color: #94a3b8;
+  cursor: not-allowed;
+  opacity: 0.6;
+  filter: grayscale(80%);
+}
+
+.gems-btn-secondary {
+  background-color: white;
+  border: 1px solid var(--gems-border-color);
+  color: var(--gems-text-color);
+}
+
+.gems-btn-secondary:hover {
+  background-color: var(--gems-background-color);
+}

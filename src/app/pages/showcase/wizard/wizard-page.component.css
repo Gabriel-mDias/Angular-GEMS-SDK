@@ -1,0 +1,30 @@
+.showcase-page {
+  animation: fadeIn 0.3s ease;
+}
+
+.page-header {
+  margin-bottom: var(--gems-spacing-2xl);
+  border-bottom: 1px solid var(--gems-border-color);
+  padding-bottom: var(--gems-spacing-md);
+}
+
+.page-header h1 {
+  font-size: var(--gems-font-size-2xl);
+  color: var(--gems-primary-700);
+  margin-bottom: var(--gems-spacing-xs);
+}
+
+.demo-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gems-spacing-2xl);
+}
+
+.card-container {
+  margin-top: var(--gems-spacing-2xl);
+  background: white;
+  padding: var(--gems-spacing-xl);
+  border-radius: var(--gems-border-radius-lg);
+  box-shadow: var(--gems-shadow-md);
+  border: 1px solid var(--gems-border-color);
+}

@@ -1,0 +1,53 @@
+<div class="showcase-page fade-in">
+  <div class="header">
+    <h1>Auth & Keycloak</h1>
+    <p class="subtitle">
+      Autenticação via Keycloak é <strong>opcional</strong> — a SDK não exige a dependência.
+      Instale <code>keycloak-angular</code> apenas quando necessário.
+    </p>
+  </div>
+
+  <gems-form-card title="Configurar Keycloak">
+    <p class="resource-intro">
+      Configure o <code>KeycloakService</code> com um <code>APP_INITIALIZER</code> antes de usar o guard ou a diretiva.
+    </p>
+    <app-code-snippet [tabs]="setupTabs" />
+  </gems-form-card>
+
+  <gems-form-card title="gemsRoleGuard">
+    <p class="resource-intro">Guard funcional que protege rotas por lista de roles Keycloak.</p>
+    <app-code-snippet [tabs]="guardTabs" />
+  </gems-form-card>
+
+  <gems-form-card title="*HasRole directive">
+    <p class="resource-intro">
+      Diretiva estrutural que exibe/oculta elementos com base nas roles do usuário autenticado.
+    </p>
+    <app-code-snippet [tabs]="directiveTabs" />
+  </gems-form-card>
+
+  <gems-form-card title="Sem Keycloak">
+    <div class="info-list">
+      <div class="info-item">
+        <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+        <div>
+          <strong>Totalmente opcional</strong>
+          <p>
+            <code>GemsBaseStore</code> injeta <code>KeycloakService</code> com <code>&#123; optional: true &#125;</code>.
+            Sem o Keycloak instalado, as requisições são feitas sem token — ideal para APIs públicas ou autenticação própria.
+          </p>
+        </div>
+      </div>
+      <div class="info-item">
+        <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+        <div>
+          <strong>Instalação</strong>
+          <p>
+            Use <code>npm install keycloak-angular keycloak-js --legacy-peer-deps</code>.
+            O <code>gemsRoleGuard</code> e <code>*HasRole</code> lançam erro em runtime se chamados sem o serviço presente.
+          </p>
+        </div>
+      </div>
+    </div>
+  </gems-form-card>
+</div>

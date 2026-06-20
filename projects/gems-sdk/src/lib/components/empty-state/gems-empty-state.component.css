@@ -1,0 +1,49 @@
+.gems-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gems-spacing-md, 1rem);
+  padding: var(--gems-spacing-2xl, 3rem) var(--gems-spacing-xl, 2rem);
+  text-align: center;
+  color: var(--gems-text-muted, #64748b);
+}
+
+.gems-empty-icon {
+  font-size: 3rem;
+  color: var(--gems-text-muted, #94a3b8);
+  opacity: 0.6;
+}
+
+.gems-empty-title {
+  margin: 0;
+  font-size: var(--gems-font-size-lg, 1.125rem);
+  font-weight: var(--gems-font-weight-semibold, 600);
+  color: var(--gems-text-main, #1e293b);
+}
+
+.gems-empty-description {
+  margin: 0;
+  font-size: var(--gems-font-size-sm, 0.875rem);
+  color: var(--gems-text-muted, #64748b);
+  max-width: 400px;
+  line-height: var(--gems-line-height-relaxed, 1.75);
+}
+
+.gems-empty-action {
+  margin-top: var(--gems-spacing-xs, 0.25rem);
+}
+
+@media (max-width: 768px) {
+  .gems-empty-state {
+    padding: var(--gems-spacing-xl) var(--gems-spacing-md);
+  }
+
+  .gems-empty-icon {
+    font-size: 2.5rem;
+  }
+
+  .gems-empty-action {
+    min-height: 44px;
+  }
+}

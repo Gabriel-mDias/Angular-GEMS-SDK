@@ -1,0 +1,53 @@
+<div class="home-page fade-in">
+  <div class="home-hero">
+    <div class="home-hero-icon" aria-hidden="true">
+      <i class="fa-solid fa-gem"></i>
+    </div>
+    <h1 class="home-hero-title">GEMS SDK</h1>
+    <p class="home-hero-subtitle">
+      Biblioteca de componentes Angular 20 — standalone, signal-based e pronta para PWA.<br>
+      Escolha uma categoria abaixo para explorar os componentes e recursos disponíveis.
+    </p>
+    <div class="home-hero-badges">
+      <span class="home-pill"><i class="fa-solid fa-bolt"></i> Angular 20</span>
+      <span class="home-pill"><i class="fa-solid fa-signal"></i> Signals</span>
+      <span class="home-pill"><i class="fa-solid fa-palette"></i> Tema dinâmico</span>
+      <span class="home-pill"><i class="fa-solid fa-universal-access"></i> Acessível</span>
+    </div>
+  </div>
+
+  <div class="roadmap">
+    @for (group of roadmapGroups; track group.title) {
+      <section class="roadmap-group">
+        <div class="roadmap-group-header">
+          <i [class]="group.icon + ' roadmap-group-icon'" aria-hidden="true"></i>
+          <div>
+            <h2 class="roadmap-group-title">{{ group.title }}</h2>
+            <p class="roadmap-group-desc">{{ group.description }}</p>
+          </div>
+        </div>
+
+        <div class="roadmap-cards">
+          @for (item of group.items; track item.label) {
+            <a
+              class="roadmap-card"
+              [routerLink]="item.route"
+              [class.roadmap-card--resource]="group.type === 'resource'"
+            >
+              <div class="roadmap-card-icon" aria-hidden="true">
+                <i [class]="item.icon"></i>
+              </div>
+              <div class="roadmap-card-content">
+                <span class="roadmap-card-label">{{ item.label }}</span>
+                @if (item.description) {
+                  <span class="roadmap-card-desc">{{ item.description }}</span>
+                }
+              </div>
+              <i class="fa-solid fa-chevron-right roadmap-card-arrow" aria-hidden="true"></i>
+            </a>
+          }
+        </div>
+      </section>
+    }
+  </div>
+</div>

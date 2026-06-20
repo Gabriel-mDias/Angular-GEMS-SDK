@@ -1,0 +1,52 @@
+<div class="gems-file-upload-container">
+  @if (label()) {
+    <label class="gems-file-upload-label">{{ label() }}</label>
+  }
+
+  @if (isUploading()) {
+    <div class="gems-upload-skeleton" role="status" aria-label="Enviando arquivo">
+      <div class="gems-spinner"></div>
+      <span>{{ uploadingText() }}</span>
+    </div>
+  } @else if (isUploaded()) {
+    <div class="gems-upload-success">
+      <div class="gems-success-info">
+        <i class="fa-solid fa-file-circle-check gems-success-icon" aria-hidden="true"></i>
+        <span class="gems-file-name">{{ fileName() }}</span>
+      </div>
+      <button type="button" class="gems-btn-remove" [attr.aria-label]="'Remover ' + fileName()" (click)="removeFile()">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+    </div>
+  } @else {
+    <div
+      class="gems-upload-dropzone"
+      [class.gems-dragover]="isDragging()"
+      role="button"
+      tabindex="0"
+      [attr.aria-label]="'Área de upload — ' + label()"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave($event)"
+      (drop)="onDrop($event)"
+      (keydown.enter)="browseInput.click()"
+      (keydown.space)="browseInput.click()"
+    >
+      <div class="gems-dropzone-content">
+        <i class="fa-solid fa-cloud-arrow-up gems-drop-icon" aria-hidden="true"></i>
+        <span class="gems-drop-text">{{ dropText() }}</span>
+        <label class="gems-btn-browse">
+          {{ browseText() }}
+          <input
+            #browseInput
+            type="file"
+            [accept]="accept()"
+            class="gems-file-input"
+            hidden
+            (change)="onFileSelected($event)"
+          />
+        </label>
+        <span class="gems-hint-text">{{ hintText() || accept() }}</span>
+      </div>
+    </div>
+  }
+</div>

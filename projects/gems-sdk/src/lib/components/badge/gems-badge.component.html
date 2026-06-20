@@ -1,0 +1,8 @@
+<span class="gems-badge" [class]="'gems-badge--' + variant()">
+  @if (icon()) {
+    <i [class]="icon()" aria-hidden="true"></i>
+  }
+  @if (label()) {
+    {{ label() }}
+  }
+</span>

@@ -1,0 +1,42 @@
+<div class="showcase-page fade-in">
+  <div class="header">
+    <h1>HTTP / BaseStore</h1>
+    <p class="subtitle">
+      <code>GemsBaseStore</code> é uma classe abstrata que centraliza chamadas HTTP com autenticação
+      Keycloak opcional e suporte a paginação.
+    </p>
+  </div>
+
+  <gems-form-card title="Configuração da URL base">
+    <p class="resource-intro">
+      Forneça a URL da API via token de injeção <code>GEMS_API_URL</code>. Todas as stores herdam esse valor.
+    </p>
+    <app-code-snippet [tabs]="codeTabs" />
+  </gems-form-card>
+
+  <gems-form-card title="Como funciona">
+    <div class="info-list">
+      <div class="info-item">
+        <i class="fa-solid fa-link" aria-hidden="true"></i>
+        <div>
+          <strong>URL automática</strong>
+          <p>Cada store recebe o path do controller no <code>super()</code>. Os métodos constroem a URL final como <code>GEMS_API_URL + controller + endpoint</code>.</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <i class="fa-solid fa-key" aria-hidden="true"></i>
+        <div>
+          <strong>Keycloak opcional</strong>
+          <p>Se <code>KeycloakService</code> estiver presente (<code>optional: true</code>), o token é renovado e adicionado como <code>Authorization: Bearer …</code> automaticamente.</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <i class="fa-solid fa-list" aria-hidden="true"></i>
+        <div>
+          <strong>Paginação com GemsPageable</strong>
+          <p>Passe <code>&#123; pageable &#125;</code> nas opções dos métodos GET para adicionar os query params <code>page</code>, <code>size</code> e <code>sort</code>.</p>
+        </div>
+      </div>
+    </div>
+  </gems-form-card>
+</div>

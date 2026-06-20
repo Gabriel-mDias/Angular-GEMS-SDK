@@ -1,0 +1,64 @@
+<div class="showcase-page fade-in">
+  <div class="header">
+    <div class="header-titles">
+      <h2>Alertas e Notificações</h2>
+      <p class="subtitle">Apresentação dos métodos nativos do <code>GemsAlertService</code> baseados em SweetAlert2.</p>
+    </div>
+  </div>
+  
+  <div class="demo-section">
+    <div class="demo-preview">
+      <gems-form-card title="Testador de Alertas" icon="fa-solid fa-bell">
+        
+        <div class="alerts-grid">
+          <div class="alert-item">
+            <button class="btn-success" (click)="showSuccess()">
+              <i class="fa-solid fa-check-circle"></i> Sucesso
+            </button>
+            <span class="gems-text-muted"><code>alertService.success(...)</code></span>
+          </div>
+
+          <div class="alert-item">
+            <button class="btn-danger" (click)="showError()">
+              <i class="fa-solid fa-circle-xmark"></i> Erro
+            </button>
+            <span class="gems-text-muted"><code>alertService.error(...)</code></span>
+          </div>
+
+          <div class="alert-item">
+            <button class="btn-warning" (click)="showWarning()">
+              <i class="fa-solid fa-triangle-exclamation"></i> Aviso
+            </button>
+            <span class="gems-text-muted"><code>alertService.warning(...)</code></span>
+          </div>
+
+          <div class="alert-item">
+            <button class="btn-info" (click)="showInfo()">
+              <i class="fa-solid fa-circle-info"></i> Informação
+            </button>
+            <span class="gems-text-muted"><code>alertService.info(...)</code></span>
+          </div>
+
+          <div class="alert-item">
+            <button class="btn-save" (click)="askConfirmation()">
+              <i class="fa-solid fa-question-circle"></i> Confirmação
+            </button>
+            <span class="gems-text-muted"><code>alertService.confirm(...)</code></span>
+          </div>
+
+          <div class="alert-item">
+            <button class="btn-danger" (click)="handleApiError()">
+              <i class="fa-solid fa-server"></i> Erro de API
+            </button>
+            <span class="gems-text-muted"><code>alertService.errorFromApi(...)</code></span>
+          </div>
+        </div>
+
+      </gems-form-card>
+    </div>
+
+    <div class="demo-code">
+      <app-code-snippet [tabs]="codeTabs"></app-code-snippet>
+    </div>
+  </div>
+</div>

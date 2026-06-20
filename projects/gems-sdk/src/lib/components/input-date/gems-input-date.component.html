@@ -1,0 +1,39 @@
+<div class="gems-input-container">
+  @if (label()) {
+    <label [for]="id()" class="gems-label" [class.gems-required]="required()">
+      {{ label() }}
+    </label>
+  }
+
+  <div class="gems-data-wrapper">
+    <i
+      class="fa-regular fa-calendar gems-input-icon gems-clickable"
+      role="button"
+      tabindex="0"
+      aria-label="Abrir seletor de data"
+      (click)="toggleDatePicker()"
+      (keydown.enter)="toggleDatePicker()"
+    ></i>
+
+    <input
+      type="text"
+      [id]="id()"
+      class="gems-input gems-with-icon"
+      [placeholder]="internalPlaceholder()"
+      [value]="displayValue()"
+      [disabled]="disabled()"
+      [required]="required()"
+      (input)="onInput($event)"
+    />
+
+    @if (formato() !== 'ano') {
+      <input
+        #nativeInput
+        [type]="getNativeType()"
+        class="gems-hidden-native-input"
+        [value]="value()"
+        (change)="onNativeChange($event)"
+      />
+    }
+  </div>
+</div>

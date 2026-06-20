@@ -1,0 +1,145 @@
+/* ── Base ─────────────────────────────────────────────────────────── */
+.gems-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gems-spacing-sm);
+  padding: var(--gems-spacing-sm) var(--gems-spacing-lg);
+  border: 2px solid transparent;
+  border-radius: var(--gems-radius-md);
+  font-family: var(--gems-font-family);
+  font-size: var(--gems-font-size-sm);
+  font-weight: var(--gems-font-weight-semibold);
+  line-height: 1;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color var(--gems-transition-fast),
+    border-color var(--gems-transition-fast),
+    color var(--gems-transition-fast),
+    opacity var(--gems-transition-fast),
+    transform var(--gems-transition-fast);
+  min-height: 40px;
+  min-width: 40px;
+}
+
+.gems-btn:focus-visible {
+  outline: 3px solid var(--gems-primary-400);
+  outline-offset: 2px;
+}
+
+.gems-btn:disabled,
+.gems-btn--loading {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.gems-btn--icon-only {
+  padding: var(--gems-spacing-sm);
+}
+
+/* ── Variantes ───────────────────────────────────────────────────── */
+.gems-btn--primary {
+  background-color: var(--gems-primary-500);
+  color: #fff;
+  border-color: var(--gems-primary-500);
+}
+.gems-btn--primary:hover:not(:disabled) {
+  background-color: var(--gems-primary-600);
+  border-color: var(--gems-primary-600);
+  transform: translateY(-1px);
+}
+
+.gems-btn--secondary {
+  background-color: var(--gems-secondary-500);
+  color: #fff;
+  border-color: var(--gems-secondary-500);
+}
+.gems-btn--secondary:hover:not(:disabled) {
+  background-color: var(--gems-secondary-600);
+  border-color: var(--gems-secondary-600);
+  transform: translateY(-1px);
+}
+
+.gems-btn--tertiary {
+  background-color: var(--gems-tertiary-500);
+  color: #fff;
+  border-color: var(--gems-tertiary-500);
+}
+.gems-btn--tertiary:hover:not(:disabled) {
+  background-color: var(--gems-tertiary-600);
+  border-color: var(--gems-tertiary-600);
+  transform: translateY(-1px);
+}
+
+.gems-btn--danger {
+  background-color: var(--gems-danger-500);
+  color: #fff;
+  border-color: var(--gems-danger-500);
+}
+.gems-btn--danger:hover:not(:disabled) {
+  background-color: var(--gems-danger-600);
+  border-color: var(--gems-danger-600);
+  transform: translateY(-1px);
+}
+
+.gems-btn--ghost {
+  background-color: transparent;
+  color: var(--gems-primary-500);
+  border-color: var(--gems-primary-500);
+}
+.gems-btn--ghost:hover:not(:disabled) {
+  background-color: var(--gems-primary-50);
+  transform: translateY(-1px);
+}
+
+.gems-btn--link {
+  background-color: transparent;
+  color: var(--gems-primary-500);
+  border-color: transparent;
+  padding-left: 0;
+  padding-right: 0;
+  min-height: auto;
+  text-decoration: underline;
+}
+.gems-btn--link:hover:not(:disabled) {
+  color: var(--gems-primary-700);
+}
+
+/* ── Spinner de loading ──────────────────────────────────────────── */
+.gems-btn-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: gems-spin 0.7s linear infinite;
+}
+
+@keyframes gems-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Responsividade ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .gems-btn {
+    min-height: 44px;
+    padding: var(--gems-spacing-sm) var(--gems-spacing-md);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gems-btn-spinner {
+    animation: none;
+    opacity: 0.6;
+  }
+
+  .gems-btn:hover {
+    transform: none;
+  }
+}

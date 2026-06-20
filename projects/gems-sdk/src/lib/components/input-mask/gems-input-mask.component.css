@@ -1,0 +1,87 @@
+.gems-input-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: var(--gems-spacing-md, 1rem);
+}
+
+.gems-label {
+  font-size: var(--gems-font-size-sm, 0.875rem);
+  font-weight: var(--gems-font-weight-medium, 500);
+  color: var(--gems-text-main, #334155);
+  margin-bottom: var(--gems-spacing-xs, 0.25rem);
+}
+
+.gems-label.gems-required::after {
+  content: '*';
+  color: var(--gems-error, #ef4444);
+  margin-left: 2px;
+}
+
+.gems-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.gems-input-icon {
+  position: absolute;
+  left: 0.75rem;
+  color: var(--gems-text-muted, #64748b);
+  font-size: var(--gems-font-size-sm, 0.875rem);
+  pointer-events: none;
+}
+
+.gems-input {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  font-size: var(--gems-font-size-sm, 0.875rem);
+  color: var(--gems-text-main, #1e293b);
+  background-color: var(--gems-bg, #ffffff);
+  border: var(--gems-border-width, 1px) solid var(--gems-border-color);
+  border-radius: var(--gems-radius-md, 8px);
+  transition: var(--gems-transition-fast);
+  outline: none;
+}
+
+.gems-input.gems-with-icon {
+  padding-left: 2.25rem;
+}
+
+.gems-input:hover:not(:disabled) {
+  border-color: var(--gems-border-color-emphasis);
+}
+
+.gems-input:focus {
+  border-color: var(--gems-primary-500, #3b82f6);
+  box-shadow: 0 0 0 3px var(--gems-primary-focus-ring, rgba(59, 130, 246, 0.3));
+}
+
+.gems-input:disabled {
+  background-color: var(--gems-bg-muted, #f1f5f9);
+  color: var(--gems-text-muted, #94a3b8);
+  cursor: not-allowed;
+}
+
+:host(.ng-invalid.ng-touched) .gems-input {
+  border-color: var(--gems-error, #ef4444) !important;
+}
+
+:host(.ng-invalid.ng-touched) .gems-input:focus {
+  border-color: var(--gems-danger-500, #ef4444) !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3) !important;
+}
+
+@media (max-width: 768px) {
+  .gems-input {
+    min-height: 44px;
+    font-size: var(--gems-font-size-md);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gems-input {
+    transition: none;
+  }
+}

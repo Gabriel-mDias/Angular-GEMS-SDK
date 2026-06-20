@@ -1,0 +1,53 @@
+<div class="showcase-page fade-in">
+  <div class="header">
+    <div class="header-titles">
+      <h2>Modal</h2>
+      <p class="subtitle">Diálogo modal com fechamento por ESC, backdrop e foco automático.</p>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <div class="demo-preview">
+      <gems-form-card title="Exemplos de Modal" icon="fa-solid fa-window-restore">
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <button class="btn-primary" (click)="openSmall = true">Abrir Modal Pequeno</button>
+          <button class="btn-save" (click)="openMedium = true">Abrir Modal Médio</button>
+          <button class="btn-danger" (click)="openConfirm = true">Modal de Confirmação</button>
+        </div>
+      </gems-form-card>
+
+      <!-- Modal Pequeno -->
+      <gems-modal [(open)]="openSmall" title="Informação" size="sm">
+        <p>Este é um modal de tamanho pequeno. Ideal para alertas simples e mensagens curtas.</p>
+        <div gems-modal-footer>
+          <button class="btn-save" (click)="openSmall = false">Entendido</button>
+        </div>
+      </gems-modal>
+
+      <!-- Modal Médio -->
+      <gems-modal [(open)]="openMedium" title="Formulário Rápido" size="md">
+        <div style="display: grid; gap: 1rem;">
+          <gems-input-text label="Nome" placeholder="Digite o nome"></gems-input-text>
+          <gems-input-text label="Descrição" placeholder="Digite a descrição"></gems-input-text>
+        </div>
+        <div gems-modal-footer>
+          <button class="btn-cancel" (click)="openMedium = false">Cancelar</button>
+          <button class="btn-save" (click)="openMedium = false">Salvar</button>
+        </div>
+      </gems-modal>
+
+      <!-- Modal de Confirmação -->
+      <gems-modal [(open)]="openConfirm" title="Confirmar Exclusão" size="sm" [closeOnBackdrop]="false">
+        <p>Tem certeza que deseja excluir este item? Esta ação não pode ser desfeita.</p>
+        <div gems-modal-footer>
+          <button class="btn-cancel" (click)="openConfirm = false">Cancelar</button>
+          <button class="btn-danger" (click)="onConfirmDelete()">Excluir</button>
+        </div>
+      </gems-modal>
+    </div>
+
+    <div class="demo-code">
+      <app-code-snippet [tabs]="codeTabs"></app-code-snippet>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="showcase-page fade-in">
+  <div class="header">
+    <div class="header-titles">
+      <h2>Textarea</h2>
+      <p class="subtitle">Área de texto com suporte a CVA, contador de caracteres e auto-resize.</p>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <div class="demo-preview">
+      <gems-form-card title="Exemplos de Textarea" icon="fa-solid fa-align-left">
+        <form [formGroup]="form" style="display: grid; gap: 1.5rem;">
+          <gems-textarea
+            label="Observações"
+            placeholder="Digite suas observações..."
+            formControlName="obs"
+            [rows]="4"
+            [maxlength]="300"
+          ></gems-textarea>
+
+          <gems-textarea
+            label="Descrição (auto-resize)"
+            placeholder="O campo cresce conforme você digita..."
+            formControlName="descricao"
+            [autoResize]="true"
+          ></gems-textarea>
+        </form>
+      </gems-form-card>
+    </div>
+
+    <div class="demo-code">
+      <app-code-snippet [tabs]="codeTabs"></app-code-snippet>
+    </div>
+  </div>
+</div>

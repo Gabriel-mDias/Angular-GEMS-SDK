@@ -1,0 +1,39 @@
+@if (open()) {
+  <div
+    class="gems-modal-backdrop"
+    (click)="onBackdropClick()"
+    (keydown)="onKeyDown($event)"
+    role="presentation"
+    aria-hidden="true"
+  ></div>
+
+  <div
+    class="gems-modal-container"
+    [class]="'gems-modal--' + size()"
+    role="dialog"
+    [attr.aria-label]="title()"
+    aria-modal="true"
+    tabindex="-1"
+    #modalRef
+  >
+    <div class="gems-modal-header">
+      <h2 class="gems-modal-title">{{ title() }}</h2>
+      <button
+        type="button"
+        class="gems-modal-close"
+        (click)="closeModal()"
+        aria-label="Fechar"
+      >
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <div class="gems-modal-body">
+      <ng-content></ng-content>
+    </div>
+
+    <div class="gems-modal-footer">
+      <ng-content select="[gems-modal-footer]"></ng-content>
+    </div>
+  </div>
+}

@@ -1,0 +1,9 @@
+.showcase-page {
+  animation: fadeIn 0.3s ease;
+}
+
+.demo-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gems-spacing-2xl);
+}

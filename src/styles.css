@@ -1,0 +1,82 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap-grid.min.css");
+@import "../projects/gems-sdk/src/lib/core/tokens/gems-design-tokens.css";
+@import "../projects/gems-sdk/src/lib/core/tokens/gems-animations.css";
+@import "../projects/gems-sdk/src/lib/core/tokens/gems-utilities.css";
+
+/* App Level Styles */
+body {
+  margin: 0;
+  font-family: var(--gems-font-family);
+  background-color: var(--gems-bg-subtle, #f8fafc);
+  color: var(--gems-text-main, #1e293b);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Base Theme Generation - Using default colors */
+:root {
+  --gems-primary-50: hsl(214, 100%, 95%);
+  --gems-primary-100: hsl(214, 100%, 88%);
+  --gems-primary-200: hsl(214, 100%, 75%);
+  --gems-primary-300: hsl(214, 100%, 62%);
+  --gems-primary-400: hsl(214, 100%, 48%);
+  --gems-primary-500: hsl(214, 100%, 35%);
+  --gems-primary-600: hsl(214, 100%, 28%);
+  --gems-primary-700: hsl(214, 100%, 21%);
+  --gems-primary-800: hsl(214, 100%, 14%);
+  --gems-primary-900: hsl(214, 100%, 7%);
+  --gems-primary: hsl(214, 100%, 35%);
+  --gems-primary-contrast: #ffffff;
+  
+  --gems-success-50: hsl(142, 76%, 95%);
+  --gems-success-200: hsl(142, 76%, 75%);
+  --gems-success-600: hsl(142, 76%, 28%);
+  
+  --gems-error: #ef4444;
+}
+
+/* Light Mode Defaults */
+:root {
+  --gems-bg: #ffffff;
+  --gems-bg-subtle: #f8fafc;
+  --gems-bg-muted: #f1f5f9;
+  --gems-bg-emphasis: #e2e8f0;
+  --gems-bg-inverse: #0f172a;
+  
+  --gems-text-main: #0f172a;
+  --gems-text-muted: #64748b;
+}
+
+/* Custom properties mapped for showcase components */
+.showcase-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 768px) {
+  .showcase-layout {
+    flex-direction: column;
+  }
+}
+
+
+.showcase-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.showcase-page {
+  flex: 1;
+  padding: var(--gems-spacing-2xl) var(--gems-spacing-xl);
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}

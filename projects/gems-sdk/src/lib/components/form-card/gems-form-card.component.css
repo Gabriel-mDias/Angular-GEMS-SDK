@@ -1,0 +1,86 @@
+.gems-form-card-wrapper {
+  background-color: var(--gems-bg, #ffffff);
+  border-radius: var(--gems-radius-md, 12px);
+  box-shadow: var(--gems-shadow-sm);
+  border: var(--gems-border-width, 1px) solid var(--gems-border-color);
+  overflow: hidden;
+  margin-bottom: var(--gems-spacing-lg, 1.5rem);
+  transition: var(--gems-transition-normal);
+}
+
+.gems-form-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--gems-spacing-md, 1rem) var(--gems-spacing-lg, 1.5rem);
+  background-color: var(--cor-secundaria);
+  color: var(--cor-terciaria);
+  border-bottom: var(--gems-border-width, 1px) solid var(--gems-border-color);
+}
+
+.header-content {
+  flex-grow: 1;
+}
+
+.gems-form-card-title {
+  margin: 0;
+  font-size: var(--gems-font-size-lg, 1.125rem);
+  font-weight: var(--gems-font-weight-semibold, 600);
+  color: var(--cor-terciaria);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.gems-form-card-subtitle, ::ng-deep [gems-form-card-subtitle] {
+  font-size: var(--gems-font-size-sm, 0.875rem);
+  font-weight: var(--gems-font-weight-regular, 400);
+  color: var(--cor-terciaria);
+  opacity: 0.8;
+  margin-top: var(--gems-spacing-xs, 0.25rem);
+}
+
+.header-actions {
+  margin-left: var(--gems-spacing-md, 1rem);
+  display: flex;
+  gap: var(--gems-spacing-sm, 0.5rem);
+}
+
+.gems-form-card-content {
+  padding: var(--gems-spacing-lg, 1.5rem);
+}
+
+.gems-form-card-footer {
+  padding: var(--gems-spacing-md, 1rem) var(--gems-spacing-lg, 1.5rem);
+  border-top: var(--gems-border-width, 1px) solid var(--gems-border-color);
+  background-color: var(--gems-bg-subtle, #f8fafc);
+}
+
+::ng-deep [gems-form-card-footer] {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--gems-spacing-sm, 0.75rem);
+}
+
+@media (max-width: 768px) {
+  .gems-form-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--gems-spacing-sm);
+  }
+
+  .header-actions {
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .gems-form-card-content {
+    padding: var(--gems-spacing-md);
+  }
+
+  ::ng-deep [gems-form-card-footer] {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+}

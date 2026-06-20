@@ -1,0 +1,36 @@
+<div class="showcase-page fade-in">
+  <div class="header">
+    <div class="header-titles">
+      <h2>Card List Select</h2>
+      <p class="subtitle">Componente para seleção visual de opções em formato de cards, com suporte a seleção simples ou múltipla.</p>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <div class="demo-preview">
+      <gems-form-card title="Seleção de Plano" icon="fa-solid fa-list-check">
+        <div style="padding-bottom: 2rem;">
+          <gems-card-list-select
+            [items]="planItems"
+            [selectedId]="selectedPlan"
+            (selectedIdChange)="selectedPlan = $event"
+            idKey="value"
+            titleKey="title"
+            subtitleKey="description"
+            icon="fa-solid fa-layer-group"
+          ></gems-card-list-select>
+        </div>
+
+        @if (selectedPlan) {
+          <div gems-form-card-footer>
+            Plano Selecionado: <strong>{{ selectedPlan }}</strong>
+          </div>
+        }
+      </gems-form-card>
+    </div>
+
+    <div class="demo-code">
+      <app-code-snippet [tabs]="codeTabs"></app-code-snippet>
+    </div>
+  </div>
+</div>
