@@ -1,6 +1,6 @@
 {
   "name": "@gabriel-mdias/angular-gems-sdk",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0",
   "description": "Kit de desenvolvimento Angular para projetos G&Ms — componentes, serviços e theming configurável.",
   "repository": {
     "type": "git",
