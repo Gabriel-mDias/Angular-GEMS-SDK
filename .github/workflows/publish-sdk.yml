@@ -1,8 +1,8 @@
-name: Publish to GitHub Packages
+name: Publish SDK to GitHub Packages
 
 on:
-  release:
-    types: [published]
+  push:
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
