@@ -1,0 +1,51 @@
+<div class="showcase-page fade-in">
+  <div class="header">
+    <div class="header-titles">
+      <h2>Instalação da SDK</h2>
+      <p class="subtitle">Aprenda como adicionar e configurar a GEMS SDK no seu projeto Angular.</p>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <gems-form-card title="Passo a Passo" icon="fa-solid fa-download">
+      <div style="padding: var(--gems-spacing-md); line-height: 1.6;">
+        <h3 style="margin-top: 0; margin-bottom: 0.5rem; color: var(--gems-primary-700);">1. Registry do GitHub Packages</h3>
+        <p>Crie ou edite o arquivo <code>.npmrc</code> na raiz do projeto:</p>
+        <pre style="padding: 15px; background: #1e293b; color: #fff; border-radius: 4px; margin-top: 10px; overflow-x: auto;">
+&#64;gabriel-mdias:registry=https://npm.pkg.github.com
+        </pre>
+
+        <h3 style="margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--gems-primary-700);">2. Instalação via NPM</h3>
+        <p>Instale utilizando a flag <code>--legacy-peer-deps</code> devido à resolução estrita do Angular 20:</p>
+        <pre style="padding: 15px; background: #1e293b; color: #fff; border-radius: 4px; margin-top: 10px; overflow-x: auto;">
+npm install &#64;gabriel-mdias/angular-gems-sdk --legacy-peer-deps
+        </pre>
+
+        <h3 style="margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--gems-primary-700);">3. Estilos e Theming</h3>
+        <p>Adicione os estilos globais em <code>styles.css</code>:</p>
+        <pre style="padding: 15px; background: #1e293b; color: #fff; border-radius: 4px; margin-top: 10px; overflow-x: auto;">
+&#64;import "&#64;gabriel-mdias/angular-gems-sdk/core/tokens/gems-design-tokens.css";
+&#64;import "&#64;gabriel-mdias/angular-gems-sdk/core/tokens/gems-utilities.css";
+&#64;import "&#64;gabriel-mdias/angular-gems-sdk/core/tokens/gems-animations.css";
+        </pre>
+
+        <p style="margin-top: 15px;">Injete o provedor de tema dinâmico em <code>app.config.ts</code>:</p>
+        <pre style="padding: 15px; background: #1e293b; color: #fff; border-radius: 4px; margin-top: 10px; overflow-x: auto;">
+import &#123; provideGemsTheme &#125; from '&#64;gabriel-mdias/angular-gems-sdk/core/theme';
+
+export const appConfig: ApplicationConfig = &#123;
+  providers: [
+    provideGemsTheme(&#123;
+      primary: '#0B5FFF',
+      secondary: '#4A5568',
+      tertiary: '#E2E8F0',
+      background: '#F7FAFC'
+    &#125;)
+  ]
+&#125;;
+        </pre>
+
+      </div>
+    </gems-form-card>
+  </div>
+</div>
