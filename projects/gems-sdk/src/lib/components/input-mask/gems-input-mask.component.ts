@@ -1,69 +1,65 @@
-import { Component, input, output, forwardRef, signal, computed, booleanAttribute } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import {
+  Component,
+  booleanAttribute,
+  computed,
+  forwardRef,
+  input,
+  output,
+  signal,
+} from '@angular/core';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-export type GemsMaskType = 'cep' | 'telefone' | 'rg' | 'email';
+import { GemsMaskType } from './gems-input-mask.model';
 
+/**
+ * Input com máscara automática para CEP, telefone, RG ou e-mail.
+ * O valor emitido é sempre o dado limpo (sem formatação), mas exibe com máscara.
+ */
 @Component({
   selector: 'gems-input-mask',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  template: `
-    <div class="gems-input-container">
-      <label *ngIf="label()" [for]="inputId()" class="gems-label" [class.gems-required]="required()">
-        {{ label() }}
-      </label>
-      <div class="gems-input-wrapper">
-        <i *ngIf="icon()" [class]="icon() + ' gems-input-icon'"></i>
-        <input 
-          [type]="maskType() === 'email' ? 'email' : 'text'" 
-          [id]="inputId()"
-          class="gems-input"
-          [class.gems-with-icon]="icon()"
-          [placeholder]="placeholder()"
-          [value]="displayValue()"
-          (input)="onInput($event)"
-          (blur)="onBlur()"
-          [disabled]="disabled()"
-          [required]="required()"
-        >
-      </div>
-    </div>
-  `,
+  imports: [FormsModule],
+  templateUrl: './gems-input-mask.component.html',
   styleUrls: ['./gems-input-mask.component.css'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => GemsInputMaskComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class GemsInputMaskComponent implements ControlValueAccessor {
-  label = input<string>('');
-  placeholder = input<string>('');
-  id = input<string>('mask-input-' + Math.random().toString(36).substring(2, 9));
-  required = input<boolean, boolean | string>(false, { transform: booleanAttribute });
-  maskType = input<GemsMaskType>('cep');
-  icon = input<string>();
+  // ── Inputs ────────────────────────────────────────────────────────
+  readonly label = input<string>('');
+  readonly placeholder = input<string>('');
+  readonly id = input<string>('mask-' + crypto.randomUUID());
+  readonly required = input<boolean, boolean | string>(false, { transform: booleanAttribute });
+  readonly maskType = input<GemsMaskType>('cep');
+  readonly icon = input<string>();
 
-  valueChange = output<string>();
+  // ── Outputs ───────────────────────────────────────────────────────
+  readonly valueChange = output<string>();
 
-  displayValue = signal<string>('');
-  value = signal<string>('');
-  disabled = signal<boolean>(false);
+  // ── Estado interno ────────────────────────────────────────────────
+  protected readonly displayValue = signal<string>('');
+  protected readonly value = signal<string>('');
+  protected readonly disabled = signal<boolean>(false);
 
-  inputId = computed(() => this.id());
+  // ── Estado derivado ───────────────────────────────────────────────
+  protected readonly inputId = computed(() => this.id());
 
-  onChange: any = () => {};
-  onTouch: any = () => {};
+  // ── ControlValueAccessor ──────────────────────────────────────────
+  private onChange: (value: string) => void = () => {};
+  private onTouch: () => void = () => {};
 
+  // ── Métodos públicos ──────────────────────────────────────────────
   onInput(event: Event): void {
     const inputEl = event.target as HTMLInputElement;
     let rawValue = inputEl.value;
 
     if (this.maskType() !== 'email') {
-      rawValue = rawValue.replace(/\D/g, ''); 
+      rawValue = rawValue.replace(/\D/g, '');
     }
 
     this.applyMaskLogic(rawValue);
@@ -78,6 +74,25 @@ export class GemsInputMaskComponent implements ControlValueAccessor {
     this.onTouch();
   }
 
+  writeValue(val: string | null | undefined): void {
+    const newVal = val ?? '';
+    this.value.set(newVal);
+    this.applyMaskLogic(newVal);
+  }
+
+  registerOnChange(fn: (value: string) => void): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: () => void): void {
+    this.onTouch = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled.set(isDisabled);
+  }
+
+  // ── Métodos privados ──────────────────────────────────────────────
   private applyMaskLogic(rawValue: string): void {
     if (!rawValue) {
       this.displayValue.set('');
@@ -115,14 +130,4 @@ export class GemsInputMaskComponent implements ControlValueAccessor {
     }
     this.displayValue.set(masked);
   }
-
-  writeValue(val: any): void {
-    const newVal = val || '';
-    this.value.set(newVal);
-    this.applyMaskLogic(newVal);
-  }
-
-  registerOnChange(fn: any): void { this.onChange = fn; }
-  registerOnTouched(fn: any): void { this.onTouch = fn; }
-  setDisabledState(isDisabled: boolean): void { this.disabled.set(isDisabled); }
 }

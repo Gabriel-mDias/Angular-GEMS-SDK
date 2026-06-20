@@ -139,5 +139,41 @@
 }
 
 @keyframes gems-spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Acessibilidade ──────────────────────────────────────────────── */
+.gems-upload-dropzone:focus-visible {
+  outline: 3px solid var(--gems-primary-400);
+  outline-offset: 2px;
+}
+
+.gems-btn-remove {
+  min-width: 36px;
+  min-height: 36px;
+}
+
+/* ── Responsividade ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .gems-upload-dropzone {
+    padding: var(--gems-spacing-lg);
+  }
+
+  .gems-btn-remove {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gems-spinner {
+    animation: none;
+    opacity: 0.6;
+  }
+
+  .gems-upload-dropzone {
+    transition: none;
+  }
 }

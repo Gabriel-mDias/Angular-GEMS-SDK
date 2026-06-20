@@ -1,0 +1,37 @@
+<div class="showcase-page fade-in">
+  <div class="header">
+    <div class="header-titles">
+      <h2>Toast</h2>
+      <p class="subtitle">Notificações leves e não-intrusivas via <code>GemsToastService</code>, com auto-dismiss configurável.</p>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <div class="demo-preview">
+      <gems-form-card title="Disparar Toasts" icon="fa-solid fa-bell-concierge">
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <button class="btn-success" (click)="showSuccess()">
+            <i class="fa-solid fa-check"></i> Sucesso
+          </button>
+          <button class="btn-danger" (click)="showError()">
+            <i class="fa-solid fa-xmark"></i> Erro
+          </button>
+          <button class="btn-info" (click)="showInfo()">
+            <i class="fa-solid fa-circle-info"></i> Informação
+          </button>
+          <button class="btn-warning" (click)="showWarning()">
+            <i class="fa-solid fa-triangle-exclamation"></i> Aviso
+          </button>
+        </div>
+        <p class="setup-note">
+          <i class="fa-solid fa-circle-info"></i>
+          Adicione <code>&lt;gems-toast-container&gt;&lt;/gems-toast-container&gt;</code> uma vez no <code>app.component</code> para renderizar a fila.
+        </p>
+      </gems-form-card>
+    </div>
+
+    <div class="demo-code">
+      <app-code-snippet [tabs]="codeTabs"></app-code-snippet>
+    </div>
+  </div>
+</div>

@@ -85,3 +85,28 @@
   font-size: var(--gems-font-size-sm, 0.875rem);
   line-height: var(--gems-line-height-relaxed, 1.6);
 }
+
+/* ── Acessibilidade ──────────────────────────────────────────────── */
+.gems-summary-card-header:focus-visible {
+  outline: 3px solid var(--gems-primary-400);
+  outline-offset: -3px;
+}
+
+/* ── Responsividade ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .gems-summary-card-header {
+    padding: var(--gems-spacing-sm) var(--gems-spacing-md);
+    min-height: 44px;
+  }
+
+  .gems-details-inner {
+    padding: var(--gems-spacing-md);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gems-summary-card-header,
+  .gems-summary-card-container {
+    transition: none;
+  }
+}

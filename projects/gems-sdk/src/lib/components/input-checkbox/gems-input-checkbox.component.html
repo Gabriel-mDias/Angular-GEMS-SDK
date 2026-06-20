@@ -1,36 +1,49 @@
 <div class="gems-checkbox-container" [class.gems-disabled]="disabled()">
-  
-  <label class="gems-top-label" *ngIf="topLabel() || alignWithInputs()">
-    <span class="gems-font-semibold" *ngIf="topLabel()">{{ topLabel() }}</span>
-    <span *ngIf="!topLabel()">&nbsp;</span>
-  </label>
+  @if (topLabel() || alignWithInputs()) {
+    <label class="gems-top-label">
+      @if (topLabel()) {
+        <span class="gems-font-semibold">{{ topLabel() }}</span>
+      } @else {
+        <span>&nbsp;</span>
+      }
+    </label>
+  }
 
-  <label *ngIf="isSwitch()" class="gems-switch-wrapper" [for]="inputId()">
-    <div class="gems-switch">
-      <input 
-        type="checkbox" 
-        [id]="inputId()" 
-        [checked]="value()" 
-        [disabled]="disabled()"
-        (change)="toggleValue($event)">
-      <span class="gems-slider"></span>
-    </div>
-    <span class="gems-switch-label" *ngIf="label()">{{ label() }}</span>
-  </label>
-
-  <label *ngIf="!isSwitch()" class="gems-checkbox-wrapper" [for]="inputId()">
-    <div class="gems-checkbox">
-      <input 
-        type="checkbox" 
-        [id]="inputId()" 
-        [checked]="value()" 
-        [disabled]="disabled()"
-        (change)="toggleValue($event)">
-      <span class="gems-box">
-        <i class="fa-solid fa-check gems-check-icon" *ngIf="value()"></i>
-      </span>
-    </div>
-    <span class="gems-checkbox-label" *ngIf="label()">{{ label() }}</span>
-  </label>
-
+  @if (isSwitch()) {
+    <label class="gems-switch-wrapper" [for]="inputId()">
+      <div class="gems-switch">
+        <input
+          type="checkbox"
+          [id]="inputId()"
+          [checked]="value()"
+          [disabled]="disabled()"
+          (change)="toggleValue($event)"
+        />
+        <span class="gems-slider"></span>
+      </div>
+      @if (label()) {
+        <span class="gems-switch-label">{{ label() }}</span>
+      }
+    </label>
+  } @else {
+    <label class="gems-checkbox-wrapper" [for]="inputId()">
+      <div class="gems-checkbox">
+        <input
+          type="checkbox"
+          [id]="inputId()"
+          [checked]="value()"
+          [disabled]="disabled()"
+          (change)="toggleValue($event)"
+        />
+        <span class="gems-box">
+          @if (value()) {
+            <i class="fa-solid fa-check gems-check-icon"></i>
+          }
+        </span>
+      </div>
+      @if (label()) {
+        <span class="gems-checkbox-label">{{ label() }}</span>
+      }
+    </label>
+  }
 </div>

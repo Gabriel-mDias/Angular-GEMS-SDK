@@ -1,59 +1,55 @@
-import { Component, input, output, forwardRef, signal, computed, booleanAttribute } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import {
+  Component,
+  booleanAttribute,
+  computed,
+  forwardRef,
+  input,
+  output,
+  signal,
+} from '@angular/core';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 
+/**
+ * Input de senha com botão de visibilidade toggle.
+ * Implementa ControlValueAccessor — compatível com Reactive Forms e Template Forms.
+ */
 @Component({
   selector: 'gems-input-password',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  template: `
-    <div class="gems-input-container">
-      <label *ngIf="label()" [for]="inputId()" class="gems-label" [class.gems-required]="required()">
-        {{ label() }}
-      </label>
-      <div class="gems-password-wrapper">
-        <input 
-          [type]="showPassword() ? 'text' : 'password'" 
-          [id]="inputId()"
-          class="gems-input"
-          [placeholder]="placeholder()"
-          [value]="value()"
-          (input)="onInput($event)"
-          [disabled]="disabled()"
-          [required]="required()"
-        >
-        <button type="button" class="gems-toggle-btn" (click)="togglePasswordVisibility()" tabindex="-1">
-          <i class="fa-solid" [ngClass]="showPassword() ? 'fa-eye-slash' : 'fa-eye'"></i>
-        </button>
-      </div>
-    </div>
-  `,
+  imports: [FormsModule],
+  templateUrl: './gems-input-password.component.html',
   styleUrls: ['./gems-input-password.component.css'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => GemsInputPasswordComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class GemsInputPasswordComponent implements ControlValueAccessor {
-  label = input<string>('Senha');
-  placeholder = input<string>('Digite sua senha');
-  id = input<string>('password-input-' + Math.random().toString(36).substring(2, 9));
-  required = input<boolean, boolean | string>(false, { transform: booleanAttribute });
-  
-  valueChange = output<string>();
+  // ── Inputs ────────────────────────────────────────────────────────
+  readonly label = input<string>('Senha');
+  readonly placeholder = input<string>('Digite sua senha');
+  readonly id = input<string>('password-' + crypto.randomUUID());
+  readonly required = input<boolean, boolean | string>(false, { transform: booleanAttribute });
 
-  value = signal<string>('');
-  showPassword = signal<boolean>(false);
-  disabled = signal<boolean>(false);
+  // ── Outputs ───────────────────────────────────────────────────────
+  readonly valueChange = output<string>();
 
-  inputId = computed(() => this.id());
+  // ── Estado interno ────────────────────────────────────────────────
+  protected readonly value = signal<string>('');
+  protected readonly showPassword = signal<boolean>(false);
+  protected readonly disabled = signal<boolean>(false);
 
-  onChange: any = () => {};
-  onTouch: any = () => {};
+  // ── Estado derivado ───────────────────────────────────────────────
+  protected readonly inputId = computed(() => this.id());
 
+  // ── ControlValueAccessor ──────────────────────────────────────────
+  private onChange: (value: string) => void = () => {};
+  private onTouch: () => void = () => {};
+
+  // ── Métodos públicos ──────────────────────────────────────────────
   togglePasswordVisibility(): void {
     this.showPassword.update(v => !v);
   }
@@ -66,19 +62,15 @@ export class GemsInputPasswordComponent implements ControlValueAccessor {
     this.onTouch();
   }
 
-  writeValue(val: any): void {
-    if (val !== undefined && val !== null) {
-      this.value.set(val);
-    } else {
-      this.value.set('');
-    }
+  writeValue(val: string | null | undefined): void {
+    this.value.set(val ?? '');
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: string) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouch = fn;
   }
 

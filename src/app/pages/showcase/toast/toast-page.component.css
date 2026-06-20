@@ -1,0 +1,12 @@
+.setup-note {
+  margin-top: 1.5rem;
+  padding: var(--gems-spacing-md);
+  background-color: var(--gems-info-50, #eff6ff);
+  border: 1px solid var(--gems-info-200, #bfdbfe);
+  border-radius: var(--gems-radius-md);
+  font-size: var(--gems-font-size-sm);
+  color: var(--gems-info-700, #1d4ed8);
+  display: flex;
+  align-items: center;
+  gap: var(--gems-spacing-sm);
+}

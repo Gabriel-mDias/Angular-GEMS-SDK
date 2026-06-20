@@ -1,101 +1,79 @@
-import { Component, input, output, forwardRef, signal, computed } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { Component, forwardRef, input, output, signal } from '@angular/core';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-export interface GemsRangeValue {
-  min: string | number | null;
-  max: string | number | null;
-}
+import { GemsRangeValue } from './gems-input-range.model';
 
+/**
+ * Input duplo para seleção de intervalos (número ou data).
+ * Emite um objeto { min, max } e implementa ControlValueAccessor.
+ */
 @Component({
   selector: 'gems-input-range',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  template: `
-    <div class="gems-input-range-container">
-      <div class="gems-input-group">
-        <input
-          [type]="type()"
-          class="gems-input"
-          [ngModel]="value().min"
-          (ngModelChange)="onMinChange($event)"
-          (blur)="onTouched()"
-          [placeholder]="placeholderMin()"
-          [disabled]="disabled()"
-        />
-      </div>
-      <span class="gems-separator">até</span>
-      <div class="gems-input-group">
-        <input
-          [type]="type()"
-          class="gems-input"
-          [ngModel]="value().max"
-          (ngModelChange)="onMaxChange($event)"
-          (blur)="onTouched()"
-          [placeholder]="placeholderMax()"
-          [disabled]="disabled()"
-        />
-      </div>
-    </div>
-  `,
+  imports: [FormsModule],
+  templateUrl: './gems-input-range.component.html',
   styleUrls: ['./gems-input-range.component.css'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => GemsInputRangeComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class GemsInputRangeComponent implements ControlValueAccessor {
-  type = input<'number' | 'date'>('number');
-  placeholderMin = input<string>('Mínimo');
-  placeholderMax = input<string>('Máximo');
-  
-  value = signal<GemsRangeValue>({ min: null, max: null });
-  disabled = signal<boolean>(false);
+  // ── Inputs ────────────────────────────────────────────────────────
+  readonly type = input<'number' | 'date'>('number');
+  readonly placeholderMin = input<string>('Mínimo');
+  readonly placeholderMax = input<string>('Máximo');
+  readonly separator = input<string>('até');
 
-  valueChange = output<GemsRangeValue>();
+  // ── Outputs ───────────────────────────────────────────────────────
+  readonly valueChange = output<GemsRangeValue>();
 
-  onChange = (val: any) => {};
-  onTouched = () => {};
+  // ── Estado interno ────────────────────────────────────────────────
+  protected readonly value = signal<GemsRangeValue>({ min: null, max: null });
+  protected readonly disabled = signal<boolean>(false);
 
-  writeValue(val: any): void {
+  // ── ControlValueAccessor ──────────────────────────────────────────
+  private onChange: (value: GemsRangeValue) => void = () => {};
+  protected onTouched: () => void = () => {};
+
+  // ── Métodos públicos ──────────────────────────────────────────────
+  onMinChange(newMin: string | number | null): void {
+    const updated: GemsRangeValue = { ...this.value(), min: newMin };
+    this.value.set(updated);
+    this.onChange(updated);
+    this.valueChange.emit(updated);
+  }
+
+  onMaxChange(newMax: string | number | null): void {
+    const updated: GemsRangeValue = { ...this.value(), max: newMax };
+    this.value.set(updated);
+    this.onChange(updated);
+    this.valueChange.emit(updated);
+  }
+
+  writeValue(val: GemsRangeValue | null | undefined): void {
     if (val) {
       this.value.set({
-        min: val.min !== undefined ? val.min : null,
-        max: val.max !== undefined ? val.max : null
+        min: val.min ?? null,
+        max: val.max ?? null,
       });
     } else {
       this.value.set({ min: null, max: null });
     }
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: GemsRangeValue) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled.set(isDisabled);
-  }
-
-  onMinChange(newMin: any) {
-    const current = this.value();
-    const updated = { ...current, min: newMin };
-    this.value.set(updated);
-    this.onChange(updated);
-    this.valueChange.emit(updated);
-  }
-
-  onMaxChange(newMax: any) {
-    const current = this.value();
-    const updated = { ...current, max: newMax };
-    this.value.set(updated);
-    this.onChange(updated);
-    this.valueChange.emit(updated);
   }
 }

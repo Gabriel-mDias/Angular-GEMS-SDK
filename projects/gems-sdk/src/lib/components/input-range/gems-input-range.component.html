@@ -1,0 +1,27 @@
+<div class="gems-input-range-container">
+  <div class="gems-input-group">
+    <input
+      [type]="type()"
+      class="gems-input"
+      [ngModel]="value().min"
+      [placeholder]="placeholderMin()"
+      [disabled]="disabled()"
+      (ngModelChange)="onMinChange($event)"
+      (blur)="onTouched()"
+    />
+  </div>
+
+  <span class="gems-separator">{{ separator() }}</span>
+
+  <div class="gems-input-group">
+    <input
+      [type]="type()"
+      class="gems-input"
+      [ngModel]="value().max"
+      [placeholder]="placeholderMax()"
+      [disabled]="disabled()"
+      (ngModelChange)="onMaxChange($event)"
+      (blur)="onTouched()"
+    />
+  </div>
+</div>

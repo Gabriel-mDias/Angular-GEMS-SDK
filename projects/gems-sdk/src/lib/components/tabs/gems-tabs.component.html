@@ -1,0 +1,28 @@
+<div class="gems-tabs-container">
+  <div class="gems-tabs-list" role="tablist" [attr.aria-label]="ariaLabel() || null">
+    @for (tab of tabs(); track tab.id) {
+      <button
+        type="button"
+        class="gems-tab-btn"
+        [class.gems-tab-active]="activeId() === tab.id"
+        [disabled]="tab.disabled ?? false"
+        role="tab"
+        [attr.id]="'tab-' + tab.id"
+        [attr.aria-selected]="activeId() === tab.id"
+        [attr.aria-controls]="'panel-' + tab.id"
+        [attr.tabindex]="activeId() === tab.id ? 0 : -1"
+        (click)="selectTab(tab)"
+        (keydown)="onKeyDown($event, tab)"
+      >
+        @if (tab.icon) {
+          <i [class]="tab.icon" aria-hidden="true"></i>
+        }
+        {{ tab.label }}
+      </button>
+    }
+  </div>
+
+  <div class="gems-tabs-content">
+    <ng-content></ng-content>
+  </div>
+</div>

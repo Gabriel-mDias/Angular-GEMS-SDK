@@ -41,3 +41,21 @@
   font-size: var(--gems-font-size-sm, 0.875rem);
   font-weight: var(--gems-font-weight-medium, 500);
 }
+
+@media (max-width: 768px) {
+  .gems-input-range-container {
+    flex-direction: column;
+    gap: var(--gems-spacing-xs, 0.25rem);
+  }
+
+  .gems-input {
+    min-height: 44px;
+    font-size: var(--gems-font-size-md, 1rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gems-input {
+    transition: none;
+  }
+}

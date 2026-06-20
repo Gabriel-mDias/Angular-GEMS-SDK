@@ -1,0 +1,14 @@
+.gems-field-error {
+  display: flex;
+  align-items: center;
+  gap: var(--gems-spacing-xs, 0.25rem);
+  margin: var(--gems-spacing-xs, 0.25rem) 0 0;
+  font-size: var(--gems-font-size-xs, 0.75rem);
+  color: var(--gems-danger-500, #dc2626);
+  font-weight: var(--gems-font-weight-medium, 500);
+}
+
+.gems-field-error-icon {
+  font-size: var(--gems-font-size-xs, 0.75rem);
+  flex-shrink: 0;
+}

@@ -1,0 +1,45 @@
+<div class="showcase-page fade-in">
+  <div class="header">
+    <div class="header-titles">
+      <h2>Tabs</h2>
+      <p class="subtitle">Navegação por abas acessível com suporte a teclado (setas ← →).</p>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <div class="demo-preview">
+      <gems-form-card title="Exemplo de Tabs" icon="fa-solid fa-table-columns">
+        <gems-tabs [tabs]="tabs" [(activeId)]="activeTab">
+          @if (activeTab === 'dados') {
+            <div role="tabpanel" id="panel-dados" aria-labelledby="tab-dados">
+              <p style="color: var(--gems-text-main, #334155);">
+                <strong>Dados Pessoais</strong><br>
+                Conteúdo da aba de dados pessoais. O conteúdo é gerenciado pelo consumidor com <code>&#64;if</code>.
+              </p>
+            </div>
+          }
+          @if (activeTab === 'endereco') {
+            <div role="tabpanel" id="panel-endereco" aria-labelledby="tab-endereco">
+              <p style="color: var(--gems-text-main, #334155);">
+                <strong>Endereço</strong><br>
+                Conteúdo da aba de endereço.
+              </p>
+            </div>
+          }
+          @if (activeTab === 'config') {
+            <div role="tabpanel" id="panel-config" aria-labelledby="tab-config">
+              <p style="color: var(--gems-text-main, #334155);">
+                <strong>Configurações</strong><br>
+                Conteúdo da aba de configurações.
+              </p>
+            </div>
+          }
+        </gems-tabs>
+      </gems-form-card>
+    </div>
+
+    <div class="demo-code">
+      <app-code-snippet [tabs]="codeTabs"></app-code-snippet>
+    </div>
+  </div>
+</div>

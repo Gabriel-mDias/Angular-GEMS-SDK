@@ -1,0 +1,11 @@
+.resource-intro {
+  margin: 0 0 var(--gems-spacing-md, 1rem);
+  color: var(--gems-text-muted, #64748b);
+  font-size: var(--gems-font-size-sm, 0.875rem);
+}
+
+@media (max-width: 768px) {
+  .showcase-page {
+    padding: var(--gems-spacing-md, 1rem);
+  }
+}

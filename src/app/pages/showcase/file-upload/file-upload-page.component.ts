@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Observable, of, delay } from 'rxjs';
+
 import { GemsFormCardComponent, GemsFileUploadComponent, GemsS3Service } from '@gabriel-mdias/angular-gems-sdk';
 import { CodeSnippetComponent, CodeTab } from '../../../components/code-snippet';
 
+/** Mock do serviço S3 para fins de demonstração. */
 class MockGemsS3Service {
-  uploadFile(file: File, directory: string): Observable<string> {
-    // Simulando um delay de rede de 2 segundos para fins de visualização
+  uploadFile(file: File, _directory: string): Observable<string> {
     return of('mock-file-key-' + file.name).pipe(delay(2000));
   }
 }
@@ -14,84 +14,56 @@ class MockGemsS3Service {
 @Component({
   selector: 'app-file-upload-page',
   standalone: true,
-  imports: [CommonModule, GemsFormCardComponent, GemsFileUploadComponent, CodeSnippetComponent],
-  providers: [
-    { provide: GemsS3Service, useClass: MockGemsS3Service }
-  ],
-  template: `
-    <div class="showcase-page fade-in">
-      <div class="header">
-        <div class="header-titles">
-          <h2>File Upload</h2>
-          <p class="subtitle">Componente para upload de arquivos com preview e progresso.</p>
-        </div>
-      </div>
-      
-      <div class="demo-section">
-        <div class="demo-preview">
-          <gems-form-card title="Upload de Documentos" icon="fa-solid fa-cloud-arrow-up">
-            <div style="padding-bottom: 2rem;">
-              <gems-file-upload
-                label="Anexar Documento"
-                accept=".pdf,.png,.jpg,.jpeg"
-                (uploadSuccess)="onUploadSuccess($event)"
-                (uploadError)="onUploadError($event)"
-              ></gems-file-upload>
-            </div>
-            
-            <div *ngIf="uploadedFileKey" class="file-list">
-              <h4>Arquivo Enviado com Sucesso!</h4>
-              <ul>
-                <li>Chave: {{ uploadedFileKey }}</li>
-              </ul>
-            </div>
-          </gems-form-card>
-        </div>
-
-        <div class="demo-code">
-          <app-code-snippet [tabs]="codeTabs"></app-code-snippet>
-        </div>
-      </div>
-    </div>
-  `,
-  styles: [`
-    .file-list { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px dashed #cbd5e1; }
-    .file-list h4 { font-size: 0.9rem; color: #475569; margin-bottom: 0.5rem; }
-    .file-list ul { margin: 0; padding-left: 1.5rem; color: #64748b; font-size: 0.85rem; }
-  `]
+  imports: [GemsFormCardComponent, GemsFileUploadComponent, CodeSnippetComponent],
+  providers: [{ provide: GemsS3Service, useClass: MockGemsS3Service }],
+  templateUrl: './file-upload-page.component.html',
+  styleUrls: ['./file-upload-page.component.css'],
 })
 export class FileUploadPageComponent {
-  uploadedFileKey: string = '';
+  // ── Estado interno ────────────────────────────────────────────────
+  uploadedFileKey = '';
 
-  onUploadSuccess(fileKey: string) {
-    this.uploadedFileKey = fileKey;
-  }
-
-  onUploadError(error: any) {
-    console.error('Erro de upload', error);
-  }
-
-  codeTabs: CodeTab[] = [
+  // ── Estado derivado ───────────────────────────────────────────────
+  readonly codeTabs: CodeTab[] = [
     {
       name: 'HTML',
       language: 'html',
-      code: `<gems-file-upload
+      code: `<!-- Registre GemsS3Service no provider da página ou app.config -->
+<gems-file-upload
   label="Anexar Documento"
   accept=".pdf,.png,.jpg,.jpeg"
   (uploadSuccess)="onUploadSuccess($event)"
   (uploadError)="onUploadError($event)">
-</gems-file-upload>`
+</gems-file-upload>`,
     },
     {
       name: 'TypeScript',
       language: 'typescript',
-      code: `export class MinhaPagina {
-  uploadedFileKey: string = '';
+      code: `// app.config.ts
+import { provideGemsTheme } from '@gabriel-mdias/angular-gems-sdk';
+// ...
 
-  onUploadSuccess(fileKey: string) {
+// MinhaPagina
+export class MinhaPagina {
+  uploadedFileKey = '';
+
+  onUploadSuccess(fileKey: string): void {
     this.uploadedFileKey = fileKey;
   }
-}`
-    }
+
+  onUploadError(error: Error): void {
+    console.error('Erro de upload', error);
+  }
+}`,
+    },
   ];
+
+  // ── Métodos públicos ──────────────────────────────────────────────
+  onUploadSuccess(fileKey: string): void {
+    this.uploadedFileKey = fileKey;
+  }
+
+  onUploadError(error: Error): void {
+    console.error('Erro de upload', error);
+  }
 }

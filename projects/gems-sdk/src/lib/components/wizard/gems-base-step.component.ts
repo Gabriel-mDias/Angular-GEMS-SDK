@@ -2,61 +2,51 @@ import { Directive, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 /**
- * Classe base para os passos de um formulário multi-step (Wizard).
- * Responsável por gerenciar a validação, salvar os dados na sessão e navegar para o próximo passo.
+ * Classe base abstrata para os passos de um formulário multi-step (Wizard).
+ * Gerencia validação do FormGroup, persistência em sessão e navegação entre passos.
+ *
+ * Uso: extenda esta classe nos componentes de cada step, implementando os
+ * métodos abstratos.
  */
 @Directive()
-export abstract class GemsBaseStepComponent<T = any> implements OnInit {
-  /**
-   * O formulário reativo deste passo.
-   */
+export abstract class GemsBaseStepComponent<T = Record<string, unknown>> implements OnInit {
+  // ── Campos abstratos ──────────────────────────────────────────────
+  /** FormGroup reativo deste passo. */
   abstract formGroup: FormGroup;
 
-  /**
-   * O índice ou identificador deste passo.
-   */
+  /** Índice ou identificador deste passo (começa em 1). */
   abstract stepIndex: number;
 
+  // ── Ciclo de vida ─────────────────────────────────────────────────
   ngOnInit(): void {
     this.createForm();
     this.loadFromSession();
   }
 
-  /**
-   * Cria o formGroup com suas validações.
-   */
+  // ── Métodos abstratos ─────────────────────────────────────────────
+  /** Cria o formGroup com validações. */
   abstract createForm(): void;
 
-  /**
-   * Carrega os dados da sessão (se existirem) para o formGroup.
-   */
+  /** Carrega dados da sessão (se existirem) no formGroup. */
   abstract loadFromSession(): void;
 
-  /**
-   * Salva os dados do formGroup na sessão.
-   */
+  /** Salva os dados do formGroup na sessão. */
   abstract saveToSession(payload: T): void;
 
-  /**
-   * Lógica para avançar para o próximo passo.
-   */
+  /** Avança para o próximo passo. */
   abstract goNext(): void;
 
-  /**
-   * Lógica para voltar para o passo anterior.
-   */
+  /** Volta para o passo anterior. */
   abstract goBack(): void;
 
-  /**
-   * Executa a validação do formulário, salva na sessão e avança.
-   */
+  // ── Métodos públicos ──────────────────────────────────────────────
+  /** Valida o form, salva na sessão e avança. Marca todos os campos como tocados se inválido. */
   saveAndNext(): void {
     if (this.formGroup.invalid) {
       this.formGroup.markAllAsTouched();
       return;
     }
-    
-    this.saveToSession(this.formGroup.value);
+    this.saveToSession(this.formGroup.value as T);
     this.goNext();
   }
 }

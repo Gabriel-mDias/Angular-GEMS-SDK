@@ -1,0 +1,28 @@
+<div class="gems-wizard-header">
+  <div class="gems-wizard-stepper">
+    @for (step of steps(); track step.label; let i = $index) {
+      <div
+        class="gems-step-item"
+        [class.gems-active]="currentStep() === i + 1"
+        [class.gems-completed]="currentStep() > i + 1"
+        (click)="onStepClick(i + 1)"
+      >
+        <div class="gems-step-circle">
+          @if (currentStep() > i + 1) {
+            <i class="fa-solid fa-check"></i>
+          } @else if (step.icon) {
+            <i [class]="step.icon"></i>
+          } @else {
+            <span>{{ i + 1 }}</span>
+          }
+        </div>
+
+        <span class="gems-step-label">{{ step.label }}</span>
+      </div>
+
+      @if (i < steps().length - 1) {
+        <div class="gems-step-connector" [class.gems-active]="currentStep() > i + 1"></div>
+      }
+    }
+  </div>
+</div>

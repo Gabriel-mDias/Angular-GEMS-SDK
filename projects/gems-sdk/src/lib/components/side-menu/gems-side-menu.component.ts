@@ -1,40 +1,60 @@
-import { Component, input, output, HostListener, PLATFORM_ID, Inject, OnInit, signal, OnChanges, SimpleChanges } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import {
+  Component,
+  HostListener,
+  Inject,
+  OnChanges,
+  OnInit,
+  PLATFORM_ID,
+  SimpleChanges,
+  computed,
+  input,
+  output,
+  signal,
+} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
+
 import { GemsSideMenuConfig, GemsSideMenuItem } from './gems-side-menu.config';
 
+/**
+ * Menu lateral responsivo com suporte a collapse (desktop) e drawer (mobile).
+ * Recebe a configuração de itens via input e delega autenticação/roles ao chamador.
+ */
 @Component({
   selector: 'gems-side-menu',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [RouterModule],
   templateUrl: './gems-side-menu.component.html',
-  styleUrls: ['./gems-side-menu.component.css']
+  styleUrls: ['./gems-side-menu.component.css'],
 })
 export class GemsSideMenuComponent implements OnInit, OnChanges {
-  config = input<GemsSideMenuConfig>();
-  logoFull = input<string>();
-  logoCollapsed = input<string>();
-  
-  // New flexible inputs for user profile
-  userName = input<string>('');
-  userEmail = input<string>('');
-  userInitials = input<string>('');
-  showUserProfile = input<boolean>(true);
+  // ── Inputs ────────────────────────────────────────────────────────
+  readonly config = input<GemsSideMenuConfig>();
+  readonly logoFull = input<string>();
+  readonly logoCollapsed = input<string>();
+  readonly userName = input<string>('');
+  readonly userEmail = input<string>('');
+  readonly userInitials = input<string>('');
+  readonly showUserProfile = input<boolean>(true);
 
-  collapsedChange = output<boolean>();
-  itemClicked = output<void>();
-  logoutClick = output<void>();
+  // ── Outputs ───────────────────────────────────────────────────────
+  readonly collapsedChange = output<boolean>();
+  readonly itemClicked = output<void>();
+  readonly logoutClick = output<void>();
 
-  filteredItems: GemsSideMenuItem[] = [];
-  isCollapsed = false;
-  isMobileOpen = false;
-  isMobileView = false;
+  // ── Estado interno ────────────────────────────────────────────────
+  protected readonly isCollapsed = signal<boolean>(false);
+  protected readonly isMobileOpen = signal<boolean>(false);
+  protected readonly isMobileView = signal<boolean>(false);
+  protected readonly filteredItems = signal<GemsSideMenuItem[]>([]);
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-    this.checkScreenSize();
+  // ── Construtor ────────────────────────────────────────────────────
+  constructor(@Inject(PLATFORM_ID) private readonly platformId: object) {
+    this.updateScreenSize();
   }
 
-  ngOnInit() {
+  // ── Ciclo de vida ─────────────────────────────────────────────────
+  ngOnInit(): void {
     this.filterMenu();
   }
 
@@ -44,84 +64,82 @@ export class GemsSideMenuComponent implements OnInit, OnChanges {
     }
   }
 
+  // ── Métodos públicos ──────────────────────────────────────────────
   logout(): void {
     this.logoutClick.emit();
   }
 
-  private filterMenu(): void {
-    const currentConfig = this.config();
-    if (!currentConfig || !currentConfig.items) {
-      this.filteredItems = [];
-      return;
-    }
-    // In SDK we don't assume role/claim parsing inside the visual component.
-    // We assume the items passed in the config are already filtered, or we let the caller do it.
-    // If the config items are passed, we just use them.
-    this.filteredItems = JSON.parse(JSON.stringify(currentConfig.items)); 
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize() {
-    this.checkScreenSize();
-  }
-
-  private checkScreenSize() {
-    if (isPlatformBrowser(this.platformId)) {
-      const wasMobile = this.isMobileView;
-      this.isMobileView = window.innerWidth <= 768;
-
-      if (this.isMobileView && !wasMobile) {
-        if (!this.isCollapsed) {
-          this.isCollapsed = true;
-          this.collapsedChange.emit(this.isCollapsed);
-        }
-      }
-    }
-  }
-
   toggleCollapse(): void {
-    if (this.isMobileView) {
-      return;
-    }
+    if (this.isMobileView()) return;
 
-    this.isCollapsed = !this.isCollapsed;
-    this.collapsedChange.emit(this.isCollapsed);
+    this.isCollapsed.update(v => !v);
+    this.collapsedChange.emit(this.isCollapsed());
 
-    if (this.isCollapsed) {
-      this.filteredItems.forEach(item => item.isExpanded = false);
+    if (this.isCollapsed()) {
+      this.filteredItems.update(items =>
+        items.map(item => ({ ...item, isExpanded: false })),
+      );
     }
   }
 
   toggleMobileMenu(): void {
-    this.isMobileOpen = !this.isMobileOpen;
+    this.isMobileOpen.update(v => !v);
   }
 
   closeMobileMenu(): void {
-    this.isMobileOpen = false;
+    this.isMobileOpen.set(false);
   }
 
   onItemClick(item: GemsSideMenuItem): void {
-    if (this.isCollapsed && !this.isMobileView && item.children && item.children.length > 0) {
-      this.isCollapsed = false;
-      this.collapsedChange.emit(this.isCollapsed);
-      item.isExpanded = true;
+    if (this.isCollapsed() && !this.isMobileView() && item.children?.length) {
+      this.isCollapsed.set(false);
+      this.collapsedChange.emit(false);
+      this.filteredItems.update(items =>
+        items.map(i => (i === item ? { ...i, isExpanded: true } : i)),
+      );
       return;
     }
 
-    if (item.children && item.children.length > 0) {
-      item.isExpanded = !item.isExpanded;
+    if (item.children?.length) {
+      this.filteredItems.update(items =>
+        items.map(i => (i === item ? { ...i, isExpanded: !i.isExpanded } : i)),
+      );
     } else {
       this.itemClicked.emit();
-      if (this.isMobileView) {
-        this.closeMobileMenu();
-      }
+      if (this.isMobileView()) this.closeMobileMenu();
     }
   }
 
   onSubItemClick(): void {
     this.itemClicked.emit();
-    if (this.isMobileView) {
-      this.closeMobileMenu();
+    if (this.isMobileView()) this.closeMobileMenu();
+  }
+
+  @HostListener('window:resize')
+  onResize(): void {
+    this.updateScreenSize();
+  }
+
+  // ── Métodos privados ──────────────────────────────────────────────
+  private filterMenu(): void {
+    const currentConfig = this.config();
+    if (!currentConfig?.items) {
+      this.filteredItems.set([]);
+      return;
+    }
+    this.filteredItems.set(structuredClone(currentConfig.items));
+  }
+
+  private updateScreenSize(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    const wasMobile = this.isMobileView();
+    const nowMobile = window.innerWidth <= 768;
+    this.isMobileView.set(nowMobile);
+
+    if (nowMobile && !wasMobile && !this.isCollapsed()) {
+      this.isCollapsed.set(true);
+      this.collapsedChange.emit(true);
     }
   }
 }

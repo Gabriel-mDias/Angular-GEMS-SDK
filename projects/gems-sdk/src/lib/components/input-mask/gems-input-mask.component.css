@@ -69,6 +69,19 @@
 }
 
 :host(.ng-invalid.ng-touched) .gems-input:focus {
-  border-color: var(--gems-error, #ef4444) !important;
-  box-shadow: 0 0 0 3px var(--gems-error-focus-ring, rgba(239, 68, 68, 0.3)) !important;
+  border-color: var(--gems-danger-500, #ef4444) !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3) !important;
+}
+
+@media (max-width: 768px) {
+  .gems-input {
+    min-height: 44px;
+    font-size: var(--gems-font-size-md);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gems-input {
+    transition: none;
+  }
 }

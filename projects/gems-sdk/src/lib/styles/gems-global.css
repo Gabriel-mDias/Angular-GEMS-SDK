@@ -21,7 +21,11 @@ body {
 }
 
 /* Global Select, Inputs */
-select, .form-select, .gems-select, .form-control, .gems-input {
+select,
+.form-select,
+.gems-select,
+.form-control,
+.gems-input {
   appearance: none !important;
   -webkit-appearance: none !important;
   -moz-appearance: none !important;
@@ -40,16 +44,28 @@ select, .form-select, .gems-select, .form-control, .gems-input {
   box-sizing: border-box;
 }
 
-select:hover, .form-select:hover, .gems-select:hover, .form-control:hover, .gems-input:hover {
+select:hover,
+.form-select:hover,
+.gems-select:hover,
+.form-control:hover,
+.gems-input:hover {
   border-color: #9ca3af;
 }
 
-select:focus, .form-select:focus, .gems-select:focus, .form-control:focus, .gems-input:focus {
+select:focus,
+.form-select:focus,
+.gems-select:focus,
+.form-control:focus,
+.gems-input:focus {
   border-color: #6366f1;
   box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-select:disabled, .form-select:disabled, .gems-select:disabled, .form-control:disabled, .gems-input:disabled {
+select:disabled,
+.form-select:disabled,
+.gems-select:disabled,
+.form-control:disabled,
+.gems-input:disabled {
   background-color: #f1f5f9;
   color: #94a3b8;
   cursor: not-allowed;
@@ -57,8 +73,16 @@ select:disabled, .form-select:disabled, .gems-select:disabled, .form-control:dis
 }
 
 /* Botoes Globais Padronizados */
-.btn-novo, .btn-save, .btn-cancel, .btn-danger, .btn-info, .btn-warning, .btn-success, .btn-primary, .btn-secondary {
-  border: none;
+.btn-novo,
+.btn-save,
+.btn-cancel,
+.btn-danger,
+.btn-info,
+.btn-warning,
+.btn-success,
+.btn-primary,
+.btn-secondary {
+  border: 1px solid transparent;
   padding: 0.625rem 1.25rem;
   border-radius: 0.5rem;
   font-size: 0.875rem;
@@ -68,83 +92,139 @@ select:disabled, .form-select:disabled, .gems-select:disabled, .form-control:dis
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    background-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-.btn-novo:disabled, .btn-save:disabled, .btn-cancel:disabled, .btn-danger:disabled, .btn-info:disabled, .btn-warning:disabled, .btn-success:disabled, button:disabled {
+.btn-novo:disabled,
+.btn-save:disabled,
+.btn-cancel:disabled,
+.btn-danger:disabled,
+.btn-info:disabled,
+.btn-warning:disabled,
+.btn-success:disabled,
+button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   filter: grayscale(80%);
 }
 
-.btn-novo, .btn-save {
-  background-color: var(--cor-terciaria);
-  color: var(--cor-principal);
+.btn-novo,
+.btn-save {
+  background-color: var(--gems-primary-600, #1d4ed8);
+  border-color: var(--gems-primary-600, #1d4ed8);
+  color: #fff;
 }
 
-.btn-novo:hover, .btn-save:hover {
-  background-color: var(--cor-terciaria-hover);
+.btn-novo:hover:not(:disabled),
+.btn-save:hover:not(:disabled) {
+  background-color: var(--gems-primary-700, #1e40af);
+  border-color: var(--gems-primary-700, #1e40af);
   transform: translateY(-1px);
 }
 
-.btn-cancel {
-  background-color: var(--cor-principal);
-  color: #4b5563;
-  border: 1px solid #d1d5db;
-}
-
-.btn-cancel:hover {
-  background-color: var(--cor-alerta, #dc2626);
-  color: var(--cor-principal, #ffffff);
-  border-color: var(--cor-alerta, #dc2626);
-}
-
 .btn-primary {
-  background-color: var(--cor-terciaria-clara, #33497a);
-  color: var(--cor-principal, #ffffff);
+  background-color: var(--gems-primary-500, #3b82f6);
+  border-color: var(--gems-primary-500, #3b82f6);
+  color: #fff;
 }
 
-.btn-primary:hover {
-  background-color: var(--cor-terciaria, #111827);
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--gems-primary-600, #2563eb);
+  border-color: var(--gems-primary-600, #2563eb);
   transform: translateY(-1px);
 }
 
 .btn-secondary {
-  background-color: var(--cor-principal, #ffffff);
-  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+  border-color: var(--gems-border-color, #d1d5db);
+  color: #374151;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--gems-primary-50, #eff6ff);
+  border-color: var(--gems-primary-300, #93c5fd);
+  color: var(--gems-primary-700, #1d4ed8);
+  transform: translateY(-1px);
+}
+
+.btn-cancel {
+  background-color: #ffffff;
+  border-color: #d1d5db;
   color: #4b5563;
 }
 
-.btn-secondary:hover {
-  background-color: #f9fafb;
-  color: var(--cor-terciaria, #111827);
-  border-color: #9ca3af;
+.btn-cancel:hover:not(:disabled) {
+  background-color: var(--gems-danger-500, #dc2626);
+  border-color: var(--gems-danger-500, #dc2626);
+  color: #ffffff;
+  transform: translateY(-1px);
 }
 
 .btn-danger {
-  background-color: var(--cor-alerta);
-  color: var(--cor-principal);
+  background-color: var(--gems-danger-500, #dc2626);
+  border-color: var(--gems-danger-500, #dc2626);
+  color: #fff;
 }
 
-.btn-danger:hover {
-  background-color: var(--cor-alerta-clara);
+.btn-danger:hover:not(:disabled) {
+  background-color: var(--gems-danger-600, #b91c1c);
+  border-color: var(--gems-danger-600, #b91c1c);
   transform: translateY(-1px);
 }
 
 .btn-success {
-  background-color: var(--cor-sucesso);
-  color: var(--cor-principal);
+  background-color: var(--gems-success-500, #22c55e);
+  border-color: var(--gems-success-500, #22c55e);
+  color: #fff;
+}
+
+.btn-success:hover:not(:disabled) {
+  background-color: var(--gems-success-600, #16a34a);
+  border-color: var(--gems-success-600, #16a34a);
+  transform: translateY(-1px);
 }
 
 .btn-info {
-  background-color: #3b82f6;
-  color: var(--cor-principal);
+  background-color: var(--gems-info-500, #3b82f6);
+  border-color: var(--gems-info-500, #3b82f6);
+  color: #fff;
+}
+
+.btn-info:hover:not(:disabled) {
+  background-color: var(--gems-info-600, #2563eb);
+  border-color: var(--gems-info-600, #2563eb);
+  transform: translateY(-1px);
 }
 
 .btn-warning {
-  background-color: #f59e0b;
-  color: var(--cor-principal);
+  background-color: var(--gems-warning-500, #f59e0b);
+  border-color: var(--gems-warning-500, #f59e0b);
+  color: #fff;
+}
+
+.btn-warning:hover:not(:disabled) {
+  background-color: var(--gems-warning-600, #d97706);
+  border-color: var(--gems-warning-600, #d97706);
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-novo:hover:not(:disabled),
+  .btn-save:hover:not(:disabled),
+  .btn-primary:hover:not(:disabled),
+  .btn-secondary:hover:not(:disabled),
+  .btn-cancel:hover:not(:disabled),
+  .btn-danger:hover:not(:disabled),
+  .btn-success:hover:not(:disabled),
+  .btn-info:hover:not(:disabled),
+  .btn-warning:hover:not(:disabled) {
+    transform: none;
+  }
 }
 
 /* Estrutura Global de Telas */
@@ -202,11 +282,13 @@ select:disabled, .form-select:disabled, .gems-select:disabled, .form-control:dis
   grid-column: 1 / -1;
 }
 
-label, .gems-label, .form-group label {
+label,
+.gems-label,
+.form-group label {
   display: block;
   margin-bottom: 0.5rem;
-  font-weight: 500;
-  font-size: 0.875rem;
+  font-weight: 700;
+  font-size: 0.850rem;
   color: #374151;
 }
 
@@ -244,15 +326,75 @@ label, .gems-label, .form-group label {
   background: rgba(17, 24, 39, 0.03);
 }
 
-.selection-card.readonly { cursor: default; }
+.selection-card.readonly {
+  cursor: default;
+}
 
-.selection-icon { font-size: 1.8rem; color: var(--cor-terciaria); opacity: 0.7; }
-.selection-label { font-size: 0.875rem; font-weight: 600; color: #1e293b; line-height: 1.3; }
-.selection-sublabel { font-size: 0.78rem; color: #6b7280; }
+.selection-icon {
+  font-size: 1.8rem;
+  color: var(--cor-terciaria);
+  opacity: 0.7;
+}
+
+.selection-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1e293b;
+  line-height: 1.3;
+}
+
+.selection-sublabel {
+  font-size: 0.78rem;
+  color: #6b7280;
+}
 
 .step-empty {
-  display: flex; flex-direction: column; align-items: center;
-  gap: 12px; padding: 40px; color: #9ca3af; text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 40px;
+  color: #9ca3af;
+  text-align: center;
 }
-.step-empty i { font-size: 2.5rem; }
 
+.step-empty i {
+  font-size: 2.5rem;
+}
+
+/* Skeleton Loading */
+.gems-skeleton {
+  background-color: #e5e7eb;
+  border-radius: 4px;
+  animation: pulse-skeleton 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-skeleton {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.gems-skeleton-text {
+  height: 1rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.gems-skeleton-title {
+  height: 1.5rem;
+  width: 50%;
+  margin-bottom: 1rem;
+}
+
+.gems-skeleton-button {
+  height: 2.5rem;
+  width: 8rem;
+  border-radius: 6px;
+}

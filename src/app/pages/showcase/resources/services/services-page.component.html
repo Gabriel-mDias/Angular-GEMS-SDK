@@ -1,0 +1,31 @@
+<div class="showcase-page fade-in">
+  <div class="header">
+    <h1>Serviços utilitários</h1>
+    <p class="subtitle">
+      A SDK oferece serviços para navegação, sessão, upload S3 e notificações — todos injetáveis via construtor.
+    </p>
+  </div>
+
+  <gems-form-card title="GemsNavigationService">
+    <p class="resource-intro">Navegação imperativa com suporte a histórico do browser.</p>
+    <app-code-snippet [tabs]="navigationTabs" />
+  </gems-form-card>
+
+  <gems-form-card title="GemsSessionService">
+    <p class="resource-intro">Persistência leve em <code>sessionStorage</code> com tipagem.</p>
+    <app-code-snippet [tabs]="sessionTabs" />
+  </gems-form-card>
+
+  <gems-form-card title="GemsS3Service">
+    <p class="resource-intro">Upload e geração de URLs pré-assinadas para S3.</p>
+    <app-code-snippet [tabs]="s3Tabs" />
+  </gems-form-card>
+
+  <gems-form-card title="Alertas e Notificações">
+    <p class="resource-intro">
+      Dois serviços complementares: <code>GemsAlertService</code> para diálogos modais bloqueantes
+      (via SweetAlert2) e <code>GemsToastService</code> para notificações rápidas não-bloqueantes.
+    </p>
+    <app-code-snippet [tabs]="alertTabs" />
+  </gems-form-card>
+</div>

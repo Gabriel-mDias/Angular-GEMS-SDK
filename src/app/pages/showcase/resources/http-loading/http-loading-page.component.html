@@ -1,0 +1,43 @@
+<div class="showcase-page fade-in">
+  <div class="header">
+    <h1>Loading Interceptor</h1>
+    <p class="subtitle">
+      <code>gemsLoadingInterceptor</code> ativa o spinner automaticamente em cada requisição HTTP.
+      <code>GemsLoadingService</code> permite controle manual quando necessário.
+    </p>
+  </div>
+
+  <gems-form-card title="Configuração">
+    <p class="resource-intro">
+      Registre o interceptor funcional via <code>withInterceptors</code> e adicione
+      <code>&lt;gems-loading&gt;</code> ao template raiz.
+    </p>
+    <app-code-snippet [tabs]="codeTabs" />
+  </gems-form-card>
+
+  <gems-form-card title="Como funciona">
+    <div class="info-list">
+      <div class="info-item">
+        <i class="fa-solid fa-arrow-up-from-bracket" aria-hidden="true"></i>
+        <div>
+          <strong>Contagem por referência</strong>
+          <p>O serviço mantém um contador interno. O spinner só desaparece quando todas as requisições em andamento terminam. Chamadas manuais a <code>show()</code>/<code>hide()</code> seguem a mesma lógica.</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <i class="fa-solid fa-ban" aria-hidden="true"></i>
+        <div>
+          <strong>forceHide()</strong>
+          <p>Em casos de erro crítico onde o contador perde a sincronia, use <code>loadingService.forceHide()</code> para zerar o estado.</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <i class="fa-solid fa-signal" aria-hidden="true"></i>
+        <div>
+          <strong>Signal-based</strong>
+          <p><code>loadingService.isLoading()</code> retorna um <code>Signal&lt;boolean&gt;</code>, compatível com qualquer template Angular sem <code>AsyncPipe</code>.</p>
+        </div>
+      </div>
+    </div>
+  </gems-form-card>
+</div>

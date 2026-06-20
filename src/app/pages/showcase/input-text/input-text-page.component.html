@@ -1,0 +1,52 @@
+<div class="showcase-page fade-in">
+  <div class="header">
+    <div class="header-titles">
+      <h2>Input Text</h2>
+      <p class="subtitle">Campo de entrada de texto genérico com suporte a Reactive Forms e CVA.</p>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <div class="demo-preview">
+      <gems-form-card title="Exemplos de Input Text" icon="fa-solid fa-i-cursor">
+        <form [formGroup]="form" style="display: grid; gap: 1.5rem;">
+          <gems-input-text
+            label="Nome completo"
+            placeholder="Digite seu nome"
+            formControlName="nome"
+            icon="fa-solid fa-user"
+            [required]="true"
+          ></gems-input-text>
+
+          <gems-input-text
+            label="E-mail"
+            type="email"
+            placeholder="exemplo@email.com"
+            formControlName="email"
+            icon="fa-solid fa-envelope"
+          ></gems-input-text>
+
+          <gems-input-text
+            label="Telefone"
+            type="tel"
+            placeholder="(00) 00000-0000"
+            formControlName="telefone"
+            icon="fa-solid fa-phone"
+            hint="Informe DDD + número"
+          ></gems-input-text>
+
+          <gems-input-text
+            label="Campo desabilitado"
+            placeholder="Não editável"
+            formControlName="readonly"
+            [disabled]="true"
+          ></gems-input-text>
+        </form>
+      </gems-form-card>
+    </div>
+
+    <div class="demo-code">
+      <app-code-snippet [tabs]="codeTabs"></app-code-snippet>
+    </div>
+  </div>
+</div>

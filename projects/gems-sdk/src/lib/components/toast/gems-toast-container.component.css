@@ -1,0 +1,107 @@
+.gems-toast-container {
+  position: fixed;
+  bottom: var(--gems-spacing-lg, 1.5rem);
+  right: var(--gems-spacing-lg, 1.5rem);
+  z-index: var(--gems-z-toast, 800);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gems-spacing-sm, 0.5rem);
+  pointer-events: none;
+  max-width: 360px;
+  width: calc(100vw - 2rem);
+}
+
+.gems-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gems-spacing-sm, 0.5rem);
+  padding: var(--gems-spacing-md, 1rem);
+  border-radius: var(--gems-radius-md, 12px);
+  box-shadow: var(--gems-shadow-lg);
+  pointer-events: all;
+  animation: gems-toast-in 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.gems-toast--success {
+  background-color: var(--gems-success-50, #f0fdf4);
+  border: 1px solid var(--gems-success-200, #bbf7d0);
+  color: var(--gems-success-700, #15803d);
+}
+
+.gems-toast--error {
+  background-color: var(--gems-danger-50, #fef2f2);
+  border: 1px solid var(--gems-danger-200, #fecaca);
+  color: var(--gems-danger-700, #b91c1c);
+}
+
+.gems-toast--info {
+  background-color: var(--gems-info-50, #eff6ff);
+  border: 1px solid var(--gems-info-200, #bfdbfe);
+  color: var(--gems-info-700, #1d4ed8);
+}
+
+.gems-toast--warning {
+  background-color: var(--gems-warning-50, #fffbeb);
+  border: 1px solid var(--gems-warning-200, #fde68a);
+  color: var(--gems-warning-700, #b45309);
+}
+
+.gems-toast-icon {
+  font-size: var(--gems-font-size-md, 1rem);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.gems-toast-message {
+  flex: 1;
+  font-size: var(--gems-font-size-sm, 0.875rem);
+  font-weight: var(--gems-font-weight-medium, 500);
+  line-height: var(--gems-line-height-normal, 1.5);
+}
+
+.gems-toast-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: currentColor;
+  opacity: 0.6;
+  font-size: var(--gems-font-size-sm, 0.875rem);
+  display: flex;
+  align-items: center;
+  padding: 0;
+  flex-shrink: 0;
+  transition: opacity var(--gems-transition-fast);
+  min-width: 20px;
+  min-height: 20px;
+}
+
+.gems-toast-close:hover {
+  opacity: 1;
+}
+
+@keyframes gems-toast-in {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@media (max-width: 768px) {
+  .gems-toast-container {
+    bottom: var(--gems-spacing-md, 1rem);
+    right: var(--gems-spacing-md, 1rem);
+    left: var(--gems-spacing-md, 1rem);
+    width: auto;
+    max-width: none;
+  }
+
+  .gems-toast-close {
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gems-toast {
+    animation: none;
+  }
+}

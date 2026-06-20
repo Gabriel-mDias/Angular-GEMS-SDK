@@ -61,3 +61,26 @@
   justify-content: flex-end;
   gap: var(--gems-spacing-sm, 0.75rem);
 }
+
+@media (max-width: 768px) {
+  .gems-form-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--gems-spacing-sm);
+  }
+
+  .header-actions {
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .gems-form-card-content {
+    padding: var(--gems-spacing-md);
+  }
+
+  ::ng-deep [gems-form-card-footer] {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+}

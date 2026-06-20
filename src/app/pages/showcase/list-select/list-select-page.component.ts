@@ -1,107 +1,62 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { GemsFormCardComponent, GemsCardListSelectComponent } from '@gabriel-mdias/angular-gems-sdk';
+
+import { GemsFormCardComponent, GemsCardListSelectComponent, GemsSelectItem } from '@gabriel-mdias/angular-gems-sdk';
 import { CodeSnippetComponent, CodeTab } from '../../../components/code-snippet';
 
 @Component({
   selector: 'app-list-select-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, GemsFormCardComponent, GemsCardListSelectComponent, CodeSnippetComponent],
-  template: `
-    <div class="showcase-page fade-in">
-      <div class="header">
-        <div class="header-titles">
-          <h2>Card List Select</h2>
-          <p class="subtitle">Componente para seleção visual de opções em formato de cards.</p>
-        </div>
-      </div>
-      
-      <div class="demo-section">
-        <div class="demo-preview">
-          <gems-form-card title="Seleção de Plano" icon="fa-solid fa-list-check">
-            <div style="padding-bottom: 2rem;">
-              <gems-card-list-select
-                [items]="planItems"
-                [(selectedId)]="selectedPlan"
-                idKey="value"
-                titleKey="title"
-                subtitleKey="description"
-                icon="fa-solid fa-layer-group"
-              ></gems-card-list-select>
-            </div>
-
-            <div gems-form-card-footer *ngIf="selectedPlan">
-              Plano Selecionado: <strong>{{ selectedPlan }}</strong>
-            </div>
-          </gems-form-card>
-        </div>
-
-        <div class="demo-code">
-          <app-code-snippet [tabs]="codeTabs"></app-code-snippet>
-        </div>
-      </div>
-    </div>
-  `
+  imports: [GemsFormCardComponent, GemsCardListSelectComponent, CodeSnippetComponent],
+  templateUrl: './list-select-page.component.html',
 })
 export class ListSelectPageComponent {
-  selectedPlan: string = 'pro';
+  // ── Estado interno ────────────────────────────────────────────────
+  selectedPlan: string | null = 'pro';
 
-  planItems: any[] = [
-    {
-      value: 'basic',
-      icon: 'fa-solid fa-paper-plane',
-      title: 'Básico',
-      description: 'Ideal para iniciantes e pequenos projetos.'
-    },
-    {
-      value: 'pro',
-      icon: 'fa-solid fa-rocket',
-      title: 'Profissional',
-      description: 'Recursos avançados para equipes em crescimento.'
-    },
-    {
-      value: 'enterprise',
-      icon: 'fa-solid fa-building',
-      title: 'Corporativo',
-      description: 'Solução completa com suporte dedicado.'
-    }
+  readonly planItems: GemsSelectItem[] = [
+    { value: 'basic', title: 'Básico', description: 'Ideal para iniciantes e pequenos projetos.' },
+    { value: 'pro', title: 'Profissional', description: 'Recursos avançados para equipes em crescimento.' },
+    { value: 'enterprise', title: 'Corporativo', description: 'Solução completa com suporte dedicado.' },
   ];
 
-  codeTabs: CodeTab[] = [
+  readonly codeTabs: CodeTab[] = [
     {
       name: 'HTML',
       language: 'html',
       code: `<gems-card-list-select
   [items]="planItems"
-  [(selectedId)]="selectedPlan"
+  [selectedId]="selectedPlan"
+  (selectedIdChange)="selectedPlan = $event"
   idKey="value"
   titleKey="title"
   subtitleKey="description"
   icon="fa-solid fa-layer-group">
-</gems-card-list-select>`
+</gems-card-list-select>
+
+<!-- Seleção múltipla -->
+<gems-card-list-select
+  [items]="planItems"
+  [selectedIds]="selectedPlans"
+  (selectedIdsChange)="selectedPlans = $event"
+  [multiple]="true"
+  idKey="value"
+  titleKey="title">
+</gems-card-list-select>`,
     },
     {
       name: 'TypeScript',
       language: 'typescript',
-      code: `export class MinhaPagina {
-  selectedPlan: string = 'pro';
+      code: `import { GemsSelectItem } from '@gabriel-mdias/angular-gems-sdk';
 
-  planItems = [
-    {
-      value: 'basic',
-      icon: 'fa-solid fa-paper-plane',
-      title: 'Básico',
-      description: 'Ideal para iniciantes.'
-    },
-    {
-      value: 'pro',
-      icon: 'fa-solid fa-rocket',
-      title: 'Profissional',
-      description: 'Recursos avançados.'
-    }
+export class MinhaPagina {
+  selectedPlan = 'pro';
+
+  // GemsSelectItem = Record<string, unknown>
+  planItems: GemsSelectItem[] = [
+    { value: 'basic', title: 'Básico', description: 'Ideal para iniciantes.' },
+    { value: 'pro', title: 'Profissional', description: 'Recursos avançados.' },
   ];
-}`
-    }
+}`,
+    },
   ];
 }

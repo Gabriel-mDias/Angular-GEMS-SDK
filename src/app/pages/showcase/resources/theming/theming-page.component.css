@@ -1,0 +1,38 @@
+.resource-intro {
+  margin: 0 0 var(--gems-spacing-md, 1rem);
+  color: var(--gems-text-muted, #64748b);
+  font-size: var(--gems-font-size-sm, 0.875rem);
+}
+
+.token-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--gems-spacing-md, 1rem);
+}
+
+.token-group {
+  padding: var(--gems-spacing-md, 1rem);
+  background-color: var(--gems-bg-subtle, #f8fafc);
+  border: 1px solid var(--gems-border-color, #e5e7eb);
+  border-radius: var(--gems-radius-md, 12px);
+}
+
+.token-group h4 {
+  margin: 0 0 var(--gems-spacing-xs, 0.25rem);
+  font-size: var(--gems-font-size-xs, 0.75rem);
+  font-weight: var(--gems-font-weight-semibold, 600);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gems-text-muted, #64748b);
+}
+
+.token-group code {
+  font-size: var(--gems-font-size-xs, 0.75rem);
+  color: var(--gems-primary-700, #1d4ed8);
+}
+
+@media (max-width: 768px) {
+  .token-grid {
+    grid-template-columns: 1fr;
+  }
+}

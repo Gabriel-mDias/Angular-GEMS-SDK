@@ -1,0 +1,42 @@
+<div class="gems-form-card-wrapper">
+  <div class="gems-form-card-header">
+    <div class="header-content">
+      @if (title()) {
+        <h2 class="gems-form-card-title">
+          @if (icon()) {
+            <i [class]="icon()"></i>
+          }
+          {{ title() }}
+        </h2>
+      } @else {
+        <ng-content select="[gems-form-card-title]"></ng-content>
+      }
+
+      @if (subtitle()) {
+        <div class="gems-form-card-subtitle">{{ subtitle() }}</div>
+      } @else {
+        <ng-content select="[gems-form-card-subtitle]"></ng-content>
+      }
+    </div>
+
+    <div class="header-actions">
+      <ng-content select="[gems-form-card-actions]"></ng-content>
+    </div>
+  </div>
+
+  <div class="gems-form-card-content">
+    @if (isLoading()) {
+      <div class="gems-skeleton gems-skeleton-title"></div>
+      <div class="gems-skeleton gems-skeleton-text"></div>
+      <div class="gems-skeleton gems-skeleton-text"></div>
+      <div class="gems-skeleton gems-skeleton-button" style="margin-top: 1rem"></div>
+    }
+    <div [style.display]="isLoading() ? 'none' : 'block'">
+      <ng-content></ng-content>
+    </div>
+  </div>
+
+  <div class="gems-form-card-footer">
+    <ng-content select="[gems-form-card-footer]"></ng-content>
+  </div>
+</div>

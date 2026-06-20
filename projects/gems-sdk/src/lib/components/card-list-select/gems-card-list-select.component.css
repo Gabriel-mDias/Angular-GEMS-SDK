@@ -51,10 +51,6 @@
   font-size: var(--gems-font-size-xl, 1.25rem);
 }
 
-.gems-check-icon-empty {
-  color: var(--gems-text-muted, #94a3b8);
-}
-
 .gems-check-icon-selected {
   color: var(--gems-primary-600, #2563eb);
 }
@@ -123,4 +119,30 @@
 .gems-pagination-total-items {
   color: var(--gems-text-muted, #64748b);
   margin-left: var(--gems-spacing-xs, 0.25rem);
+}
+
+/* ── Responsividade ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .gems-selection-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--gems-spacing-sm);
+  }
+
+  .gems-selection-card {
+    min-height: 100px;
+    padding: var(--gems-spacing-md) var(--gems-spacing-sm);
+    /* Alvos de toque ≥ 44px */
+    min-height: 44px;
+  }
+
+  .gems-btn-pagination {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gems-selection-card {
+    transition: none;
+  }
 }
