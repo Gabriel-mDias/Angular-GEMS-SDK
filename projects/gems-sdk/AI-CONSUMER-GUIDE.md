@@ -213,9 +213,7 @@ Provide the API base URL:
 1. `provideGemsTheme({ primary, secondary, tertiary, background })` in `app.config.ts`
 2. Import CSS tokens in `styles.css`:
    ```css
-   @import "@gabriel-mdias/angular-gems-sdk/core/tokens/gems-design-tokens.css";
-   @import "@gabriel-mdias/angular-gems-sdk/core/tokens/gems-utilities.css";
-   @import "@gabriel-mdias/angular-gems-sdk/core/tokens/gems-animations.css";
+   @import "@gabriel-mdias/angular-gems-sdk/src/lib/styles/gems-global.css";
    ```
 
 ---

@@ -5,6 +5,7 @@
     "entryFile": "src/public-api.ts"
   },
   "assets": [
-    "AI-CONSUMER-GUIDE.md"
+    "AI-CONSUMER-GUIDE.md",
+    "src/lib/styles/**/*.css"
   ]
 }
