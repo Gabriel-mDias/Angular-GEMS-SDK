@@ -36,6 +36,7 @@ Adicionar a SDK no seu projeto Angular é extremamente simples. O pacote é vers
 No seu projeto Angular, crie ou edite o arquivo `.npmrc` na raiz e aponte o namespace para o GitHub:
 ```ini
 @gabriel-mdias:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=<SEU TOKEN NO GITHUB COM PERMISSÃO DE LEITURA DE PACOTES>
 ```
 *Nota: Tenha certeza de que você possui permissão/token do GitHub para ler pacotes.*
 
