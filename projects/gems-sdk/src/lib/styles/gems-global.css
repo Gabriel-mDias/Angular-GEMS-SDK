@@ -1,4 +1,8 @@
 /* Estrutura Global e Cores */
+@import '../core/tokens/gems-design-tokens.css';
+@import '../core/tokens/gems-animations.css';
+@import '../core/tokens/gems-utilities.css';
+
 :root {
   --cor-fundo: #f8f9fa;
   --cor-principal: #ffffff;
@@ -214,6 +218,7 @@ button:disabled {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .btn-novo:hover:not(:disabled),
   .btn-save:hover:not(:disabled),
   .btn-primary:hover:not(:disabled),
@@ -373,9 +378,11 @@ label,
   0% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.4;
   }
+
   100% {
     opacity: 1;
   }
