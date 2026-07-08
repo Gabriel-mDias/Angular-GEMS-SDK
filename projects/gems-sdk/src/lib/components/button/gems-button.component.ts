@@ -1,4 +1,10 @@
-import { Component, booleanAttribute, computed, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  booleanAttribute,
+  computed,
+  input,
+} from '@angular/core';
 
 import { GemsButtonVariant } from './gems-button.model';
 
@@ -20,6 +26,7 @@ import { GemsButtonVariant } from './gems-button.model';
   imports: [],
   templateUrl: './gems-button.component.html',
   styleUrls: ['./gems-button.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GemsButtonComponent {
   // ── Inputs ────────────────────────────────────────────────────────

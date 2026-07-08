@@ -1,4 +1,4 @@
-import { Component, input, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, model } from '@angular/core';
 
 import { GemsTab } from './gems-tabs.model';
 
@@ -20,6 +20,7 @@ import { GemsTab } from './gems-tabs.model';
   imports: [],
   templateUrl: './gems-tabs.component.html',
   styleUrls: ['./gems-tabs.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GemsTabsComponent {
   // ── Inputs / two-way ─────────────────────────────────────────────

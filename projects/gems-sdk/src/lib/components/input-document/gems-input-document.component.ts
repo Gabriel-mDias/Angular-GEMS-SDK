@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   booleanAttribute,
   computed,
@@ -9,6 +10,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 
+import { gemsUniqueId } from '../../core/utils/gems-unique-id.util';
 import { GemsDocumentType } from './gems-input-document.model';
 
 /**
@@ -28,12 +30,13 @@ import { GemsDocumentType } from './gems-input-document.model';
       multi: true,
     },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GemsInputDocumentComponent implements ControlValueAccessor {
   // ── Inputs ────────────────────────────────────────────────────────
   readonly label = input<string>('Documento');
   readonly placeholder = input<string>('CPF ou CNPJ');
-  readonly id = input<string>('doc-' + crypto.randomUUID());
+  readonly id = input<string>(gemsUniqueId('doc'));
   readonly required = input<boolean, boolean | string>(false, { transform: booleanAttribute });
   readonly documentType = input<GemsDocumentType>('auto');
   readonly icon = input<string>('fa-regular fa-id-card');
@@ -100,7 +103,7 @@ export class GemsInputDocumentComponent implements ControlValueAccessor {
     }
 
     const type = this.documentType();
-    let masked = '';
+    let masked: string;
 
     if (type === 'cpf' || (type === 'auto' && rawValue.length <= 11)) {
       rawValue = rawValue.substring(0, 11);

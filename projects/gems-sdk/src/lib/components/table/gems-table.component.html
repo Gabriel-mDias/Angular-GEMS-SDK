@@ -3,125 +3,119 @@
     <thead>
       <tr>
         @for (col of columns(); track col.field) {
-          <th
-            [class.sortable]="col.sortable !== false && col.type !== 'actions'"
-            (click)="sortBy(col.field)"
-          >
-            {{ col.header }}
-            @if (sortField() === (col.sortParam || col.field)) {
-              <i
-                class="fa-solid sort-icon"
-                [class.fa-sort-up]="sortDirection() === 'asc'"
-                [class.fa-sort-down]="sortDirection() === 'desc'"
-                aria-hidden="true"
-              ></i>
-            } @else if (col.sortable !== false && col.type !== 'actions') {
-              <i class="fa-solid fa-sort sort-icon text-muted" aria-hidden="true"></i>
-            }
-          </th>
+        <th
+          [class.sortable]="col.sortable !== false && col.type !== 'actions'"
+          [attr.role]="col.sortable !== false && col.type !== 'actions' ? 'button' : null"
+          [attr.tabindex]="col.sortable !== false && col.type !== 'actions' ? 0 : null"
+          [attr.aria-sort]="
+              sortField() === (col.sortParam || col.field)
+                ? (sortDirection() === 'asc' ? 'ascending' : 'descending')
+                : (col.sortable !== false && col.type !== 'actions' ? 'none' : null)
+            "
+          (click)="sortBy(col.field)"
+          (keydown.enter)="sortBy(col.field)"
+          (keydown.space)="sortBy(col.field)"
+        >
+          {{ col.header }} @if (sortField() === (col.sortParam || col.field)) {
+          <i
+            class="fa-solid sort-icon"
+            [class.fa-sort-up]="sortDirection() === 'asc'"
+            [class.fa-sort-down]="sortDirection() === 'desc'"
+            aria-hidden="true"
+          ></i>
+          } @else if (col.sortable !== false && col.type !== 'actions') {
+          <i class="fa-solid fa-sort sort-icon text-muted" aria-hidden="true"></i>
+          }
+        </th>
         }
       </tr>
     </thead>
 
     <tbody>
-      @if (isLoading()) {
-        @for (row of skeletonRows; track row) {
-          <tr>
-            @for (col of columns(); track col.field) {
-              <td><div class="gems-skeleton gems-skeleton-text"></div></td>
-            }
-          </tr>
+      @if (isLoading()) { @for (row of skeletonRows; track row) {
+      <tr>
+        @for (col of columns(); track col.field) {
+        <td><div class="gems-skeleton gems-skeleton-text"></div></td>
         }
-      } @else {
-        @if (data().length === 0) {
-          <tr>
-            <td [attr.colspan]="columns().length" class="empty-state">
-              <i class="fa-solid fa-folder-open" aria-hidden="true"></i>
-              <p>{{ emptyMessage() }}</p>
-            </td>
-          </tr>
-        } @else {
-          @for (row of data(); track $index) {
-            <tr>
-              @for (col of columns(); track col.field) {
-                <td [attr.data-label]="col.header">
-                  @switch (col.type) {
-                    @case ('document') {
-                      {{ row[col.field] | gemsDocument: row[col.docTypeField || 'tipoDocumento'] }}
-                    }
-                    @case ('badge') {
-                      <span class="status-badge" [ngStyle]="getBadgeStyle(col, row[col.field])">
-                        {{ row[col.field] }}
-                      </span>
-                    }
-                    @case ('actions') {
-                      <div class="action-buttons">
-                        @for (action of actions(); track action.actionName) {
-                          @if (!action.visible || action.visible(row)) {
-                            <button
-                              type="button"
-                              [title]="action.tooltip"
-                              [class]="action.colorClass || 'btn-default'"
-                              (click)="onActionClick(action.actionName, row)"
-                            >
-                              <i [class]="action.icon" aria-hidden="true"></i>
-                            </button>
-                          }
-                        }
-                      </div>
-                    }
-                    @default {
-                      {{ row[col.field] }}
-                    }
-                  }
-                </td>
-              }
-            </tr>
-          }
+      </tr>
+      } } @else { @if (data().length === 0) {
+      <tr>
+        <td [attr.colspan]="columns().length" class="empty-state">
+          <i class="fa-solid fa-folder-open" aria-hidden="true"></i>
+          <p>{{ emptyMessage() }}</p>
+        </td>
+      </tr>
+      } @else { @for (row of data(); track trackRow($index, row)) {
+      <tr>
+        @for (col of columns(); track col.field) {
+        <td [attr.data-label]="col.header">
+          @switch (col.type) { @case ('document') { {{ row[col.field] | gemsDocument:
+          $any(row[col.docTypeField || 'tipoDocumento']) }} } @case ('badge') {
+          <span class="status-badge" [ngStyle]="getBadgeStyle(col, row[col.field])">
+            {{ row[col.field] }}
+          </span>
+          } @case ('actions') {
+          <div class="action-buttons">
+            @for (action of actions(); track action.actionName) { @if (!action.visible ||
+            action.visible(row)) {
+            <button
+              type="button"
+              [title]="action.tooltip"
+              [class]="action.colorClass || 'btn-default'"
+              (click)="onActionClick(action.actionName, row)"
+            >
+              <i [class]="action.icon" aria-hidden="true"></i>
+            </button>
+            } }
+          </div>
+          } @default { {{ row[col.field] }} } }
+        </td>
         }
-      }
+      </tr>
+      } } }
     </tbody>
   </table>
 
   @if (totalRecords() > 0) {
-    <div class="pagination-container">
-      <div class="pagination-info">
-        Mostrando {{ page() * size() + 1 }} até
-        {{ (page() + 1) * size() > totalRecords() ? totalRecords() : (page() + 1) * size() }}
-        de {{ totalRecords() }} registros
+  <div class="pagination-container">
+    <div class="pagination-info">
+      {{ resolvedLabels().showing( page() * size() + 1, (page() + 1) * size() > totalRecords() ?
+      totalRecords() : (page() + 1) * size(), totalRecords() ) }}
+    </div>
+
+    <div class="pagination-controls">
+      <div class="page-size">
+        <label for="pageSize">{{ resolvedLabels().perPage }}</label>
+        <select id="pageSize" [value]="size()" (change)="changeSize($event)">
+          <option [value]="5">5</option>
+          <option [value]="10">10</option>
+          <option [value]="20">20</option>
+          <option [value]="50">50</option>
+        </select>
       </div>
 
-      <div class="pagination-controls">
-        <div class="page-size">
-          <label for="pageSize">Itens por página:</label>
-          <select id="pageSize" [value]="size()" (change)="changeSize($event)">
-            <option [value]="5">5</option>
-            <option [value]="10">10</option>
-            <option [value]="20">20</option>
-            <option [value]="50">50</option>
-          </select>
-        </div>
-
-        <div class="page-buttons">
-          <button
-            class="btn-icon"
-            [disabled]="!hasPreviousPage()"
-            title="Página Anterior"
-            (click)="changePage(page() - 1)"
-          >
-            <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
-          </button>
-          <span class="page-indicator">Página {{ page() + 1 }} de {{ totalPages() }}</span>
-          <button
-            class="btn-icon"
-            [disabled]="!hasNextPage()"
-            title="Próxima Página"
-            (click)="changePage(page() + 1)"
-          >
-            <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
-          </button>
-        </div>
+      <div class="page-buttons">
+        <button
+          type="button"
+          class="btn-icon"
+          [disabled]="!hasPreviousPage()"
+          [title]="resolvedLabels().previous"
+          (click)="changePage(page() - 1)"
+        >
+          <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+        </button>
+        <span class="page-indicator">{{ resolvedLabels().page(page() + 1, totalPages()) }}</span>
+        <button
+          type="button"
+          class="btn-icon"
+          [disabled]="!hasNextPage()"
+          [title]="resolvedLabels().next"
+          (click)="changePage(page() + 1)"
+        >
+          <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+        </button>
       </div>
     </div>
+  </div>
   }
 </div>

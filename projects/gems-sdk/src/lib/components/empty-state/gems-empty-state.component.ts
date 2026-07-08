@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
 /**
  * Estado vazio para listas, tabelas ou seções sem dados.
@@ -20,6 +20,7 @@ import { Component, input, output } from '@angular/core';
   imports: [],
   templateUrl: './gems-empty-state.component.html',
   styleUrls: ['./gems-empty-state.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GemsEmptyStateComponent {
   // ── Inputs ────────────────────────────────────────────────────────

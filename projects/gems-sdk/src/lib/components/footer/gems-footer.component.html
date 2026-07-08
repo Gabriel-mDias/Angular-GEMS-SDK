@@ -5,15 +5,13 @@
 
   <div class="gems-footer-bottom">
     @if (copyright()) {
-      <p class="gems-footer-copyright">&copy; {{ currentYear }} {{ copyright() }}</p>
-    }
-
-    @if (links().length) {
-      <div class="gems-footer-links">
-        @for (link of links(); track link.url) {
-          <a [href]="link.url" [target]="link.target || '_self'">{{ link.label }}</a>
-        }
-      </div>
+    <p class="gems-footer-copyright">&copy; {{ currentYear }} {{ copyright() }}</p>
+    } @if (links().length) {
+    <div class="gems-footer-links">
+      @for (link of links(); track link.url) {
+      <a [href]="link.url" [target]="link.target || '_self'">{{ link.label }}</a>
+      }
+    </div>
     }
   </div>
 </footer>

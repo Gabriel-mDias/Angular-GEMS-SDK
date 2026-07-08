@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {
+  GemsLoadingComponent,
   GemsSideMenuComponent,
   GemsSideMenuConfig,
   GemsToastContainerComponent,
@@ -9,8 +10,9 @@ import {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, GemsSideMenuComponent, GemsToastContainerComponent],
+  imports: [RouterOutlet, GemsSideMenuComponent, GemsToastContainerComponent, GemsLoadingComponent],
   template: `
+    <gems-loading></gems-loading>
     <gems-toast-container></gems-toast-container>
     <div class="showcase-layout" [class.mobile-menu-open]="mobileMenuOpen">
       <gems-side-menu

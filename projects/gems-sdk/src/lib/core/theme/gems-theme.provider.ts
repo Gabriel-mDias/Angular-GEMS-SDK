@@ -1,4 +1,9 @@
-import { APP_INITIALIZER, EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
+import {
+  EnvironmentProviders,
+  inject,
+  makeEnvironmentProviders,
+  provideAppInitializer,
+} from '@angular/core';
 import { GemsThemeConfig } from './gems-theme.config';
 import { GEMS_THEME_CONFIG, GemsThemeService } from './gems-theme.service';
 
@@ -28,11 +33,6 @@ import { GEMS_THEME_CONFIG, GemsThemeService } from './gems-theme.service';
 export function provideGemsTheme(config: GemsThemeConfig): EnvironmentProviders {
   return makeEnvironmentProviders([
     { provide: GEMS_THEME_CONFIG, useValue: config },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: (themeService: GemsThemeService) => () => themeService.applyTheme(),
-      deps: [GemsThemeService],
-      multi: true,
-    },
+    provideAppInitializer(() => inject(GemsThemeService).applyTheme()),
   ]);
 }

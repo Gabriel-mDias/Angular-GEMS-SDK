@@ -1,4 +1,4 @@
-import { Component, input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, ViewEncapsulation } from '@angular/core';
 
 /**
  * Card estruturado com cabeçalho (título, subtítulo, ações), área de
@@ -18,6 +18,7 @@ import { Component, input, ViewEncapsulation } from '@angular/core';
   templateUrl: './gems-form-card.component.html',
   styleUrls: ['./gems-form-card.component.css'],
   encapsulation: ViewEncapsulation.Emulated,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GemsFormCardComponent {
   // ── Inputs ────────────────────────────────────────────────────────

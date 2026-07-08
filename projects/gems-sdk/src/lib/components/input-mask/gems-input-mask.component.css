@@ -7,15 +7,15 @@
 
 .gems-label {
   display: block;
-  font-size: 0.850rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: #374151;
   margin-bottom: 0.5rem;
 }
 
 .gems-label.gems-required::after {
-  content: '*';
-  color: var(--gems-error, #ef4444);
+  content: "*";
+  color: var(--gems-danger-500, #ef4444);
   margin-left: 2px;
 }
 

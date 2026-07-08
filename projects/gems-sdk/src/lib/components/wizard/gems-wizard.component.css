@@ -52,15 +52,15 @@
 
 /* Active State */
 .gems-step-item.gems-active .gems-step-circle {
-  border-color: var(--cor-quartenaria, #2563eb);
-  background-color: var(--cor-quartenaria, #2563eb);
+  border-color: var(--gems-secondary, #e17827);
+  background-color: var(--gems-secondary, #e17827);
   color: #ffffff;
   box-shadow: 0 0 0 4px rgba(225, 120, 39, 0.15); /* Orange hue based on meduc primary */
   transform: scale(1.05);
 }
 
 .gems-step-item.gems-active .gems-step-label {
-  color: var(--cor-quartenaria, #2563eb);
+  color: var(--gems-secondary, #e17827);
   font-weight: 700;
 }
 
@@ -95,13 +95,13 @@
   .gems-step-label {
     display: none; /* Hide labels on mobile to keep circles proportional */
   }
-  
+
   .gems-step-circle {
     width: 40px;
     height: 40px;
     font-size: 1rem;
   }
-  
+
   .gems-step-connector {
     margin-top: 19px;
   }

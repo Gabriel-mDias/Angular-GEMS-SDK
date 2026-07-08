@@ -1,7 +1,16 @@
-import { Component, forwardRef, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  forwardRef,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { GemsSelectOption } from './gems-select.model';
+import { gemsUniqueId } from '../../core/utils/gems-unique-id.util';
+import { GemsSelectCompareWith, GemsSelectOption } from './gems-select.model';
 
 /**
  * Dropdown estilizado com suporte a ControlValueAccessor.
@@ -18,6 +27,7 @@ import { GemsSelectOption } from './gems-select.model';
   imports: [],
   templateUrl: './gems-select.component.html',
   styleUrls: ['./gems-select.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -33,10 +43,19 @@ export class GemsSelectComponent implements ControlValueAccessor {
   readonly placeholder = input<string>('Selecione...');
   readonly disabled = input<boolean>(false);
   readonly required = input<boolean>(false);
+  /** Comparador usado para casar o valor do formulário com uma opção (valores objeto). */
+  readonly compareWith = input<GemsSelectCompareWith>((a, b) => a === b);
+
+  // ── Outputs ───────────────────────────────────────────────────────
+  readonly valueChange = output<unknown>();
 
   // ── Estado interno ────────────────────────────────────────────────
-  protected readonly selectId = crypto.randomUUID();
-  protected value: unknown = null;
+  protected readonly selectId = gemsUniqueId('select');
+  protected readonly value = signal<unknown>(null);
+  private readonly disabledByForm = signal(false);
+  protected readonly isDisabled = computed(() => this.disabled() || this.disabledByForm());
+  /** true quando nenhum valor real está selecionado (placeholder visível). */
+  protected readonly isEmpty = computed(() => this.value() === null || this.value() === undefined);
 
   // ── CVA ───────────────────────────────────────────────────────────
   private onChange: (value: unknown) => void = () => {};
@@ -44,7 +63,7 @@ export class GemsSelectComponent implements ControlValueAccessor {
 
   // ── Métodos públicos (CVA) ────────────────────────────────────────
   writeValue(value: unknown): void {
-    this.value = value ?? null;
+    this.value.set(value ?? null);
   }
 
   registerOnChange(fn: (value: unknown) => void): void {
@@ -55,7 +74,9 @@ export class GemsSelectComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  setDisabledState(_isDisabled: boolean): void {}
+  setDisabledState(isDisabled: boolean): void {
+    this.disabledByForm.set(isDisabled);
+  }
 
   // ── Métodos públicos ──────────────────────────────────────────────
   /** Retorna o índice como string para vincular ao option value no template. */
@@ -64,7 +85,11 @@ export class GemsSelectComponent implements ControlValueAccessor {
   }
 
   isSelected(option: GemsSelectOption): boolean {
-    return option.value === this.value;
+    const current = this.value();
+    if (current === null || current === undefined) {
+      return false;
+    }
+    return this.compareWith()(option.value, current);
   }
 
   onSelectChange(event: Event): void {
@@ -72,8 +97,9 @@ export class GemsSelectComponent implements ControlValueAccessor {
     const index = Number(select.value);
     const selected = this.options()[index];
     if (selected) {
-      this.value = selected.value;
+      this.value.set(selected.value);
       this.onChange(selected.value);
+      this.valueChange.emit(selected.value);
     }
   }
 }

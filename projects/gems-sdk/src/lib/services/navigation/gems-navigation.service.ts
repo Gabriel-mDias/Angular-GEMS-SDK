@@ -73,15 +73,13 @@ export class GemsNavigationService {
 
   // ── Métodos privados ──────────────────────────────────────────────
   private initHistoryTracker(): void {
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(event => {
-        const history = this.getHistory();
-        const url = (event as NavigationEnd).urlAfterRedirects;
-        if (history.length === 0 || history[history.length - 1] !== url) {
-          history.push(url);
-          this.sessionService.setItem(this.HISTORY_KEY, history);
-        }
-      });
+    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(event => {
+      const history = this.getHistory();
+      const url = (event as NavigationEnd).urlAfterRedirects;
+      if (history.length === 0 || history[history.length - 1] !== url) {
+        history.push(url);
+        this.sessionService.setItem(this.HISTORY_KEY, history);
+      }
+    });
   }
 }

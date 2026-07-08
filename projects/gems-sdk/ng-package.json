@@ -4,8 +4,6 @@
   "lib": {
     "entryFile": "src/public-api.ts"
   },
-  "assets": [
-    "AI-CONSUMER-GUIDE.md",
-    "src/lib/styles/**/*.css"
-  ]
+  "allowedNonPeerDependencies": ["sweetalert2", "tslib"],
+  "assets": ["AI-CONSUMER-GUIDE.md", "src/lib/styles/**/*.css", "src/lib/core/**/*.css"]
 }

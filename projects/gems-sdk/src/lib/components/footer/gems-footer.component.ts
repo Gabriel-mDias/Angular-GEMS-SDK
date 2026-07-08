@@ -1,4 +1,4 @@
-import { Component, input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, ViewEncapsulation } from '@angular/core';
 
 import { GemsFooterLink } from './gems-footer.model';
 
@@ -13,6 +13,7 @@ import { GemsFooterLink } from './gems-footer.model';
   templateUrl: './gems-footer.component.html',
   styleUrls: ['./gems-footer.component.css'],
   encapsulation: ViewEncapsulation.Emulated,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GemsFooterComponent {
   // ── Inputs ────────────────────────────────────────────────────────

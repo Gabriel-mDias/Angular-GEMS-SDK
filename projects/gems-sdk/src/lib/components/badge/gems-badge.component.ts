@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 import { GemsBadgeVariant } from './gems-badge.model';
 
@@ -17,6 +17,7 @@ import { GemsBadgeVariant } from './gems-badge.model';
   imports: [],
   templateUrl: './gems-badge.component.html',
   styleUrls: ['./gems-badge.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GemsBadgeComponent {
   // ── Inputs ────────────────────────────────────────────────────────

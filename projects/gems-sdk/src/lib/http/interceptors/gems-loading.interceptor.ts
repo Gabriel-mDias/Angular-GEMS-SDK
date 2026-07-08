@@ -12,13 +12,11 @@ import { GemsLoadingService } from '../../services/gems-loading.service';
  */
 export const gemsLoadingInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
-  next: HttpHandlerFn
+  next: HttpHandlerFn,
 ): Observable<HttpEvent<unknown>> => {
   const loadingService = inject(GemsLoadingService);
 
-  loadingService.show();
+  const generation = loadingService.show();
 
-  return next(req).pipe(
-    finalize(() => loadingService.hide())
-  );
+  return next(req).pipe(finalize(() => loadingService.hide(generation)));
 };

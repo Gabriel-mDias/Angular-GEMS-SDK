@@ -39,3 +39,10 @@
   background-color: var(--gems-bg-emphasis, #e2e8f0);
   color: var(--gems-text-main, #475569);
 }
+
+@media (max-width: 768px) {
+  .gems-badge {
+    padding: 2px 8px;
+    font-size: var(--gems-font-size-xs, 0.7rem);
+  }
+}

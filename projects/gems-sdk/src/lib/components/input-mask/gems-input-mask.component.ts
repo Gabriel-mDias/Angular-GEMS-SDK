@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   booleanAttribute,
   computed,
@@ -9,7 +10,8 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { GemsMaskType } from './gems-input-mask.model';
+import { gemsUniqueId } from '../../core/utils/gems-unique-id.util';
+import { GemsMaskType, GemsMaskTypeInput, gemsNormalizeMaskType } from './gems-input-mask.model';
 
 /**
  * Input com máscara automática para CEP, telefone, RG ou e-mail.
@@ -21,6 +23,7 @@ import { GemsMaskType } from './gems-input-mask.model';
   imports: [FormsModule],
   templateUrl: './gems-input-mask.component.html',
   styleUrls: ['./gems-input-mask.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -33,10 +36,16 @@ export class GemsInputMaskComponent implements ControlValueAccessor {
   // ── Inputs ────────────────────────────────────────────────────────
   readonly label = input<string>('');
   readonly placeholder = input<string>('');
-  readonly id = input<string>('mask-' + crypto.randomUUID());
+  readonly id = input<string>(gemsUniqueId('mask'));
   readonly required = input<boolean, boolean | string>(false, { transform: booleanAttribute });
-  readonly maskType = input<GemsMaskType>('cep');
+  /** Tipo de máscara (EN): 'cep' | 'phone' | 'rg' | 'email'. Aceita 'telefone' (@deprecated). */
+  readonly maskType = input<GemsMaskTypeInput>('cep');
   readonly icon = input<string>();
+
+  /** Tipo de máscara canônico (EN), resolvido a partir de `maskType`. */
+  protected readonly resolvedMaskType = computed<GemsMaskType>(() =>
+    gemsNormalizeMaskType(this.maskType()),
+  );
 
   // ── Outputs ───────────────────────────────────────────────────────
   readonly valueChange = output<string>();
@@ -58,7 +67,7 @@ export class GemsInputMaskComponent implements ControlValueAccessor {
     const inputEl = event.target as HTMLInputElement;
     let rawValue = inputEl.value;
 
-    if (this.maskType() !== 'email') {
+    if (this.resolvedMaskType() !== 'email') {
       rawValue = rawValue.replace(/\D/g, '');
     }
 
@@ -100,12 +109,12 @@ export class GemsInputMaskComponent implements ControlValueAccessor {
     }
 
     let masked = '';
-    switch (this.maskType()) {
+    switch (this.resolvedMaskType()) {
       case 'cep':
         rawValue = rawValue.substring(0, 8);
         masked = rawValue.replace(/(\d{5})(\d)/, '$1-$2');
         break;
-      case 'telefone':
+      case 'phone':
         rawValue = rawValue.substring(0, 11);
         if (rawValue.length > 10) {
           masked = rawValue.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3');

@@ -1,35 +1,36 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
   GemsFormCardComponent,
   GemsTableComponent,
   GemsTableColumn,
   GemsTableAction,
+  GemsTableRow,
   GemsAlertService,
-  GemsPageable
+  GemsPageable,
 } from '@gabriel-mdias/angular-gems-sdk';
 import { CodeSnippetComponent, CodeTab } from '../../../components/code-snippet';
+
+interface Matricula {
+  idMatricula: string;
+  instituicaoNomeFantasia: string;
+  alunoNome: string;
+  situacaoDesc: string;
+}
 
 @Component({
   selector: 'app-search-page',
   standalone: true,
-  imports: [
-    CommonModule, 
-    FormsModule,
-    GemsFormCardComponent,
-    GemsTableComponent,
-    CodeSnippetComponent
-  ],
+  imports: [FormsModule, GemsFormCardComponent, GemsTableComponent, CodeSnippetComponent],
   templateUrl: './search-page.component.html',
-  styleUrls: ['./search-page.component.css']
+  styleUrls: ['./search-page.component.css'],
 })
 export class SearchPageComponent {
   constructor(private alertService: GemsAlertService) {}
 
   filterParams = {
     nome: '',
-    situacao: ''
+    situacao: '',
   };
 
   situacaoOptions = ['Ativa', 'Suspensa', 'Cancelada'];
@@ -38,51 +39,76 @@ export class SearchPageComponent {
     { field: 'idMatricula', header: 'ID Matrícula', sortable: true },
     { field: 'instituicaoNomeFantasia', header: 'Nome Fantasia', sortable: true },
     { field: 'alunoNome', header: 'Aluno', sortable: true },
-    { 
-      field: 'situacaoDesc', 
-      header: 'Situação', 
-      sortable: true, 
+    {
+      field: 'situacaoDesc',
+      header: 'Situação',
+      sortable: true,
       sortParam: 'situacao',
       type: 'badge',
       badgeColors: {
-        'Ativa': { bg: '#dcfce7', text: '#166534' },     
-        'Suspensa': { bg: '#fef9c3', text: '#854d0e' },  
-        'Cancelada': { bg: '#fee2e2', text: '#991b1b' }  
-      }
+        Ativa: { bg: '#dcfce7', text: '#166534' },
+        Suspensa: { bg: '#fef9c3', text: '#854d0e' },
+        Cancelada: { bg: '#fee2e2', text: '#991b1b' },
+      },
     },
-    { field: 'actions', header: '', type: 'actions', sortable: false }
+    { field: 'actions', header: '', type: 'actions', sortable: false },
   ];
 
   tableActions: GemsTableAction[] = [
-    { 
-      actionName: 'view', 
-      icon: 'fa-solid fa-eye', 
-      tooltip: 'Visualizar', 
+    {
+      actionName: 'view',
+      icon: 'fa-solid fa-eye',
+      tooltip: 'Visualizar',
       colorClass: 'btn-info',
-      visible: () => true
+      visible: () => true,
     },
-    { 
-      actionName: 'suspend', 
-      icon: 'fa-solid fa-pause', 
-      tooltip: 'Suspender', 
+    {
+      actionName: 'suspend',
+      icon: 'fa-solid fa-pause',
+      tooltip: 'Suspender',
       colorClass: 'btn-warning',
-      visible: (row: any) => row.situacaoDesc === 'Ativa'
+      visible: (row: GemsTableRow) => (row as unknown as Matricula).situacaoDesc === 'Ativa',
     },
-    { 
-      actionName: 'cancel', 
-      icon: 'fa-solid fa-ban', 
-      tooltip: 'Cancelar', 
+    {
+      actionName: 'cancel',
+      icon: 'fa-solid fa-ban',
+      tooltip: 'Cancelar',
       colorClass: 'btn-danger',
-      visible: (row: any) => row.situacaoDesc !== 'Cancelada'
-    }
+      visible: (row: GemsTableRow) => (row as unknown as Matricula).situacaoDesc !== 'Cancelada',
+    },
   ];
 
   allData = [
-    { idMatricula: '1001', instituicaoNomeFantasia: 'Escola Esperança', alunoNome: 'João da Silva', situacaoDesc: 'Ativa' },
-    { idMatricula: '1002', instituicaoNomeFantasia: 'Escola Esperança', alunoNome: 'Maria Joaquina', situacaoDesc: 'Ativa' },
-    { idMatricula: '1003', instituicaoNomeFantasia: 'Colégio Futuro', alunoNome: 'Pedro Alves', situacaoDesc: 'Suspensa' },
-    { idMatricula: '1004', instituicaoNomeFantasia: 'Instituto Luz', alunoNome: 'Ana Souza', situacaoDesc: 'Cancelada' },
-    { idMatricula: '1005', instituicaoNomeFantasia: 'Escola Esperança', alunoNome: 'Marcos Paulo', situacaoDesc: 'Ativa' },
+    {
+      idMatricula: '1001',
+      instituicaoNomeFantasia: 'Escola Esperança',
+      alunoNome: 'João da Silva',
+      situacaoDesc: 'Ativa',
+    },
+    {
+      idMatricula: '1002',
+      instituicaoNomeFantasia: 'Escola Esperança',
+      alunoNome: 'Maria Joaquina',
+      situacaoDesc: 'Ativa',
+    },
+    {
+      idMatricula: '1003',
+      instituicaoNomeFantasia: 'Colégio Futuro',
+      alunoNome: 'Pedro Alves',
+      situacaoDesc: 'Suspensa',
+    },
+    {
+      idMatricula: '1004',
+      instituicaoNomeFantasia: 'Instituto Luz',
+      alunoNome: 'Ana Souza',
+      situacaoDesc: 'Cancelada',
+    },
+    {
+      idMatricula: '1005',
+      instituicaoNomeFantasia: 'Escola Esperança',
+      alunoNome: 'Marcos Paulo',
+      situacaoDesc: 'Ativa',
+    },
   ];
 
   tableData = [...this.allData];
@@ -119,7 +145,7 @@ export class SearchPageComponent {
   [totalRecords]="totalRecords"
   (actionClick)="handleAction($event)"
   (pageChange)="onPageChange($event)">
-</gems-table>`
+</gems-table>`,
     },
     {
       name: 'TypeScript',
@@ -156,14 +182,16 @@ export class MatriculaListComponent {
       this.alertService.confirm('Suspender', 'Deseja suspender a matrícula?');
     }
   }
-}`
-    }
+}`,
+    },
   ];
 
   search() {
     this.tableData = this.allData.filter(item => {
       const matchNome = item.alunoNome.toLowerCase().includes(this.filterParams.nome.toLowerCase());
-      const matchSituacao = this.filterParams.situacao ? item.situacaoDesc === this.filterParams.situacao : true;
+      const matchSituacao = this.filterParams.situacao
+        ? item.situacaoDesc === this.filterParams.situacao
+        : true;
       return matchNome && matchSituacao;
     });
     this.totalRecords = this.tableData.length;
@@ -174,22 +202,25 @@ export class MatriculaListComponent {
     this.search();
   }
 
-  handleAction(event: { action: string; row: any }) {
+  handleAction(event: { action: string; row: GemsTableRow }) {
+    const row = event.row as unknown as Matricula;
     if (event.action === 'view') {
-      this.alertService.info('Visualizar', `Visualizando matrícula ${event.row.idMatricula}`);
+      this.alertService.info('Visualizar', `Visualizando matrícula ${row.idMatricula}`);
     } else if (event.action === 'suspend') {
-      this.alertService.confirm('Suspender', `Tem certeza que deseja suspender a matrícula ${event.row.idMatricula}?`)
+      this.alertService
+        .confirm('Suspender', `Tem certeza que deseja suspender a matrícula ${row.idMatricula}?`)
         .then(res => {
           if (res.isConfirmed) {
-            event.row.situacaoDesc = 'Suspensa';
+            row.situacaoDesc = 'Suspensa';
             this.alertService.success('Sucesso', 'Matrícula suspensa.');
           }
         });
     } else if (event.action === 'cancel') {
-      this.alertService.confirm('Cancelar', `Tem certeza que deseja cancelar a matrícula ${event.row.idMatricula}?`)
+      this.alertService
+        .confirm('Cancelar', `Tem certeza que deseja cancelar a matrícula ${row.idMatricula}?`)
         .then(res => {
           if (res.isConfirmed) {
-            event.row.situacaoDesc = 'Cancelada';
+            row.situacaoDesc = 'Cancelada';
             this.alertService.success('Sucesso', 'Matrícula cancelada.');
           }
         });
@@ -197,6 +228,9 @@ export class MatriculaListComponent {
   }
 
   onPageChange(pageable: GemsPageable) {
-    this.alertService.success('Paginação', `Mudou para página ${pageable.page} tamanho ${pageable.size}`);
+    this.alertService.success(
+      'Paginação',
+      `Mudou para página ${pageable.page} tamanho ${pageable.size}`,
+    );
   }
 }

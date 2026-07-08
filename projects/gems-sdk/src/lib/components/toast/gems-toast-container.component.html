@@ -1,20 +1,16 @@
 <div class="gems-toast-container" aria-live="polite" aria-atomic="false">
   @for (toast of toastService.toasts(); track toast.id) {
-    <div
-      class="gems-toast"
-      [class]="'gems-toast--' + toast.type"
-      role="status"
+  <div class="gems-toast" [class]="'gems-toast--' + toast.type" role="status">
+    <i [class]="toastIcon(toast.type)" class="gems-toast-icon" aria-hidden="true"></i>
+    <span class="gems-toast-message">{{ toast.message }}</span>
+    <button
+      type="button"
+      class="gems-toast-close"
+      (click)="toastService.dismiss(toast.id)"
+      aria-label="Fechar notificação"
     >
-      <i [class]="toastIcon(toast.type)" class="gems-toast-icon" aria-hidden="true"></i>
-      <span class="gems-toast-message">{{ toast.message }}</span>
-      <button
-        type="button"
-        class="gems-toast-close"
-        (click)="toastService.dismiss(toast.id)"
-        aria-label="Fechar notificação"
-      >
-        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-      </button>
-    </div>
+      <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+    </button>
+  </div>
   }
 </div>

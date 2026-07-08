@@ -19,7 +19,7 @@
 | Colors | `var(--gems-primary-500)` | Hardcoded hex `#3b82f6` |
 | Form fields | `<gems-input-text>`, `<gems-select>`, etc. | `<input>`, `<select>` |
 | Forms approach | Reactive Forms (`[formGroup]`) | Template-driven `[(ngModel)]` |
-| Buttons | `<gems-button>` or CSS classes `btn-primary`, `btn-save` | Custom `.my-btn` |
+| Buttons | Native classes `btn-primary`, `btn-save`, `btn-cancel`, `btn-secondary`, `btn-danger`, `btn-info`, `btn-warning`, `btn-success`, `btn-novo` (from `gems-global.css`) | Custom `.my-btn` |
 | Cards | `<gems-form-card>` | Custom card markup |
 | Icons | Font Awesome 6 (`fa-solid fa-user`) | Material Icons |
 
@@ -69,10 +69,7 @@ import {
   // HTTP
   GemsBaseStore,
   GEMS_API_URL,
-
-  // Auth
-  GemsHasRoleDirective,
-  gemsRoleGuard,
+  provideGemsHttp,
 
   // Theme
   provideGemsTheme,
@@ -90,6 +87,13 @@ import {
   GemsRangeValue,
   GemsModalSize,
 } from '@gabriel-mdias/angular-gems-sdk';
+
+// Auth — separate secondary entry point, only loaded if you use Keycloak
+import {
+  GemsHasRoleDirective,
+  gemsRoleGuard,
+  provideGemsKeycloak,
+} from '@gabriel-mdias/angular-gems-sdk/auth';
 ```
 
 ---
@@ -103,14 +107,16 @@ Every form field implements `ControlValueAccessor`. Use with `formControlName`.
 |---|---|---|---|
 | Input Text | `<gems-input-text>` | `string` | `label`, `type`, `icon`, `placeholder`, `required`, `maxlength`, `hint` |
 | Input Password | `<gems-input-password>` | `string` | `label`, `placeholder`, `required` |
-| Input Date | `<gems-input-date>` | `string` (ISO) | `label`, `formato` (diaMesAno\|fullData\|mesAno\|ano), `required` |
-| Input Mask | `<gems-input-mask>` | `string` (raw) | `label`, `maskType` (cep\|telefone\|rg\|email), `icon`, `required` |
+| Input Date | `<gems-input-date>` | `string` (ISO) | `label`, `format` (dayMonthYear\|fullDate\|monthYear\|year), `required` |
+| Input Mask | `<gems-input-mask>` | `string` (raw) | `label`, `maskType` (cep\|phone\|rg\|email), `icon`, `required` |
 | Input Document | `<gems-input-document>` | `string` (raw) | `label`, `documentType` (auto\|cpf\|cnpj), `icon`, `required` |
 | Select | `<gems-select>` | `unknown` | `label`, `options: GemsSelectOption[]`, `placeholder`, `required` |
 | Textarea | `<gems-textarea>` | `string` | `label`, `rows`, `maxlength`, `autoResize`, `required` |
 | Checkbox | `<gems-input-checkbox>` | `boolean` | `label`, `topLabel`, `isSwitch` (default true), `alignWithInputs` |
 | Range | `<gems-input-range>` | `GemsRangeValue` | `type` (number\|date), `placeholderMin`, `placeholderMax`, `separator` |
 | Field Error | `<gems-field-error>` | — | `control: AbstractControl`, `messages: Record<string, string>` |
+
+> The old PT-BR values (`formato="diaMesAno\|fullData\|mesAno\|ano"` and `maskType="telefone"`) still work but are **deprecated** — use the English names above in new code.
 
 ### Validation feedback
 All input components automatically turn **red** (border + label) via `:host.ng-invalid.ng-touched`.
@@ -133,7 +139,7 @@ Wrap forms and content in structured cards. Slots: `[gems-form-card-actions]`, `
 ```
 
 ### gems-modal
-Two-way `[(open)]`. Sizes: `sm`, `md`, `lg`, `xl`. Auto-closes on ESC.
+Two-way `[(open)]`. Sizes: `sm`, `md`, `lg`. Auto-closes on ESC.
 ```html
 <gems-modal [(open)]="showModal" title="Confirmar" size="sm">
   <p>Conteúdo</p>
@@ -194,26 +200,55 @@ export class UserStore extends GemsBaseStore {
 }
 ```
 
-Provide the API base URL:
+Provide the API base URL (in `app.config.ts`, imported from the package root):
 ```typescript
-{ provide: GEMS_API_URL, useValue: 'https://api.example.com' }
+import { provideGemsHttp } from '@gabriel-mdias/angular-gems-sdk';
+
+providers: [
+  provideGemsHttp('https://api.example.com'),
+]
 ```
+Equivalent to `{ provide: GEMS_API_URL, useValue: '...' }`, but with a descriptive error if you forget to configure it.
 
 ---
 
 ## Auth (Keycloak)
 
-- **Route guard:** `canActivate: [gemsRoleGuard]` with `data: { roles: ['ADMIN'] }`
-- **Template directive:** `*gemsHasRole="'ADMIN'"` or `*gemsHasRole="['EDITOR','ADMIN']"`
+> **v1.1.0+:** Auth is a **separate secondary entry point** — import from
+> `@gabriel-mdias/angular-gems-sdk/auth`, NOT the package root. This keeps
+> `keycloak-angular` out of apps that don't use auth.
+
+Setup (`app.config.ts`):
+```typescript
+import { provideGemsKeycloak } from '@gabriel-mdias/angular-gems-sdk/auth';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideHttpClient(withInterceptorsFromDi()),
+    provideGemsKeycloak({
+      config: { url: 'https://auth.example.com', realm: 'my-realm', clientId: 'my-client' },
+      initOptions: {
+        onLoad: 'check-sso',
+        silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
+      },
+    }),
+  ],
+};
+```
+The JWT bearer token is attached by the interceptor registered by `provideGemsKeycloak` (via `withInterceptorsFromDi()`) — it is **no longer** attached automatically by `GemsBaseStore`.
+
+- **Route guard:** `canActivate: [gemsRoleGuard]` with `data: { roles: ['ADMIN'], roleMode: 'any' }` (`roleMode` optional: `'any'` default | `'all'`)
+- **Template directive:** `*gemsHasRole="'ADMIN'"`, `*gemsHasRole="['EDITOR','ADMIN']"`, or `*gemsHasRole="['A','B']; mode: 'all'"`
 
 ---
 
 ## Theming Setup
 
-1. `provideGemsTheme({ primary, secondary, tertiary, background })` in `app.config.ts`
-2. Import CSS tokens in `styles.css`:
+1. `provideGemsTheme({ primary, secondary, tertiary, background })` in `app.config.ts` (imported from the package root — no `/core/theme` entry point exists)
+2. Import CSS in `styles.css`:
    ```css
-   @import "@gabriel-mdias/angular-gems-sdk/src/lib/styles/gems-global.css";
+   @import "@gabriel-mdias/angular-gems-sdk/styles.css";
    ```
 
 ---
@@ -229,9 +264,9 @@ Provide the API base URL:
     <gems-input-text label="E-mail" formControlName="email" type="email" [required]="true"></gems-input-text>
     <gems-field-error [control]="form.get('email')"></gems-field-error>
 
-    <gems-input-date label="Nascimento" formControlName="birthDate" formato="diaMesAno"></gems-input-date>
+    <gems-input-date label="Nascimento" formControlName="birthDate" format="dayMonthYear"></gems-input-date>
 
-    <gems-input-mask label="Telefone" formControlName="phone" maskType="telefone" [required]="true"></gems-input-mask>
+    <gems-input-mask label="Telefone" formControlName="phone" maskType="phone" [required]="true"></gems-input-mask>
     <gems-field-error [control]="form.get('phone')"></gems-field-error>
 
     <gems-input-document label="CPF/CNPJ" formControlName="doc" [required]="true"></gems-input-document>
@@ -246,8 +281,10 @@ Provide the API base URL:
   </form>
 
   <div gems-form-card-footer>
-    <button class="btn-cancel">Cancelar</button>
-    <gems-button label="Salvar" variant="primary" (click)="save()"></gems-button>
+    <button class="btn-cancel" (click)="cancel()">Cancelar</button>
+    <button class="btn-save" (click)="save()">Salvar</button>
   </div>
 </gems-form-card>
 ```
+
+> `<gems-button>` also exists as a component (`label`, `variant`, `icon`, `loading` inputs) for cases that need a loading spinner or icon state. It renders a native `<button>` internally and has **no custom output** — bind `(click)` on it directly, it bubbles from the native element. Don't mix `<gems-button>` and `.btn-*` classes in the same snippet; pick one style per screen.

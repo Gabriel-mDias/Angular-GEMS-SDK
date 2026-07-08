@@ -1,7 +1,12 @@
-import { Injectable, Inject, DOCUMENT } from '@angular/core';
+import { Injectable, Inject, DOCUMENT, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { InjectionToken } from '@angular/core';
 import { GemsThemeConfig, GEMS_DEFAULT_THEME } from './gems-theme.config';
-import { generatePalette, generateBackgroundPalette } from './gems-palette.util';
+import {
+  generatePalette,
+  generateBackgroundPalette,
+  generateTextPalette,
+} from './gems-palette.util';
 
 /**
  * Token de injeção para a configuração do tema.
@@ -27,7 +32,8 @@ export class GemsThemeService {
 
   constructor(
     @Inject(DOCUMENT) private readonly document: Document,
-    @Inject(GEMS_THEME_CONFIG) private readonly config: GemsThemeConfig
+    @Inject(GEMS_THEME_CONFIG) private readonly config: GemsThemeConfig,
+    @Inject(PLATFORM_ID) private readonly platformId: object,
   ) {
     this.currentTheme = this.config;
   }
@@ -56,6 +62,7 @@ export class GemsThemeService {
       ...generatePalette('gems-warning', t.warning ?? '#f59e0b'),
       ...generatePalette('gems-info', t.info ?? '#3b82f6'),
       ...generateBackgroundPalette(t.background),
+      ...generateTextPalette(t.background),
     };
 
     // Aplica cada variável no :root
@@ -69,8 +76,11 @@ export class GemsThemeService {
     return { ...this.currentTheme };
   }
 
-  /** Retorna o valor de uma CSS variable do tema. */
+  /** Retorna o valor de uma CSS variable do tema (vazio em SSR). */
   getCssVariable(name: string): string {
+    if (!isPlatformBrowser(this.platformId)) {
+      return '';
+    }
     return getComputedStyle(this.document.documentElement).getPropertyValue(name).trim();
   }
 }

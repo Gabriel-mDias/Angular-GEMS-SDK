@@ -1,4 +1,11 @@
-import { Component, forwardRef, input, output, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  forwardRef,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { GemsRangeValue } from './gems-input-range.model';
@@ -20,6 +27,7 @@ import { GemsRangeValue } from './gems-input-range.model';
       multi: true,
     },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GemsInputRangeComponent implements ControlValueAccessor {
   // ── Inputs ────────────────────────────────────────────────────────

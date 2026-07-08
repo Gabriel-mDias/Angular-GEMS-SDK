@@ -2,21 +2,25 @@
   <div class="header">
     <div class="header-titles">
       <h2>Loading Full-Page</h2>
-      <p class="subtitle">Demonstração do componente de loading em tela cheia da SDK, ideal para bloquear iterações do usuário durante requisições globais.</p>
+      <p class="subtitle">
+        Demonstração do componente de loading em tela cheia da SDK, ideal para bloquear iterações do
+        usuário durante requisições globais.
+      </p>
     </div>
   </div>
 
   <div class="demo-section">
     <div class="demo-preview">
       <gems-form-card title="Configurar Loading" icon="fa-solid fa-spinner">
-        <div class="form-group" style="max-width: 300px; margin-bottom: 2rem;">
-          <label class="gems-label">Duração (segundos)</label>
-          <input type="number" class="gems-input" [(ngModel)]="durationSeconds" min="1" max="10">
+        <div class="form-group" style="max-width: 300px; margin-bottom: 2rem">
+          <span class="gems-label">Duração (segundos)</span>
+          <input type="number" class="gems-input" [(ngModel)]="durationSeconds" min="1" max="10" />
         </div>
-        
-        <div gems-form-card-footer style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+
+        <div gems-form-card-footer style="display: flex; gap: 0.5rem; justify-content: flex-end">
           <button class="btn-save" (click)="triggerLoading()">
-            Simular Loading <i class="fa-solid fa-play"></i>
+            Simular Loading
+            <i class="fa-solid fa-play"></i>
           </button>
         </div>
       </gems-form-card>

@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   HostListener,
   Inject,
@@ -6,7 +7,6 @@ import {
   OnInit,
   PLATFORM_ID,
   SimpleChanges,
-  computed,
   input,
   output,
   signal,
@@ -26,6 +26,7 @@ import { GemsSideMenuConfig, GemsSideMenuItem } from './gems-side-menu.config';
   imports: [RouterModule],
   templateUrl: './gems-side-menu.component.html',
   styleUrls: ['./gems-side-menu.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GemsSideMenuComponent implements OnInit, OnChanges {
   // ── Inputs ────────────────────────────────────────────────────────
@@ -36,6 +37,10 @@ export class GemsSideMenuComponent implements OnInit, OnChanges {
   readonly userEmail = input<string>('');
   readonly userInitials = input<string>('');
   readonly showUserProfile = input<boolean>(true);
+  readonly logoutLabel = input<string>('Sair');
+  readonly logoutTitle = input<string>('Sair do Sistema');
+  readonly openMenuLabel = input<string>('Abrir menu');
+  readonly appName = input<string>('G&Ms SDK');
 
   // ── Outputs ───────────────────────────────────────────────────────
   readonly collapsedChange = output<boolean>();
@@ -76,9 +81,7 @@ export class GemsSideMenuComponent implements OnInit, OnChanges {
     this.collapsedChange.emit(this.isCollapsed());
 
     if (this.isCollapsed()) {
-      this.filteredItems.update(items =>
-        items.map(item => ({ ...item, isExpanded: false })),
-      );
+      this.filteredItems.update(items => items.map(item => ({ ...item, isExpanded: false })));
     }
   }
 

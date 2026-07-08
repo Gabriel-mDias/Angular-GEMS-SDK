@@ -1,4 +1,12 @@
-import { Component, booleanAttribute, computed, input, output, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  booleanAttribute,
+  computed,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 
 import { GemsSelectItem } from './gems-card-list-select.model';
 
@@ -12,6 +20,7 @@ import { GemsSelectItem } from './gems-card-list-select.model';
   imports: [],
   templateUrl: './gems-card-list-select.component.html',
   styleUrls: ['./gems-card-list-select.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GemsCardListSelectComponent {
   // ── Inputs ────────────────────────────────────────────────────────
@@ -99,7 +108,9 @@ export class GemsCardListSelectComponent {
   private resolveKey(obj: GemsSelectItem, path: string): unknown {
     if (!obj || !path) return '';
     return path.split('.').reduce<unknown>((acc, part) => {
-      return acc != null && typeof acc === 'object' ? (acc as Record<string, unknown>)[part] : undefined;
+      return acc != null && typeof acc === 'object'
+        ? (acc as Record<string, unknown>)[part]
+        : undefined;
     }, obj);
   }
 }

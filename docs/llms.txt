@@ -1,6 +1,6 @@
 # Angular GEMS SDK — Comprehensive AI Context (llms.txt)
 
-> VERSION: 1.0.0 | ANGULAR: 20+ | PACKAGE: @gabriel-mdias/angular-gems-sdk
+> VERSION: 1.1.0 | ANGULAR: 20+ | PACKAGE: @gabriel-mdias/angular-gems-sdk
 
 This document is the single source of truth for any AI model generating code
 that uses or integrates with the GEMS SDK. Read it in full before producing
@@ -30,15 +30,20 @@ any Angular template, component, or service.
 ## 2. IMPORT PATHS
 
 ```typescript
-// Main barrel — use for most imports
-import { GemsInputTextComponent, GemsAlertService } from '@gabriel-mdias/angular-gems-sdk';
+// The package root is the entry point for everything except auth
+// (no /components, /services, /http, /core/theme secondary entry points —
+// those all resolve from the root). Everything below except auth is
+// imported from '@gabriel-mdias/angular-gems-sdk' directly.
+import { GemsInputTextComponent, GemsAlertService, provideGemsTheme, provideGemsHttp } from '@gabriel-mdias/angular-gems-sdk';
 
-// Secondary entry points (tree-shaking)
-import { ... } from '@gabriel-mdias/angular-gems-sdk/components';
-import { ... } from '@gabriel-mdias/angular-gems-sdk/services';
-import { ... } from '@gabriel-mdias/angular-gems-sdk/http';
-import { ... } from '@gabriel-mdias/angular-gems-sdk/auth';
-import { provideGemsTheme } from '@gabriel-mdias/angular-gems-sdk/core/theme';
+// Auth is the ONE real secondary entry point (v1.1.0+), kept separate so
+// keycloak-angular is only loaded by apps that use it:
+import { gemsRoleGuard, GemsHasRoleDirective, provideGemsKeycloak } from '@gabriel-mdias/angular-gems-sdk/auth';
+```
+
+The single CSS import is also from the package root:
+```css
+@import "@gabriel-mdias/angular-gems-sdk/styles.css";
 ```
 
 ---
@@ -47,7 +52,7 @@ import { provideGemsTheme } from '@gabriel-mdias/angular-gems-sdk/core/theme';
 
 ### 3.1 Bootstrap (app.config.ts)
 ```typescript
-import { provideGemsTheme } from '@gabriel-mdias/angular-gems-sdk/core/theme';
+import { provideGemsTheme } from '@gabriel-mdias/angular-gems-sdk';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -64,9 +69,7 @@ export const appConfig: ApplicationConfig = {
 
 ### 3.2 Global styles (styles.css)
 ```css
-@import "@gabriel-mdias/angular-gems-sdk/core/tokens/gems-design-tokens.css";
-@import "@gabriel-mdias/angular-gems-sdk/core/tokens/gems-utilities.css";
-@import "@gabriel-mdias/angular-gems-sdk/core/tokens/gems-animations.css";
+@import "@gabriel-mdias/angular-gems-sdk/styles.css";
 ```
 
 ### 3.3 Key CSS Variables
@@ -126,30 +129,32 @@ styling (red border + red label).
 <gems-input-date
   label="Data de Nascimento"
   formControlName="birthDate"
-  formato="diaMesAno"
+  format="dayMonthYear"
   [required]="true">
 </gems-input-date>
 ```
-**Inputs:** `label`, `placeholder`, `id`, `required`, `formato`.
-**Formats:** `'diaMesAno'` (DD/MM/YYYY → YYYY-MM-DD), `'fullData'` (DD/MM/YYYY HH:mm → ISO),
-`'mesAno'` (MM/YYYY → YYYY-MM), `'ano'` (YYYY).
+**Inputs:** `label`, `placeholder`, `id`, `required`, `format`.
+**Formats:** `'dayMonthYear'` (DD/MM/YYYY → YYYY-MM-DD), `'fullDate'` (DD/MM/YYYY HH:mm → ISO),
+`'monthYear'` (MM/YYYY → YYYY-MM), `'year'` (YYYY).
 **Value type:** `string` (always ISO backend format).
 Built-in validation: `incompleteDate`, `invalidDate`.
+> Deprecated: the old PT-BR values (`formato` input, `'diaMesAno'|'fullData'|'mesAno'|'ano'`) still work but should not be used in new code — use `format` with the English values above.
 
 ### 4.4 gems-input-mask
 ```html
 <gems-input-mask
   label="Telefone"
   formControlName="phone"
-  maskType="telefone"
+  maskType="phone"
   icon="fa-solid fa-phone"
   [required]="true">
 </gems-input-mask>
 ```
 **Inputs:** `label`, `placeholder`, `id`, `required`, `maskType`, `icon`.
-**Mask types:** `'cep'` (99999-999), `'telefone'` ((99) 99999-9999),
+**Mask types:** `'cep'` (99999-999), `'phone'` ((99) 99999-9999),
 `'rg'` (99.999.999-9), `'email'` (no mask, pass-through).
 **Value type:** `string` (raw digits, no formatting).
+> Deprecated: `maskType="telefone"` still works but is a legacy PT-BR alias for `'phone'` — use `'phone'` in new code.
 
 ### 4.5 gems-input-document
 ```html
@@ -264,17 +269,28 @@ Shows message only when control is `invalid` AND (`touched` OR `dirty`).
 `[gems-form-card-actions]`, `[gems-form-card-footer]`, default (body).
 
 ### 5.2 Button CSS classes (gems-global.css)
-Use these classes directly on `<button>` elements for standard actions:
+**Preferred way to render buttons.** Use these classes directly on native `<button>`
+elements for standard actions — this is what the reference app uses exclusively:
 - `btn-primary` — primary action (save, submit)
 - `btn-secondary` — secondary action
 - `btn-cancel` — cancel / back
 - `btn-save` — alias for primary save
 - `btn-danger` — destructive action
-Never create custom `.my-button` classes.
+- `btn-info` — informational action
+- `btn-warning` — warning action
+- `btn-success` — success / confirm action
+- `btn-novo` — "new/create" action
+Never create custom `.my-button` classes. Do not mix these classes with `<gems-button>`
+in the same snippet — pick one style per screen/form.
 
 ---
 
 ## 6. GEMS-BUTTON COMPONENT
+
+Use `<gems-button>` only when you need built-in **loading** or **icon** state that
+the `.btn-*` classes (section 5.2) don't provide. It renders a native `<button>`
+internally and has **no custom output** — `(click)` works via native DOM bubbling,
+not an `@Output()`. Never mix `<gems-button>` and `.btn-*` classes in the same form/screen.
 
 ```html
 <gems-button label="Salvar" variant="primary" [loading]="isSaving" (click)="save()"></gems-button>
@@ -284,6 +300,7 @@ Never create custom `.my-button` classes.
 **Inputs:** `label`, `variant` (primary|secondary|tertiary|danger|ghost|link),
 `type` (button|submit|reset), `icon`, `iconPosition` (left|right),
 `loading`, `disabled`, `ariaLabel`.
+**Outputs:** none — bind `(click)` directly; it bubbles from the internal `<button>`.
 
 ---
 
@@ -365,7 +382,7 @@ Visual card-based selection component.
   </div>
 </gems-modal>
 ```
-**Inputs:** `open` (two-way model), `title`, `size` (sm|md|lg|xl),
+**Inputs:** `open` (two-way model), `title`, `size` (sm|md|lg),
 `closeOnBackdrop`. Closes on ESC key automatically.
 
 ### 8.2 GemsAlertService (SweetAlert2)
@@ -491,14 +508,26 @@ export class UserStore extends GemsBaseStore {
 }
 ```
 Provides: `get`, `post`, `put`, `delete`, `patch`.
-Auto-injects Keycloak Bearer token when `KeycloakService` is available.
+> **Change from 1.0.x:** the Keycloak Bearer token is **no longer** attached automatically
+> by `GemsBaseStore`. It is attached by the interceptor registered via `provideGemsKeycloak`
+> (see section 11) — that provider requires `provideHttpClient(withInterceptorsFromDi())`.
 
-### 10.2 GEMS_API_URL token
+### 10.2 GEMS_API_URL token / provideGemsHttp
+Prefer the `provideGemsHttp` helper, imported from the package root:
+```typescript
+import { provideGemsHttp } from '@gabriel-mdias/angular-gems-sdk';
+
+providers: [
+  provideGemsHttp('https://api.example.com'),
+]
+```
+Equivalent low-level form:
 ```typescript
 providers: [
   { provide: GEMS_API_URL, useValue: 'https://api.example.com' },
 ]
 ```
+If `GEMS_API_URL` is missing, `GemsBaseStore` now throws a descriptive error instead of failing silently.
 
 ### 10.3 GemsPageable
 ```typescript
@@ -513,21 +542,53 @@ interface GemsPageable {
 
 ## 11. AUTH (Keycloak)
 
-### 11.1 Route guard
+> **BREAKING in 1.1.0:** all auth exports moved to the secondary entry point
+> `@gabriel-mdias/angular-gems-sdk/auth` — `gemsRoleGuard`, `GemsHasRoleDirective`,
+> and the new `provideGemsKeycloak` are NOT exported from the package root anymore.
+
+### 11.1 Setup (app.config.ts)
 ```typescript
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideGemsKeycloak } from '@gabriel-mdias/angular-gems-sdk/auth';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideHttpClient(withInterceptorsFromDi()),
+    provideGemsKeycloak({
+      config: { url: 'https://auth.example.com', realm: 'my-realm', clientId: 'my-client' },
+      initOptions: {
+        onLoad: 'check-sso',
+        silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
+      },
+    }),
+  ],
+};
+```
+The JWT bearer token is attached to outgoing HTTP requests by the interceptor
+registered inside `provideGemsKeycloak` — NOT automatically by `GemsBaseStore`
+(see section 10.1). `provideHttpClient(withInterceptorsFromDi())` is required
+for that DI-based interceptor to run.
+
+### 11.2 Route guard
+```typescript
+import { gemsRoleGuard } from '@gabriel-mdias/angular-gems-sdk/auth';
+
 {
   path: 'admin',
   canActivate: [gemsRoleGuard],
-  data: { roles: ['ADMIN'] },
+  data: { roles: ['ADMIN'], roleMode: 'any' }, // 'any' (default) | 'all'
   loadComponent: () => import('./admin.component').then(m => m.AdminComponent),
 }
 ```
 
-### 11.2 Structural directive
+### 11.3 Structural directive
 ```html
 <button *gemsHasRole="'ADMIN'" class="btn-danger">Excluir</button>
 <div *gemsHasRole="['EDITOR', 'ADMIN']">Conteúdo restrito</div>
+<div *gemsHasRole="['A', 'B']; mode: 'all'">Só com os dois papéis</div>
 ```
+Selector: `*gemsHasRole`. Optional `mode` (`'any'` default | `'all'`) controls whether
+any or all of the given roles are required.
 
 ---
 
@@ -577,7 +638,6 @@ SSR-safe (checks `isPlatformBrowser` internally).
     GemsTextareaComponent,
     GemsInputCheckboxComponent,
     GemsFieldErrorComponent,
-    GemsButtonComponent,
   ],
   templateUrl: './user-form.component.html',
 })
@@ -623,9 +683,9 @@ export class UserFormComponent {
     <gems-input-text label="E-mail" formControlName="email" type="email" icon="fa-solid fa-envelope" [required]="true"></gems-input-text>
     <gems-field-error [control]="form.get('email')"></gems-field-error>
 
-    <gems-input-date label="Data de Nascimento" formControlName="birthDate" formato="diaMesAno"></gems-input-date>
+    <gems-input-date label="Data de Nascimento" formControlName="birthDate" format="dayMonthYear"></gems-input-date>
 
-    <gems-input-mask label="Telefone" formControlName="phone" maskType="telefone" [required]="true"></gems-input-mask>
+    <gems-input-mask label="Telefone" formControlName="phone" maskType="phone" [required]="true"></gems-input-mask>
     <gems-field-error [control]="form.get('phone')"></gems-field-error>
 
     <gems-input-document label="CPF/CNPJ" formControlName="document" [required]="true"></gems-input-document>
@@ -640,8 +700,8 @@ export class UserFormComponent {
   </form>
 
   <div gems-form-card-footer>
-    <button class="btn-cancel">Cancelar</button>
-    <gems-button label="Salvar" variant="primary" (click)="save()"></gems-button>
+    <button class="btn-cancel" (click)="cancel()">Cancelar</button>
+    <button class="btn-save" (click)="save()">Salvar</button>
   </div>
 </gems-form-card>
 ```
@@ -661,7 +721,6 @@ export class UserFormComponent {
     GemsSelectComponent,
     GemsTableComponent,
     GemsEmptyStateComponent,
-    GemsButtonComponent,
   ],
   templateUrl: './user-list.component.html',
 })
@@ -709,6 +768,18 @@ export class UserListComponent {
 The SDK uses **Font Awesome 6** (free solid/regular). All `icon` inputs expect
 a FA class string like `'fa-solid fa-user'` or `'fa-regular fa-envelope'`.
 Never use Material Icons or other icon libraries unless explicitly told.
+
+Setup (required, or icons render as empty boxes):
+```bash
+npm install @fortawesome/fontawesome-free
+```
+```json
+"styles": [
+  "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+  "src/styles.css"
+]
+```
+The **Inter** font is optional — load it via Google Fonts or `@fontsource/inter` if desired.
 
 ---
 

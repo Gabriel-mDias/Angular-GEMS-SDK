@@ -111,7 +111,7 @@
 
 .gems-btn-remove:hover {
   background-color: rgba(0, 0, 0, 0.05);
-  color: var(--gems-error, #ef4444);
+  color: var(--gems-danger-500, #ef4444);
 }
 
 /* Skeleton / Loading state */

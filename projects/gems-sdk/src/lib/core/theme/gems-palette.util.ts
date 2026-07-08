@@ -59,21 +59,28 @@ export function hexToHsl(hex: string): [number, number, number] {
   return rgbToHsl(r, g, b);
 }
 
+/** Limita um número ao intervalo [min, max]. */
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(Math.max(value, min), max);
+}
+
 /**
- * Mapeamento de lightness para cada nível da paleta.
+ * Offsets de lightness (em pontos percentuais) de cada nível em relação ao
+ * nível 500. O 500 é ancorado na lightness real da cor de entrada, de modo que
+ * `--{prefix}-500` corresponda à cor de marca informada pelo consumidor.
  * Inspirado no Material Design: 50 é o mais claro, 900 o mais escuro.
  */
-const PALETTE_LIGHTNESS_MAP: Record<number, number> = {
-  50: 95,
-  100: 88,
-  200: 75,
-  300: 62,
-  400: 48,
-  500: 35, // Cor base (ajustada pelo input)
-  600: 28,
-  700: 21,
-  800: 14,
-  900: 7,
+const PALETTE_OFFSET_MAP: Record<number, number> = {
+  50: 60,
+  100: 53,
+  200: 40,
+  300: 27,
+  400: 13,
+  500: 0, // Cor base (ancorada no input)
+  600: -7,
+  700: -14,
+  800: -21,
+  900: -28,
 };
 
 /**
@@ -84,22 +91,30 @@ const PALETTE_LIGHTNESS_MAP: Record<number, number> = {
  * @returns Mapa de variáveis CSS { '--gems-primary-50': 'hsl(...)', ... }
  */
 export function generatePalette(prefix: string, hex: string): Record<string, string> {
-  const [h, s] = hexToHsl(hex);
+  const [h, s, baseLightness] = hexToHsl(hex);
   const vars: Record<string, string> = {};
 
-  // Gera variações 50-900
-  for (const [level, lightness] of Object.entries(PALETTE_LIGHTNESS_MAP)) {
-    vars[`--${prefix}-${level}`] = hslToString(h, s, lightness);
+  // Ancoramos o nível 500 na lightness real da cor de entrada (com clamp para
+  // manter uma escala utilizável), preservando hue e saturation. Assim
+  // `--{prefix}-500` fica visualmente próximo do hex de marca informado.
+  const anchor = clamp(baseLightness, 25, 55);
+
+  // Gera variações 50-900 a partir do offset relativo ao 500
+  for (const [level, offset] of Object.entries(PALETTE_OFFSET_MAP)) {
+    vars[`--${prefix}-${level}`] = hslToString(h, s, clamp(anchor + offset, 4, 97));
   }
 
   // Cor base original (sem modificação de lightness)
   vars[`--${prefix}`] = hex;
 
   // Estados semânticos
-  const [, , baseLightness] = hexToHsl(hex);
-  vars[`--${prefix}-hover`] = hslToString(h, s, Math.min(baseLightness + 8, 95));
-  vars[`--${prefix}-active`] = hslToString(h, s, Math.max(baseLightness - 5, 5));
-  vars[`--${prefix}-disabled`] = hslToString(h, Math.max(s - 20, 0), Math.min(baseLightness + 20, 90));
+  vars[`--${prefix}-hover`] = hslToString(h, s, clamp(baseLightness + 8, 5, 95));
+  vars[`--${prefix}-active`] = hslToString(h, s, clamp(baseLightness - 5, 5, 95));
+  vars[`--${prefix}-disabled`] = hslToString(
+    h,
+    Math.max(s - 20, 0),
+    clamp(baseLightness + 20, 5, 90),
+  );
   vars[`--${prefix}-focus-ring`] = `hsla(${h}, ${s}%, ${baseLightness}%, 0.3)`;
 
   // Variações de texto (para contraste sobre a cor)
@@ -119,5 +134,20 @@ export function generateBackgroundPalette(hex: string): Record<string, string> {
     '--gems-bg-muted': hslToString(h, s, 93),
     '--gems-bg-emphasis': hslToString(h, s, 88),
     '--gems-bg-inverse': hslToString(h, s, 10),
+  };
+}
+
+/**
+ * Gera as cores de texto (`--gems-text-main` / `--gems-text-muted`) com
+ * contraste adequado em relação ao fundo. Consumidas pela maioria dos
+ * componentes; derivadas da lightness do `background` para funcionar tanto em
+ * temas claros quanto escuros.
+ */
+export function generateTextPalette(backgroundHex: string): Record<string, string> {
+  const [, , lightness] = hexToHsl(backgroundHex);
+  const isLightBackground = lightness > 50;
+  return {
+    '--gems-text-main': isLightBackground ? '#1e293b' : '#f1f5f9',
+    '--gems-text-muted': isLightBackground ? '#64748b' : '#94a3b8',
   };
 }

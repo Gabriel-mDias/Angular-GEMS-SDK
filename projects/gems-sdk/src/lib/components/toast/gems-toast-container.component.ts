@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { GemsToastService } from '../../services/gems-toast.service';
 import { GemsToastType } from './gems-toast.model';
@@ -27,6 +27,7 @@ const TOAST_ICONS: Record<GemsToastType, string> = {
   imports: [],
   templateUrl: './gems-toast-container.component.html',
   styleUrls: ['./gems-toast-container.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GemsToastContainerComponent {
   // ── Construtor ────────────────────────────────────────────────────
