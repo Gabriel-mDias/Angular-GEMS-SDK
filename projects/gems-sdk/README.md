@@ -14,9 +14,7 @@ npm install @gabriel-mdias/angular-gems-sdk --legacy-peer-deps
 Importe o sistema de temas globais no seu `styles.css`:
 
 \`\`\`css
-@import "@gabriel-mdias/angular-gems-sdk/core/tokens/gems-design-tokens.css";
-@import "@gabriel-mdias/angular-gems-sdk/core/tokens/gems-animations.css";
-@import "@gabriel-mdias/angular-gems-sdk/core/tokens/gems-utilities.css";
+@import "@gabriel-mdias/angular-gems-sdk/src/lib/styles/gems-global.css";
 \`\`\`
 
 Adicione o provedor global do tema no seu `app.config.ts`:
