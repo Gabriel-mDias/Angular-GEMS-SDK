@@ -1,20 +1,27 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { Observable, from, switchMap } from 'rxjs';
-import { KeycloakService } from 'keycloak-angular';
+import { Observable } from 'rxjs';
 import { GemsPageable } from './gems-pageable';
 import { GEMS_API_URL } from './gems-api-url.token';
 
 export interface GemsHttpRequestOptions {
   headers?: HttpHeaders | { [header: string]: string | string[] };
-  params?: HttpParams | { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean> };
+  params?:
+    | HttpParams
+    | { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean> };
   pageable?: GemsPageable;
 }
 
+/**
+ * Classe base para stores que consomem uma API REST.
+ *
+ * A autenticação (token JWT) NÃO é responsabilidade desta classe — use o
+ * `gemsKeycloakInterceptor` do entry point `@gabriel-mdias/angular-gems-sdk/auth`
+ * (ou o interceptor de bearer do keycloak-angular) para anexar `Authorization`.
+ */
 export abstract class GemsBaseStore {
   protected readonly http = inject(HttpClient);
   protected readonly baseUrl = inject(GEMS_API_URL);
-  protected readonly keycloakService = inject(KeycloakService, { optional: true });
   protected readonly controllerPath: string;
 
   constructor(controllerPath: string) {
@@ -33,23 +40,19 @@ export abstract class GemsBaseStore {
     return urlParts.join('/');
   }
 
-  private async prepareOptions(options?: GemsHttpRequestOptions): Promise<{ headers: HttpHeaders, params?: HttpParams }> {
-    let headers = options?.headers instanceof HttpHeaders
-      ? options.headers
-      : new HttpHeaders(options?.headers || {});
+  private prepareOptions(options?: GemsHttpRequestOptions): {
+    headers: HttpHeaders;
+    params?: HttpParams;
+  } {
+    const headers =
+      options?.headers instanceof HttpHeaders
+        ? options.headers
+        : new HttpHeaders(options?.headers || {});
 
-    if (this.keycloakService && await this.keycloakService.isLoggedIn()) {
-      await this.keycloakService.updateToken(30);
-      const token = await this.keycloakService.getToken();
-
-      if (token) {
-        headers = headers.set('Authorization', `Bearer ${token}`);
-      }
-    }
-
-    let params = options?.params instanceof HttpParams
-      ? options.params
-      : new HttpParams({ fromObject: (options?.params as any) || {} });
+    let params =
+      options?.params instanceof HttpParams
+        ? options.params
+        : new HttpParams({ fromObject: options?.params ?? {} });
 
     if (options?.pageable) {
       if (options.pageable.page !== undefined) {
@@ -68,33 +71,41 @@ export abstract class GemsBaseStore {
     return { headers, params: params.keys().length > 0 ? params : undefined };
   }
 
-  protected get<TResponse>(endpoint: string = '', options?: GemsHttpRequestOptions): Observable<TResponse> {
-    return from(this.prepareOptions(options)).pipe(
-      switchMap(reqOptions => this.http.get<TResponse>(this.buildUrl(endpoint), reqOptions))
-    );
+  protected get<TResponse>(
+    endpoint: string = '',
+    options?: GemsHttpRequestOptions,
+  ): Observable<TResponse> {
+    return this.http.get<TResponse>(this.buildUrl(endpoint), this.prepareOptions(options));
   }
 
-  protected post<TResponse, TBody = unknown>(endpoint: string = '', body: TBody, options?: GemsHttpRequestOptions): Observable<TResponse> {
-    return from(this.prepareOptions(options)).pipe(
-      switchMap(reqOptions => this.http.post<TResponse>(this.buildUrl(endpoint), body, reqOptions))
-    );
+  protected post<TResponse, TBody = unknown>(
+    endpoint: string = '',
+    body: TBody,
+    options?: GemsHttpRequestOptions,
+  ): Observable<TResponse> {
+    return this.http.post<TResponse>(this.buildUrl(endpoint), body, this.prepareOptions(options));
   }
 
-  protected put<TResponse, TBody = unknown>(endpoint: string = '', body: TBody, options?: GemsHttpRequestOptions): Observable<TResponse> {
-    return from(this.prepareOptions(options)).pipe(
-      switchMap(reqOptions => this.http.put<TResponse>(this.buildUrl(endpoint), body, reqOptions))
-    );
+  protected put<TResponse, TBody = unknown>(
+    endpoint: string = '',
+    body: TBody,
+    options?: GemsHttpRequestOptions,
+  ): Observable<TResponse> {
+    return this.http.put<TResponse>(this.buildUrl(endpoint), body, this.prepareOptions(options));
   }
 
-  protected delete<TResponse>(endpoint: string = '', options?: GemsHttpRequestOptions): Observable<TResponse> {
-    return from(this.prepareOptions(options)).pipe(
-      switchMap(reqOptions => this.http.delete<TResponse>(this.buildUrl(endpoint), reqOptions))
-    );
+  protected delete<TResponse>(
+    endpoint: string = '',
+    options?: GemsHttpRequestOptions,
+  ): Observable<TResponse> {
+    return this.http.delete<TResponse>(this.buildUrl(endpoint), this.prepareOptions(options));
   }
 
-  protected patch<TResponse, TBody = unknown>(endpoint: string = '', body: TBody, options?: GemsHttpRequestOptions): Observable<TResponse> {
-    return from(this.prepareOptions(options)).pipe(
-      switchMap(reqOptions => this.http.patch<TResponse>(this.buildUrl(endpoint), body, reqOptions))
-    );
+  protected patch<TResponse, TBody = unknown>(
+    endpoint: string = '',
+    body: TBody,
+    options?: GemsHttpRequestOptions,
+  ): Observable<TResponse> {
+    return this.http.patch<TResponse>(this.buildUrl(endpoint), body, this.prepareOptions(options));
   }
 }

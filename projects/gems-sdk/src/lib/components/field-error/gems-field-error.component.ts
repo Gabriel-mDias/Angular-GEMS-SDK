@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 
 import { GemsErrorMessages } from './gems-field-error.model';
@@ -29,6 +29,7 @@ const DEFAULT_MESSAGES: GemsErrorMessages = {
   imports: [],
   templateUrl: './gems-field-error.component.html',
   styleUrls: ['./gems-field-error.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GemsFieldErrorComponent {
   // ── Inputs ────────────────────────────────────────────────────────

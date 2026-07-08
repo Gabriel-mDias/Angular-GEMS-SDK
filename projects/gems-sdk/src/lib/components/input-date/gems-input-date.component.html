@@ -1,8 +1,6 @@
 <div class="gems-input-container">
   @if (label()) {
-    <label [for]="id()" class="gems-label" [class.gems-required]="required()">
-      {{ label() }}
-    </label>
+  <label [for]="id()" class="gems-label" [class.gems-required]="required()">{{ label() }}</label>
   }
 
   <div class="gems-data-wrapper">
@@ -24,16 +22,17 @@
       [disabled]="disabled()"
       [required]="required()"
       (input)="onInput($event)"
+      (blur)="onBlur()"
     />
 
-    @if (formato() !== 'ano') {
-      <input
-        #nativeInput
-        [type]="getNativeType()"
-        class="gems-hidden-native-input"
-        [value]="value()"
-        (change)="onNativeChange($event)"
-      />
+    @if (resolvedFormat() !== 'year') {
+    <input
+      #nativeInput
+      [type]="getNativeType()"
+      class="gems-hidden-native-input"
+      [value]="value()"
+      (change)="onNativeChange($event)"
+    />
     }
   </div>
 </div>

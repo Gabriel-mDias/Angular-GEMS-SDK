@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { GemsLoadingService } from '../../services/gems-loading.service';
 
@@ -13,6 +13,7 @@ import { GemsLoadingService } from '../../services/gems-loading.service';
   imports: [],
   templateUrl: './gems-loading.component.html',
   styleUrls: ['./gems-loading.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GemsLoadingComponent {
   // ── Construtor ────────────────────────────────────────────────────

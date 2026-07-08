@@ -1,7 +1,4 @@
-<div
-  class="gems-summary-card-container"
-  [class.gems-is-expanded]="expanded()"
->
+<div class="gems-summary-card-container" [class.gems-is-expanded]="expanded()">
   <div
     class="gems-summary-card-header"
     role="button"
@@ -13,16 +10,16 @@
   >
     <div class="gems-header-main">
       @if (icon()) {
-        <div class="gems-icon-wrapper">
-          <i [class]="icon()"></i>
-        </div>
+      <div class="gems-icon-wrapper">
+        <i [class]="icon()"></i>
+      </div>
       }
       <div class="gems-title-wrapper">
         <h3 class="gems-card-title">{{ title() }}</h3>
         @if (!expanded()) {
-          <div class="gems-summary-preview">
-            <ng-content select="[summary]"></ng-content>
-          </div>
+        <div class="gems-summary-preview">
+          <ng-content select="[summary]"></ng-content>
+        </div>
         }
       </div>
     </div>
@@ -36,10 +33,7 @@
     </div>
   </div>
 
-  <div
-    class="gems-summary-card-details"
-    [@expandCollapse]="expanded() ? 'expanded' : 'collapsed'"
-  >
+  <div class="gems-summary-card-details" [@expandCollapse]="expanded() ? 'expanded' : 'collapsed'">
     <div class="gems-details-inner">
       <ng-content select="[details]"></ng-content>
     </div>

@@ -2,16 +2,16 @@ import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GemsSessionService {
-  constructor(@Inject(PLATFORM_ID) private readonly platformId: Object) {}
-  
+  constructor(@Inject(PLATFORM_ID) private readonly platformId: object) {}
+
   private get isBrowser(): boolean {
     return isPlatformBrowser(this.platformId);
   }
 
-  setItem(key: string, value: any): void {
+  setItem<T>(key: string, value: T): void {
     if (this.isBrowser) {
       sessionStorage.setItem(key, JSON.stringify(value));
     }
@@ -20,7 +20,7 @@ export class GemsSessionService {
   getItem<T>(key: string): T | null {
     if (this.isBrowser) {
       const item = sessionStorage.getItem(key);
-      return item ? JSON.parse(item) as T : null;
+      return item ? (JSON.parse(item) as T) : null;
     }
     return null;
   }

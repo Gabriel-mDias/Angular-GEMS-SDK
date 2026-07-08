@@ -12,15 +12,16 @@
   /* ========================================
    * TIPOGRAFIA
    * ======================================== */
-  --gems-font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --gems-font-size-xs: 0.75rem;    /* 12px */
-  --gems-font-size-sm: 0.875rem;   /* 14px */
-  --gems-font-size-md: 1rem;       /* 16px */
-  --gems-font-size-lg: 1.125rem;   /* 18px */
-  --gems-font-size-xl: 1.25rem;    /* 20px */
-  --gems-font-size-2xl: 1.5rem;    /* 24px */
-  --gems-font-size-3xl: 1.875rem;  /* 30px */
-  --gems-font-size-4xl: 2.25rem;   /* 36px */
+  --gems-font-family:
+    "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --gems-font-size-xs: 0.75rem; /* 12px */
+  --gems-font-size-sm: 0.875rem; /* 14px */
+  --gems-font-size-md: 1rem; /* 16px */
+  --gems-font-size-lg: 1.125rem; /* 18px */
+  --gems-font-size-xl: 1.25rem; /* 20px */
+  --gems-font-size-2xl: 1.5rem; /* 24px */
+  --gems-font-size-3xl: 1.875rem; /* 30px */
+  --gems-font-size-4xl: 2.25rem; /* 36px */
 
   --gems-font-weight-light: 300;
   --gems-font-weight-regular: 400;
@@ -35,13 +36,13 @@
   /* ========================================
    * ESPAÇAMENTO
    * ======================================== */
-  --gems-spacing-xs: 0.25rem;   /* 4px */
-  --gems-spacing-sm: 0.5rem;    /* 8px */
-  --gems-spacing-md: 1rem;      /* 16px */
-  --gems-spacing-lg: 1.5rem;    /* 24px */
-  --gems-spacing-xl: 2rem;      /* 32px */
-  --gems-spacing-2xl: 3rem;     /* 48px */
-  --gems-spacing-3xl: 4rem;     /* 64px */
+  --gems-spacing-xs: 0.25rem; /* 4px */
+  --gems-spacing-sm: 0.5rem; /* 8px */
+  --gems-spacing-md: 1rem; /* 16px */
+  --gems-spacing-lg: 1.5rem; /* 24px */
+  --gems-spacing-xl: 2rem; /* 32px */
+  --gems-spacing-2xl: 3rem; /* 48px */
+  --gems-spacing-3xl: 4rem; /* 64px */
 
   /* ========================================
    * BORDER RADIUS
@@ -89,6 +90,15 @@
   --gems-border-width: 1px;
   --gems-border-color: rgba(0, 0, 0, 0.08);
   --gems-border-color-emphasis: rgba(0, 0, 0, 0.15);
+
+  /* ========================================
+   * CORES DE TEXTO (fallback)
+   * Neutros padrão para tema claro. São sobrescritos em tempo de execução
+   * por `provideGemsTheme()` (derivados do `background`) — definidos aqui
+   * apenas para evitar texto sem estilo antes do JS rodar.
+   * ======================================== */
+  --gems-text-main: #1e293b;
+  --gems-text-muted: #64748b;
 
   /* ========================================
    * BREAKPOINTS (referência para media queries)

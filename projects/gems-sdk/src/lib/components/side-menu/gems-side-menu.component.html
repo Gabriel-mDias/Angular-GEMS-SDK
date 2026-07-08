@@ -1,25 +1,31 @@
 @if (isMobileOpen() && isMobileView()) {
-  <div class="mobile-overlay" (click)="closeMobileMenu()"></div>
-}
-
-@if (isMobileView()) {
-  <div class="mobile-top-bar">
-    <div class="mobile-brand">
-      @if (logoFull() || config()?.headerLogoUrl) {
-        <img [src]="logoFull() || config()!.headerLogoUrl" alt="Logo" class="logo-img-mobile" />
-      } @else {
-        <span class="logo-text-mobile">{{ config()?.headerTitle || 'G&Ms SDK' }}</span>
-      }
-    </div>
-    <button
-      class="hamburger-btn"
-      [attr.aria-expanded]="isMobileOpen()"
-      aria-label="Abrir menu"
-      (click)="toggleMobileMenu()"
-    >
-      <i class="fa-solid fa-bars" aria-hidden="true"></i>
-    </button>
+<div
+  class="mobile-overlay"
+  role="button"
+  tabindex="0"
+  [attr.aria-label]="openMenuLabel()"
+  (click)="closeMobileMenu()"
+  (keydown.enter)="closeMobileMenu()"
+  (keydown.escape)="closeMobileMenu()"
+></div>
+} @if (isMobileView()) {
+<div class="mobile-top-bar">
+  <div class="mobile-brand">
+    @if (logoFull() || config()?.headerLogoUrl) {
+    <img [src]="logoFull() || config()!.headerLogoUrl" alt="Logo" class="logo-img-mobile" />
+    } @else {
+    <span class="logo-text-mobile">{{ config()?.headerTitle || appName() }}</span>
+    }
   </div>
+  <button
+    class="hamburger-btn"
+    [attr.aria-expanded]="isMobileOpen()"
+    [attr.aria-label]="openMenuLabel()"
+    (click)="toggleMobileMenu()"
+  >
+    <i class="fa-solid fa-bars" aria-hidden="true"></i>
+  </button>
+</div>
 }
 
 <div
@@ -29,105 +35,112 @@
 >
   <div class="menu-header">
     @if ((!isCollapsed() || isMobileView()) && (logoFull() || config()?.headerLogoUrl)) {
-      <img [src]="logoFull() || config()!.headerLogoUrl" alt="Logo" class="logo-img" />
-    }
-
-    @if ((isCollapsed() && !isMobileView()) && (logoCollapsed() || logoFull() || config()?.headerLogoUrl)) {
-      <img [src]="logoCollapsed() || logoFull() || config()!.headerLogoUrl" alt="Logo" class="logo-img-collapsed" />
-    }
-
-    @if (!(logoFull() || config()?.headerLogoUrl) && (!isCollapsed() || isMobileView())) {
-      <span class="logo-text">{{ config()?.headerTitle || 'G&Ms SDK' }}</span>
-    }
-
-    @if (!(logoCollapsed() || logoFull() || config()?.headerLogoUrl) && (isCollapsed() && !isMobileView())) {
-      <span class="logo-text-collapsed">{{ config()?.headerTitle?.charAt(0) || 'G' }}</span>
+    <img [src]="logoFull() || config()!.headerLogoUrl" alt="Logo" class="logo-img" />
+    } @if ((isCollapsed() && !isMobileView()) && (logoCollapsed() || logoFull() ||
+    config()?.headerLogoUrl)) {
+    <img
+      [src]="logoCollapsed() || logoFull() || config()!.headerLogoUrl"
+      alt="Logo"
+      class="logo-img-collapsed"
+    />
+    } @if (!(logoFull() || config()?.headerLogoUrl) && (!isCollapsed() || isMobileView())) {
+    <span class="logo-text">{{ config()?.headerTitle || appName() }}</span>
+    } @if (!(logoCollapsed() || logoFull() || config()?.headerLogoUrl) && (isCollapsed() &&
+    !isMobileView())) {
+    <span class="logo-text-collapsed">{{ config()?.headerTitle?.charAt(0) || 'G' }}</span>
     }
   </div>
 
   <ul class="menu-list" role="menu">
     @for (item of filteredItems(); track item.label) {
-      <li class="menu-item-wrapper" role="none">
-        <a
-          class="menu-item"
-          role="menuitem"
-          [class.active]="item.isExpanded"
-          [routerLink]="item.route ?? null"
-          routerLinkActive="active"
-          #rla="routerLinkActive"
-          [class.active]="rla.isActive || item.isExpanded"
-          (click)="onItemClick(item)"
-        >
-          <i [class]="item.icon" class="menu-icon" aria-hidden="true"></i>
-          @if (!isCollapsed() || isMobileView()) {
-            <span class="menu-title">{{ item.label }}</span>
-          }
-          @if (item.children && (!isCollapsed() || isMobileView())) {
-            <i
-              class="fa-solid fa-chevron-down toggle-icon"
-              [class.rotated]="item.isExpanded"
-              aria-hidden="true"
-            ></i>
-          }
-        </a>
-
-        @if (item.children && item.isExpanded && (!isCollapsed() || isMobileView())) {
-          <ul class="sub-menu-list" role="menu">
-            @for (child of item.children; track child.label) {
-              <li
-                class="sub-menu-item"
-                role="menuitem"
-                [routerLink]="child.route"
-                routerLinkActive="active"
-                (click)="onSubItemClick()"
-              >
-                <i [class]="child.icon" class="sub-menu-icon" aria-hidden="true"></i>
-                <span class="sub-menu-title">{{ child.label }}</span>
-              </li>
-            }
-          </ul>
+    <li class="menu-item-wrapper" role="none">
+      <a
+        class="menu-item"
+        role="menuitem"
+        [class.active]="item.isExpanded"
+        [routerLink]="item.route ?? null"
+        routerLinkActive="active"
+        #rla="routerLinkActive"
+        [class.active]="rla.isActive || item.isExpanded"
+        (click)="onItemClick(item)"
+      >
+        <i [class]="item.icon" class="menu-icon" aria-hidden="true"></i>
+        @if (!isCollapsed() || isMobileView()) {
+        <span class="menu-title">{{ item.label }}</span>
+        } @if (item.children && (!isCollapsed() || isMobileView())) {
+        <i
+          class="fa-solid fa-chevron-down toggle-icon"
+          [class.rotated]="item.isExpanded"
+          aria-hidden="true"
+        ></i>
         }
-      </li>
+      </a>
+
+      @if (item.children && item.isExpanded && (!isCollapsed() || isMobileView())) {
+      <ul class="sub-menu-list" role="menu">
+        @for (child of item.children; track child.label) {
+        <li
+          class="sub-menu-item"
+          role="menuitem"
+          tabindex="0"
+          [routerLink]="child.route"
+          routerLinkActive="active"
+          (click)="onSubItemClick()"
+          (keydown.enter)="onSubItemClick()"
+        >
+          <i [class]="child.icon" class="sub-menu-icon" aria-hidden="true"></i>
+          <span class="sub-menu-title">{{ child.label }}</span>
+        </li>
+        }
+      </ul>
+      }
+    </li>
     }
   </ul>
 
   @if (showUserProfile()) {
-    <div class="user-profile-section" [class.collapsed]="isCollapsed() && !isMobileView()">
-      <div class="user-avatar-wrapper">
-        <div
-          class="user-avatar"
-          [title]="isCollapsed() && !isMobileView() ? 'Sair' : ''"
-          (click)="isCollapsed() && !isMobileView() ? logout() : null"
-        >
-          {{ userInitials() }}
-          @if (isCollapsed() && !isMobileView()) {
-            <div class="logout-overlay">
-              <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
-            </div>
-          }
-        </div>
-      </div>
-
-      @if (!isCollapsed() || isMobileView()) {
-        <div class="user-info">
-          <span class="user-name" [title]="userName()">{{ userName() }}</span>
-          <span class="user-email" [title]="userEmail()">{{ userEmail() }}</span>
-        </div>
-        <button class="btn-logout" title="Sair do Sistema" (click)="logout()">
+  <div class="user-profile-section" [class.collapsed]="isCollapsed() && !isMobileView()">
+    <div class="user-avatar-wrapper">
+      <div
+        class="user-avatar"
+        [attr.role]="isCollapsed() && !isMobileView() ? 'button' : null"
+        [attr.tabindex]="isCollapsed() && !isMobileView() ? 0 : null"
+        [title]="isCollapsed() && !isMobileView() ? logoutLabel() : ''"
+        (click)="isCollapsed() && !isMobileView() ? logout() : null"
+        (keydown.enter)="isCollapsed() && !isMobileView() ? logout() : null"
+      >
+        {{ userInitials() }} @if (isCollapsed() && !isMobileView()) {
+        <div class="logout-overlay">
           <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
-        </button>
-      }
+        </div>
+        }
+      </div>
     </div>
-  }
 
-  @if (!isMobileView()) {
-    <div class="menu-footer" role="button" tabindex="0" (click)="toggleCollapse()" (keydown.enter)="toggleCollapse()">
-      <i
-        class="fa-solid"
-        [class.fa-chevron-left]="!isCollapsed()"
-        [class.fa-chevron-right]="isCollapsed()"
-        aria-hidden="true"
-      ></i>
+    @if (!isCollapsed() || isMobileView()) {
+    <div class="user-info">
+      <span class="user-name" [title]="userName()">{{ userName() }}</span>
+      <span class="user-email" [title]="userEmail()">{{ userEmail() }}</span>
     </div>
+    <button class="btn-logout" [title]="logoutTitle()" (click)="logout()">
+      <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+    </button>
+    }
+  </div>
+  } @if (!isMobileView()) {
+  <div
+    class="menu-footer"
+    role="button"
+    tabindex="0"
+    (click)="toggleCollapse()"
+    (keydown.enter)="toggleCollapse()"
+  >
+    <i
+      class="fa-solid"
+      [class.fa-chevron-left]="!isCollapsed()"
+      [class.fa-chevron-right]="isCollapsed()"
+      aria-hidden="true"
+    ></i>
+  </div>
   }
 </div>

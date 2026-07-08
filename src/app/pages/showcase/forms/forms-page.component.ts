@@ -4,11 +4,10 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import {
   GemsFormCardComponent,
   GemsInputDateComponent,
-  GemsInputMaskComponent,
   GemsInputPasswordComponent,
   GemsInputCheckboxComponent,
   GemsAlertService,
-  GemsInputDocumentComponent
+  GemsInputDocumentComponent,
 } from '@gabriel-mdias/angular-gems-sdk';
 import { CodeSnippetComponent, CodeTab } from '../../../components/code-snippet';
 
@@ -23,10 +22,10 @@ import { CodeSnippetComponent, CodeTab } from '../../../components/code-snippet'
     GemsInputPasswordComponent,
     GemsInputCheckboxComponent,
     GemsInputDocumentComponent,
-    CodeSnippetComponent
+    CodeSnippetComponent,
   ],
   templateUrl: './forms-page.component.html',
-  styleUrls: ['./forms-page.component.css']
+  styleUrls: ['./forms-page.component.css'],
 })
 export class FormsPageComponent {
   form: FormGroup;
@@ -78,7 +77,7 @@ export class FormsPageComponent {
       </button>
     </div>
   </form>
-</gems-form-card>`
+</gems-form-card>`,
     },
     {
       name: 'TypeScript',
@@ -112,22 +111,28 @@ export class MeuFormularioComponent {
   onCancel() {
     this.alertService.info('Cancelado', 'Ação cancelada pelo usuário.');
   }
-}`
-    }
+}`,
+    },
   ];
 
-  constructor(private alertService: GemsAlertService, private fb: FormBuilder) {
+  constructor(
+    private alertService: GemsAlertService,
+    private fb: FormBuilder,
+  ) {
     this.form = this.fb.group({
       cpf: ['', Validators.required],
       dataNascimento: ['', Validators.required],
       senha: ['', Validators.required],
-      aceitoTermos: [false, Validators.requiredTrue]
+      aceitoTermos: [false, Validators.requiredTrue],
     });
   }
 
   onSubmit() {
     if (this.form.invalid) {
-      this.alertService.warning('Atenção', 'Preencha todos os campos obrigatórios e aceite os termos.');
+      this.alertService.warning(
+        'Atenção',
+        'Preencha todos os campos obrigatórios e aceite os termos.',
+      );
       return;
     }
 

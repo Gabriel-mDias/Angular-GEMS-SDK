@@ -1,7 +1,24 @@
 {
   "name": "@gabriel-mdias/angular-gems-sdk",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "Kit de desenvolvimento Angular para projetos G&Ms — componentes, serviços e theming configurável.",
+  "license": "MIT",
+  "author": "Gabriel Magalhães",
+  "homepage": "https://github.com/Gabriel-mDias/Angular-GEMS-SDK#readme",
+  "bugs": {
+    "url": "https://github.com/Gabriel-mDias/Angular-GEMS-SDK/issues"
+  },
+  "keywords": [
+    "angular",
+    "angular-library",
+    "components",
+    "ui",
+    "sdk",
+    "design-system",
+    "theming",
+    "keycloak",
+    "gems"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/Gabriel-mDias/Angular-GEMS-SDK.git"
@@ -14,11 +31,14 @@
     "@angular/core": "^20.0.0",
     "@angular/forms": "^20.0.0",
     "@angular/router": "^20.0.0",
-    "rxjs": "^7.8.0",
-    "sweetalert2": "^11.0.0"
+    "@fortawesome/fontawesome-free": "^6.0.0 || ^7.0.0",
+    "rxjs": "^7.8.0"
   },
   "peerDependenciesMeta": {
     "keycloak-angular": {
+      "optional": true
+    },
+    "@fortawesome/fontawesome-free": {
       "optional": true
     }
   },
@@ -26,6 +46,7 @@
     "keycloak-angular": "^16.0.0"
   },
   "dependencies": {
+    "sweetalert2": "^11.0.0",
     "tslib": "^2.3.0"
   },
   "sideEffects": false,
@@ -36,6 +57,10 @@
     ".": {
       "types": "./index.d.ts",
       "default": "./fesm2022/gabriel-mdias-angular-gems-sdk.mjs"
+    },
+    "./styles.css": {
+      "style": "./src/lib/styles/gems-global.css",
+      "default": "./src/lib/styles/gems-global.css"
     },
     "./*": "./*"
   }

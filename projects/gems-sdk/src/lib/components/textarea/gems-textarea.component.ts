@@ -1,5 +1,18 @@
-import { Component, ElementRef, ViewChild, booleanAttribute, forwardRef, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  ViewChild,
+  booleanAttribute,
+  computed,
+  forwardRef,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+
+import { gemsUniqueId } from '../../core/utils/gems-unique-id.util';
 
 /**
  * Área de texto com suporte a ControlValueAccessor e auto-resize opcional.
@@ -15,6 +28,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   imports: [],
   templateUrl: './gems-textarea.component.html',
   styleUrls: ['./gems-textarea.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -33,12 +47,17 @@ export class GemsTextareaComponent implements ControlValueAccessor {
   readonly required = input<boolean>(false);
   readonly autoResize = input<boolean, boolean | string>(false, { transform: booleanAttribute });
 
+  // ── Outputs ───────────────────────────────────────────────────────
+  readonly valueChange = output<string>();
+
   // ── ViewChild ─────────────────────────────────────────────────────
   @ViewChild('textareaRef') private readonly textareaRef!: ElementRef<HTMLTextAreaElement>;
 
   // ── Estado interno ────────────────────────────────────────────────
-  protected readonly textareaId = crypto.randomUUID();
-  protected value = '';
+  protected readonly textareaId = gemsUniqueId('textarea');
+  protected readonly value = signal('');
+  private readonly disabledByForm = signal(false);
+  protected readonly isDisabled = computed(() => this.disabled() || this.disabledByForm());
 
   // ── CVA ───────────────────────────────────────────────────────────
   private onChange: (value: string) => void = () => {};
@@ -46,7 +65,7 @@ export class GemsTextareaComponent implements ControlValueAccessor {
 
   // ── Métodos públicos (CVA) ────────────────────────────────────────
   writeValue(value: string | null): void {
-    this.value = value ?? '';
+    this.value.set(value ?? '');
   }
 
   registerOnChange(fn: (value: string) => void): void {
@@ -57,13 +76,16 @@ export class GemsTextareaComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  setDisabledState(_isDisabled: boolean): void {}
+  setDisabledState(isDisabled: boolean): void {
+    this.disabledByForm.set(isDisabled);
+  }
 
   // ── Métodos públicos ──────────────────────────────────────────────
   onInput(event: Event): void {
     const el = event.target as HTMLTextAreaElement;
-    this.value = el.value;
-    this.onChange(this.value);
+    this.value.set(el.value);
+    this.onChange(el.value);
+    this.valueChange.emit(el.value);
 
     if (this.autoResize()) {
       el.style.height = 'auto';

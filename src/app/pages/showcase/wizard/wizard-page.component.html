@@ -2,28 +2,27 @@
   <div class="header">
     <div class="header-titles">
       <h2>Fluxo Wizard</h2>
-      <p class="subtitle">Gerenciamento de fluxos longos divididos em passos com o <code>gems-wizard</code>.</p>
+      <p class="subtitle">
+        Gerenciamento de fluxos longos divididos em passos com o
+        <code>gems-wizard</code>
+        .
+      </p>
     </div>
   </div>
 
   <div class="demo-section">
     <div class="demo-preview">
-
       <gems-wizard [steps]="steps" [currentStep]="currentStep"></gems-wizard>
 
       <div>
-
-        <app-step-personal *ngIf="currentStep === 1" (next)="goToStep(2)">
-        </app-step-personal>
-
-        <app-step-address *ngIf="currentStep === 2" (prev)="goToStep(1)" (next)="goToStep(3)">
-        </app-step-address>
-
-        <app-step-summary *ngIf="currentStep === 3" (prev)="goToStep(2)" (finish)="finishFlow()">
-        </app-step-summary>
-
+        @if (currentStep === 1) {
+        <app-step-personal (next)="goToStep(2)"></app-step-personal>
+        } @if (currentStep === 2) {
+        <app-step-address (prev)="goToStep(1)" (next)="goToStep(3)"></app-step-address>
+        } @if (currentStep === 3) {
+        <app-step-summary (prev)="goToStep(2)" (formSubmit)="finishFlow()"></app-step-summary>
+        }
       </div>
-
     </div>
 
     <div class="demo-code">

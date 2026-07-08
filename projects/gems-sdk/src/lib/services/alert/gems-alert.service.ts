@@ -24,9 +24,12 @@ export class GemsAlertService {
     return Swal.fire({ icon: 'error', title, text, confirmButtonColor: this.dangerColor });
   }
 
-  errorFromApi(apiError: { error?: { errorType?: string; message?: string } }): Promise<SweetAlertResult> {
-    const title = apiError?.error?.errorType ?? 'Erro';
-    const text = apiError?.error?.message ?? 'Ocorreu um erro inesperado.';
+  errorFromApi(
+    apiError: { error?: { errorType?: string; message?: string } },
+    opts?: { title?: string; fallback?: string },
+  ): Promise<SweetAlertResult> {
+    const title = apiError?.error?.errorType ?? opts?.title ?? 'Erro';
+    const text = apiError?.error?.message ?? opts?.fallback ?? 'Ocorreu um erro inesperado.';
     return Swal.fire({ icon: 'error', title, text, confirmButtonColor: this.dangerColor });
   }
 

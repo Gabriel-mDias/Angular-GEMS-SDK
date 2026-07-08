@@ -1,25 +1,24 @@
 @if (label()) {
-  <label [for]="inputId" class="gems-input-label">
-    {{ label() }}
-    @if (required()) {
-      <span class="gems-required" aria-hidden="true">*</span>
-    }
-  </label>
+<label [for]="inputId" class="gems-input-label">
+  {{ label() }} @if (required()) {
+  <span class="gems-required" aria-hidden="true">*</span>
+  }
+</label>
 }
 
 <div class="gems-input-wrapper" [class.gems-has-icon]="icon()">
   @if (icon()) {
-    <i [class]="icon() + ' gems-input-icon'" aria-hidden="true"></i>
+  <i [class]="icon() + ' gems-input-icon'" aria-hidden="true"></i>
   }
   <input
     [id]="inputId"
     class="gems-input-field"
     [type]="type()"
     [placeholder]="placeholder()"
-    [disabled]="disabled()"
+    [disabled]="isDisabled()"
     [required]="required()"
     [attr.maxlength]="maxlength() || null"
-    [value]="value"
+    [value]="value()"
     (input)="onInput($event)"
     (blur)="onTouched()"
     [attr.aria-label]="label() || null"
@@ -27,5 +26,5 @@
 </div>
 
 @if (hint()) {
-  <p class="gems-input-hint">{{ hint() }}</p>
+<p class="gems-input-hint">{{ hint() }}</p>
 }

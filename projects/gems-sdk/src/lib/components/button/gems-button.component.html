@@ -9,16 +9,12 @@
   [attr.aria-label]="ariaLabel() || label() || null"
 >
   @if (loading()) {
-    <span class="gems-btn-spinner" aria-hidden="true"></span>
+  <span class="gems-btn-spinner" aria-hidden="true"></span>
   } @else if (icon() && iconPosition() === 'left') {
-    <i [class]="icon()" aria-hidden="true"></i>
-  }
-
-  @if (label()) {
-    <span class="gems-btn-label">{{ label() }}</span>
-  }
-
-  @if (!loading() && icon() && iconPosition() === 'right') {
-    <i [class]="icon()" aria-hidden="true"></i>
+  <i [class]="icon()" aria-hidden="true"></i>
+  } @if (label()) {
+  <span class="gems-btn-label">{{ label() }}</span>
+  } @if (!loading() && icon() && iconPosition() === 'right') {
+  <i [class]="icon()" aria-hidden="true"></i>
   }
 </button>

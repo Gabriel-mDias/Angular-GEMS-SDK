@@ -1,13 +1,13 @@
 <div class="gems-input-container">
   @if (label()) {
-    <label [for]="inputId()" class="gems-label" [class.gems-required]="required()">
-      {{ label() }}
-    </label>
+  <label [for]="inputId()" class="gems-label" [class.gems-required]="required()">
+    {{ label() }}
+  </label>
   }
 
   <div class="gems-input-wrapper">
     @if (icon()) {
-      <i [class]="icon() + ' gems-input-icon'" aria-hidden="true"></i>
+    <i [class]="icon() + ' gems-input-icon'" aria-hidden="true"></i>
     }
     <input
       type="text"

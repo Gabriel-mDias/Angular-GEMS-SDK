@@ -2,21 +2,29 @@
   <div class="header">
     <div class="header-titles">
       <h2>Skeleton Loading</h2>
-      <p class="subtitle">Demonstração do comportamento de skeleton nativo nos componentes da SDK. Permite exibir mockups de conteúdo enquanto os dados reais estão sendo buscados.</p>
+      <p class="subtitle">
+        Demonstração do comportamento de skeleton nativo nos componentes da SDK. Permite exibir
+        mockups de conteúdo enquanto os dados reais estão sendo buscados.
+      </p>
     </div>
   </div>
 
   <div class="demo-section">
     <div class="demo-preview">
-      <gems-form-card title="Controle do Skeleton" icon="fa-solid fa-bone" style="margin-bottom: 2rem;">
-        <div class="form-group" style="max-width: 300px; margin-bottom: 2rem;">
-          <label class="gems-label">Duração (segundos)</label>
-          <input type="number" class="gems-input" [(ngModel)]="durationSeconds" min="1" max="10">
+      <gems-form-card
+        title="Controle do Skeleton"
+        icon="fa-solid fa-bone"
+        style="margin-bottom: 2rem"
+      >
+        <div class="form-group" style="max-width: 300px; margin-bottom: 2rem">
+          <span class="gems-label">Duração (segundos)</span>
+          <input type="number" class="gems-input" [(ngModel)]="durationSeconds" min="1" max="10" />
         </div>
-        
-        <div gems-form-card-footer style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+
+        <div gems-form-card-footer style="display: flex; gap: 0.5rem; justify-content: flex-end">
           <button class="btn-save" (click)="triggerSkeleton()">
-            Simular Skeleton <i class="fa-solid fa-play"></i>
+            Simular Skeleton
+            <i class="fa-solid fa-play"></i>
           </button>
         </div>
       </gems-form-card>
@@ -25,12 +33,12 @@
         <!-- Form Card Skeleton -->
         <gems-form-card title="Exemplo Form" icon="fa-regular fa-user" [isLoading]="isSimulating">
           <div class="form-group">
-            <label class="gems-label">Nome</label>
-            <input type="text" class="gems-input" placeholder="Digite seu nome" disabled>
+            <span class="gems-label">Nome</span>
+            <input type="text" class="gems-input" placeholder="Digite seu nome" disabled />
           </div>
-          <div class="form-group" style="margin-top: 1rem;">
-            <label class="gems-label">Email</label>
-            <input type="email" class="gems-input" placeholder="Digite seu email" disabled>
+          <div class="form-group" style="margin-top: 1rem">
+            <span class="gems-label">Email</span>
+            <input type="email" class="gems-input" placeholder="Digite seu email" disabled />
           </div>
           <div gems-form-card-footer>
             <button class="btn-save" disabled>Salvar</button>
@@ -38,25 +46,25 @@
         </gems-form-card>
 
         <!-- Card List Skeleton -->
-        <gems-card-list-select 
-          [items]="mockList" 
+        <gems-card-list-select
+          [items]="mockList"
           [isLoading]="isSimulating"
           titleKey="name"
           subtitleKey="role"
           icon="fa-regular fa-id-badge"
           [pageSize]="3"
-          [multiple]="true">
-        </gems-card-list-select>
+          [multiple]="true"
+        ></gems-card-list-select>
       </div>
 
       <!-- Table Skeleton -->
-      <div style="margin-top: 2rem;">
-        <gems-table 
-          [columns]="tableColumns" 
-          [data]="mockData" 
+      <div style="margin-top: 2rem">
+        <gems-table
+          [columns]="tableColumns"
+          [data]="mockData"
           [totalRecords]="mockData.length"
-          [isLoading]="isSimulating">
-        </gems-table>
+          [isLoading]="isSimulating"
+        ></gems-table>
       </div>
     </div>
 

@@ -17,18 +17,39 @@ export default tseslint.config(
       '@typescript-eslint/no-explicit-any': 'error',
       // Proíbe variáveis/imports declarados mas não utilizados
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-      // Padrão de seletor de componentes: prefixo 'gems', kebab-case
+      // Proíbe template inline no @Component (obriga templateUrl)
+      '@angular-eslint/prefer-standalone': 'error',
+      // O padrão do projeto é injeção via construtor (ver CODING-STANDARDS.md);
+      // interceptors/guards funcionais usam inject() por serem funções.
+      '@angular-eslint/prefer-inject': 'off',
+    },
+  },
+  {
+    // Biblioteca publicável: prefixo 'gems'.
+    files: ['projects/gems-sdk/**/*.ts'],
+    rules: {
       '@angular-eslint/component-selector': [
         'error',
         { type: 'element', prefix: 'gems', style: 'kebab-case' },
       ],
-      // Padrão de seletor de diretivas: prefixo 'gems', camelCase
       '@angular-eslint/directive-selector': [
         'error',
         { type: 'attribute', prefix: 'gems', style: 'camelCase' },
       ],
-      // Proíbe template inline no @Component (obriga templateUrl)
-      '@angular-eslint/prefer-standalone': 'error',
+    },
+  },
+  {
+    // App de demonstração (showcase): prefixo 'app'.
+    files: ['src/**/*.ts'],
+    rules: {
+      '@angular-eslint/component-selector': [
+        'error',
+        { type: 'element', prefix: 'app', style: 'kebab-case' },
+      ],
+      '@angular-eslint/directive-selector': [
+        'error',
+        { type: 'attribute', prefix: 'app', style: 'camelCase' },
+      ],
     },
   },
   {

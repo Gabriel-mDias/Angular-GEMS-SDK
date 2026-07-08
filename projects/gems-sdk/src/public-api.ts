@@ -1,12 +1,9 @@
 /*
- * Public API Surface of @gems/angular-sdk (raiz)
+ * Public API Surface of @gabriel-mdias/angular-gems-sdk (raiz)
  *
- * Re-exporta TUDO para conveniência. Consumidores que preferem
- * tree-shaking mais granular devem usar os secondary entry points:
- *   @gems/angular-sdk/components
- *   @gems/angular-sdk/services
- *   @gems/angular-sdk/http
- *   @gems/angular-sdk/auth
+ * Re-exporta componentes, serviços, HTTP e theming. A autenticação (Keycloak)
+ * fica no secondary entry point `@gabriel-mdias/angular-gems-sdk/auth`, para que
+ * o `keycloak-angular` só seja carregado por quem realmente usa auth.
  */
 
 // Core — Theming
@@ -20,7 +17,11 @@ export {
   hslToString,
   generatePalette,
   generateBackgroundPalette,
+  generateTextPalette,
 } from './lib/core/theme/gems-palette.util';
+
+// Core — Utils
+export { gemsUniqueId } from './lib/core/utils/gems-unique-id.util';
 
 // Re-export Components
 export * from './components/public-api';
@@ -30,6 +31,3 @@ export * from './services/public-api';
 
 // Re-export HTTP
 export * from './http/public-api';
-
-// Re-export Auth
-export * from './auth/public-api';

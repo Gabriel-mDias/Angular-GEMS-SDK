@@ -13,8 +13,8 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--gems-spacing-md, 1rem) var(--gems-spacing-lg, 1.5rem);
-  background-color: var(--cor-secundaria);
-  color: var(--cor-terciaria);
+  background-color: var(--gems-bg-subtle, #ffffff);
+  color: var(--gems-primary-700, #111827);
   border-bottom: var(--gems-border-width, 1px) solid var(--gems-border-color);
 }
 
@@ -26,16 +26,17 @@
   margin: 0;
   font-size: var(--gems-font-size-lg, 1.125rem);
   font-weight: var(--gems-font-weight-semibold, 600);
-  color: var(--cor-terciaria);
+  color: var(--gems-primary-700, #111827);
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.gems-form-card-subtitle, ::ng-deep [gems-form-card-subtitle] {
+.gems-form-card-subtitle,
+::ng-deep [gems-form-card-subtitle] {
   font-size: var(--gems-font-size-sm, 0.875rem);
   font-weight: var(--gems-font-weight-regular, 400);
-  color: var(--cor-terciaria);
+  color: var(--gems-primary-700, #111827);
   opacity: 0.8;
   margin-top: var(--gems-spacing-xs, 0.25rem);
 }

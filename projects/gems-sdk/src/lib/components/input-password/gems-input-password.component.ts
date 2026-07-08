@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   booleanAttribute,
   computed,
@@ -8,6 +9,8 @@ import {
   signal,
 } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+
+import { gemsUniqueId } from '../../core/utils/gems-unique-id.util';
 
 /**
  * Input de senha com botão de visibilidade toggle.
@@ -26,12 +29,13 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/f
       multi: true,
     },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GemsInputPasswordComponent implements ControlValueAccessor {
   // ── Inputs ────────────────────────────────────────────────────────
   readonly label = input<string>('Senha');
   readonly placeholder = input<string>('Digite sua senha');
-  readonly id = input<string>('password-' + crypto.randomUUID());
+  readonly id = input<string>(gemsUniqueId('password'));
   readonly required = input<boolean, boolean | string>(false, { transform: booleanAttribute });
 
   // ── Outputs ───────────────────────────────────────────────────────

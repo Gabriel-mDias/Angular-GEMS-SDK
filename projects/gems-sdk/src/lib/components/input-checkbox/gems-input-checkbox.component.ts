@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   booleanAttribute,
   computed,
@@ -8,6 +9,8 @@ import {
   signal,
 } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+
+import { gemsUniqueId } from '../../core/utils/gems-unique-id.util';
 
 /**
  * Input de seleção booleana com dois modos: switch (padrão) e checkbox clássico.
@@ -26,12 +29,15 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/f
       multi: true,
     },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GemsInputCheckboxComponent implements ControlValueAccessor {
   // ── Inputs ────────────────────────────────────────────────────────
   readonly label = input<string>('');
   readonly topLabel = input<string>('');
-  readonly alignWithInputs = input<boolean, boolean | string>(false, { transform: booleanAttribute });
+  readonly alignWithInputs = input<boolean, boolean | string>(false, {
+    transform: booleanAttribute,
+  });
   readonly isSwitch = input<boolean, boolean | string>(true, { transform: booleanAttribute });
 
   // ── Outputs ───────────────────────────────────────────────────────
@@ -42,7 +48,7 @@ export class GemsInputCheckboxComponent implements ControlValueAccessor {
   protected readonly value = signal<boolean>(false);
 
   // ── Estado derivado ───────────────────────────────────────────────
-  private readonly uniqueId = 'gems-checkbox-' + crypto.randomUUID();
+  private readonly uniqueId = gemsUniqueId('gems-checkbox');
   protected readonly inputId = computed(() => this.uniqueId);
 
   // ── ControlValueAccessor ──────────────────────────────────────────

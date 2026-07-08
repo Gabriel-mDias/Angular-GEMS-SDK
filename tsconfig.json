@@ -23,6 +23,9 @@
     "paths": {
       "@gabriel-mdias/angular-gems-sdk": [
         "./projects/gems-sdk/src/public-api.ts"
+      ],
+      "@gabriel-mdias/angular-gems-sdk/auth": [
+        "./projects/gems-sdk/auth/public-api.ts"
       ]
     }
   },

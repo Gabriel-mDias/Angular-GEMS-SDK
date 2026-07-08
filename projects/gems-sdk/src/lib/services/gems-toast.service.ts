@@ -1,5 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 
+import { gemsUniqueId } from '../core/utils/gems-unique-id.util';
 import { GemsToast, GemsToastType } from '../components/toast/gems-toast.model';
 
 /**
@@ -40,7 +41,7 @@ export class GemsToastService {
 
   // ── Métodos privados ──────────────────────────────────────────────
   private add(type: GemsToastType, message: string, duration = 4000): void {
-    const id = crypto.randomUUID();
+    const id = gemsUniqueId('toast');
     const toast: GemsToast = { id, type, message, duration };
     this.toasts.update(list => [...list, toast]);
     setTimeout(() => this.dismiss(id), duration);

@@ -12,3 +12,10 @@
   font-size: var(--gems-font-size-xs, 0.75rem);
   flex-shrink: 0;
 }
+
+@media (max-width: 768px) {
+  .gems-field-error {
+    font-size: var(--gems-font-size-xs, 0.7rem);
+    white-space: normal;
+  }
+}

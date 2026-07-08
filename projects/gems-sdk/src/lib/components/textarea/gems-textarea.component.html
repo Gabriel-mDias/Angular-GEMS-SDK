@@ -1,10 +1,9 @@
 @if (label()) {
-  <label [for]="textareaId" class="gems-textarea-label">
-    {{ label() }}
-    @if (required()) {
-      <span class="gems-required" aria-hidden="true">*</span>
-    }
-  </label>
+<label [for]="textareaId" class="gems-textarea-label">
+  {{ label() }} @if (required()) {
+  <span class="gems-required" aria-hidden="true">*</span>
+  }
+</label>
 }
 
 <textarea
@@ -12,15 +11,17 @@
   class="gems-textarea-field"
   [class.gems-textarea-autoresize]="autoResize()"
   [placeholder]="placeholder()"
-  [disabled]="disabled()"
+  [disabled]="isDisabled()"
   [required]="required()"
   [rows]="rows()"
   [attr.maxlength]="maxlength() || null"
   [attr.aria-label]="label() || null"
   (input)="onInput($event)"
   (blur)="onTouched()"
->{{ value }}</textarea>
+>
+{{ value() }}</textarea
+>
 
 @if (maxlength()) {
-  <p class="gems-textarea-counter">{{ value.length }} / {{ maxlength() }}</p>
+<p class="gems-textarea-counter">{{ value().length }} / {{ maxlength() }}</p>
 }

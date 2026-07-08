@@ -1,20 +1,34 @@
 <form [formGroup]="form" (ngSubmit)="onNext()">
-  <gems-form-card title="Dados Pessoais" subtitle="Preencha os dados de identificação do paciente." icon="fa-solid fa-user">
+  <gems-form-card
+    title="Dados Pessoais"
+    subtitle="Preencha os dados de identificação do paciente."
+    icon="fa-solid fa-user"
+  >
     <div class="row">
       <div class="col-md-12 mb-3">
-        <label class="fw-bold mb-1 gems-label">Nome Completo</label>
-        <input type="text" class="form-control" formControlName="nome">
+        <span class="fw-bold mb-1 gems-label">Nome Completo</span>
+        <input type="text" class="form-control" formControlName="nome" />
       </div>
       <div class="col-md-6 mb-3">
-        <gems-input-document label="CPF" documentType="cpf" formControlName="cpf"></gems-input-document>
+        <gems-input-document
+          label="CPF"
+          documentType="cpf"
+          formControlName="cpf"
+        ></gems-input-document>
       </div>
       <div class="col-md-6 mb-3">
-        <gems-input-date label="Data de Nascimento" formControlName="dataNascimento"></gems-input-date>
+        <gems-input-date
+          label="Data de Nascimento"
+          formControlName="dataNascimento"
+        ></gems-input-date>
       </div>
     </div>
 
-    <div gems-form-card-footer style="display: flex; gap: 0.5rem; justify-content: flex-end;">
-      <button type="submit" class="btn-save" [disabled]="form.invalid">Próximo Passo <i class="fa-solid fa-arrow-right"></i></button>
+    <div gems-form-card-footer style="display: flex; gap: 0.5rem; justify-content: flex-end">
+      <button type="submit" class="btn-save" [disabled]="form.invalid">
+        Próximo Passo
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
     </div>
   </gems-form-card>
 </form>

@@ -62,7 +62,9 @@
   width: 32px;
   height: 32px;
   border-radius: var(--gems-radius-sm, 6px);
-  transition: background-color var(--gems-transition-fast), color var(--gems-transition-fast);
+  transition:
+    background-color var(--gems-transition-fast),
+    color var(--gems-transition-fast);
 }
 
 .gems-modal-close:hover {
@@ -141,7 +143,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-
   .gems-modal-backdrop,
   .gems-modal-container {
     animation: none;

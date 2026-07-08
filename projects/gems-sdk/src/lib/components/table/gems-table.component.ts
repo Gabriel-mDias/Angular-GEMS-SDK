@@ -1,9 +1,23 @@
-import { Component, computed, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { NgStyle } from '@angular/common';
 
 import { GemsDocumentPipe } from '../../pipes/gems-document.pipe';
 import { GemsPageable } from '../../http/gems-pageable';
-import { GemsTableAction, GemsTableColumn, GemsTableRow } from './gems-table.model';
+import {
+  GemsTableAction,
+  GemsTableColumn,
+  GemsTableLabels,
+  GemsTableRow,
+} from './gems-table.model';
+
+/** Rótulos padrão (pt-BR) da tabela. */
+const DEFAULT_TABLE_LABELS: Required<GemsTableLabels> = {
+  showing: (from, to, total) => `Mostrando ${from} até ${to} de ${total} registros`,
+  perPage: 'Itens por página:',
+  page: (current, total) => `Página ${current} de ${total}`,
+  previous: 'Página Anterior',
+  next: 'Próxima Página',
+};
 
 /**
  * Tabela de dados com ordenação, paginação server-side, skeleton loading,
@@ -22,6 +36,7 @@ import { GemsTableAction, GemsTableColumn, GemsTableRow } from './gems-table.mod
   imports: [NgStyle, GemsDocumentPipe],
   templateUrl: './gems-table.component.html',
   styleUrls: ['./gems-table.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GemsTableComponent {
   // ── Inputs ────────────────────────────────────────────────────────
@@ -30,6 +45,10 @@ export class GemsTableComponent {
   readonly actions = input<GemsTableAction[]>([]);
   readonly emptyMessage = input<string>('Nenhum registro encontrado.');
   readonly isLoading = input<boolean>(false);
+  /** Campo que identifica unicamente a linha (usado no trackBy). Ex.: 'id'. */
+  readonly rowId = input<string>('id');
+  /** Rótulos configuráveis (i18n). */
+  readonly labels = input<GemsTableLabels>({});
 
   readonly totalRecords = input<number>(0);
   readonly page = input<number>(0);
@@ -42,14 +61,23 @@ export class GemsTableComponent {
   readonly pageChange = output<GemsPageable>();
 
   // ── Estado derivado ───────────────────────────────────────────────
-  protected readonly totalPages = computed(() =>
-    Math.ceil(this.totalRecords() / this.size()),
-  );
+  protected readonly totalPages = computed(() => Math.ceil(this.totalRecords() / this.size()));
   protected readonly hasPreviousPage = computed(() => this.page() > 0);
   protected readonly hasNextPage = computed(() => this.page() < this.totalPages() - 1);
+  /** Rótulos efetivos (defaults pt-BR mesclados com os overrides). */
+  protected readonly resolvedLabels = computed<Required<GemsTableLabels>>(() => ({
+    ...DEFAULT_TABLE_LABELS,
+    ...this.labels(),
+  }));
 
   /** Linhas de placeholder para o skeleton de loading (5 linhas fixas). */
   protected readonly skeletonRows = [1, 2, 3, 4, 5];
+
+  // ── trackBy ───────────────────────────────────────────────────────
+  protected trackRow = (index: number, row: GemsTableRow): unknown => {
+    const key = this.rowId();
+    return row[key] ?? index;
+  };
 
   // ── Métodos públicos ──────────────────────────────────────────────
   changePage(newPage: number): void {
@@ -78,10 +106,10 @@ export class GemsTableComponent {
     this.actionClick.emit({ action: actionName, row });
   }
 
-  getBadgeStyle(col: GemsTableColumn, value: any): Record<string, string> {
-    return col.badgeColors?.[value]
-      ? { 'background-color': col.badgeColors[value].bg, color: col.badgeColors[value].text }
-      : {};
+  getBadgeStyle(col: GemsTableColumn, value: unknown): Record<string, string> {
+    const key = String(value);
+    const badge = col.badgeColors?.[key];
+    return badge ? { 'background-color': badge.bg, color: badge.text } : {};
   }
 
   // ── Métodos privados ──────────────────────────────────────────────

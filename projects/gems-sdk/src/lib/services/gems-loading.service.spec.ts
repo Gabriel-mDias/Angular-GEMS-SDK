@@ -87,5 +87,14 @@ describe('GemsLoadingService', () => {
       service.hide();
       expect(service.isLoading()).toBeFalse();
     });
+
+    it('deve ignorar hide() de uma geração antiga após forceHide (M1)', () => {
+      const genAntiga = service.show(); // requisição antiga em voo
+      service.forceHide(); // reset (nova geração)
+      service.show(); // nova requisição
+      // hide da requisição antiga NÃO deve esconder o loading da nova
+      service.hide(genAntiga);
+      expect(service.isLoading()).toBeTrue();
+    });
   });
 });

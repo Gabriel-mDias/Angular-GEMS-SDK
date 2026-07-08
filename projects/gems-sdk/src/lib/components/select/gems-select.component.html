@@ -1,33 +1,31 @@
 @if (label()) {
-  <label [for]="selectId" class="gems-select-label">
-    {{ label() }}
-    @if (required()) {
-      <span class="gems-required" aria-hidden="true">*</span>
-    }
-  </label>
+<label [for]="selectId" class="gems-select-label">
+  {{ label() }} @if (required()) {
+  <span class="gems-required" aria-hidden="true">*</span>
+  }
+</label>
 }
 
 <div class="gems-select-wrapper">
   <select
     [id]="selectId"
     class="gems-select-field"
-    [disabled]="disabled()"
+    [disabled]="isDisabled()"
     [required]="required()"
     (change)="onSelectChange($event)"
     (blur)="onTouched()"
     [attr.aria-label]="label() || null"
   >
     @if (placeholder()) {
-      <option value="" disabled [selected]="!value">{{ placeholder() }}</option>
-    }
-    @for (option of options(); track option.value) {
-      <option
-        [value]="getOptionIndex($index)"
-        [disabled]="option.disabled ?? false"
-        [selected]="isSelected(option)"
-      >
-        {{ option.label }}
-      </option>
+    <option value="" disabled [selected]="isEmpty()">{{ placeholder() }}</option>
+    } @for (option of options(); track option.value) {
+    <option
+      [value]="getOptionIndex($index)"
+      [disabled]="option.disabled ?? false"
+      [selected]="isSelected(option)"
+    >
+      {{ option.label }}
+    </option>
     }
   </select>
   <i class="fa-solid fa-chevron-down gems-select-arrow" aria-hidden="true"></i>
