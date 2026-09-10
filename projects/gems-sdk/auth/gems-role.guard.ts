@@ -20,8 +20,10 @@ import { GemsRoleMode, gemsHasRequiredRoles } from './gems-role.util';
  * }
  * ```
  *
- * Quando o `KeycloakService` não está configurado, o guard libera o acesso
- * (fail-open) assumindo que a aplicação não usa autenticação.
+ * Fail-**closed**: sem `KeycloakService` disponível, o guard **nega**. A mesma condição cobria
+ * "aplicação sem autenticação" e "aplicação com autenticação cuja injeção falhou", e liberar
+ * atendia à primeira à custa da segunda. Aplicação sem autenticação não põe o guard na rota —
+ * não há opção de compatibilidade, e isso é deliberado.
  */
 export const gemsRoleGuard: CanActivateFn = async (
   route: ActivatedRouteSnapshot,
@@ -31,7 +33,7 @@ export const gemsRoleGuard: CanActivateFn = async (
   const document = inject(DOCUMENT);
 
   if (!keycloak) {
-    return true; // Sem Keycloak configurado: aplicação sem auth.
+    return false; // Sem Keycloak disponível não há como decidir: nega.
   }
 
   if (!keycloak.isLoggedIn()) {

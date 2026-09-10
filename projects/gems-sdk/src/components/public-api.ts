@@ -32,6 +32,13 @@ export { GemsSelectItem } from '../lib/components/card-list-select/gems-card-lis
 
 // Inputs
 export { GemsInputPasswordComponent } from '../lib/components/input-password/gems-input-password.component';
+export {
+  GemsPasswordPolicyErrors,
+  GemsPasswordIdentityErrors,
+  GemsPasswordCriterion,
+  GEMS_PASSWORD_MINIMUM_LENGTH,
+  GEMS_PASSWORD_SPECIAL_CHARACTER_PATTERN,
+} from '../lib/components/input-password/gems-input-password.model';
 export { GemsInputDateComponent } from '../lib/components/input-date/gems-input-date.component';
 export {
   GemsDateFormat,

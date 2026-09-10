@@ -115,7 +115,11 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "buildTarget": "gems-showcase:build:development",
-            "tsConfig": "projects/gems-sdk/tsconfig.spec.json"
+            "tsConfig": "projects/gems-sdk/tsconfig.spec.json",
+            "include": [
+              "**/*.spec.ts",
+              "../auth/**/*.spec.ts"
+            ]
           }
         },
         "lint": {
