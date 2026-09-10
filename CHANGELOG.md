@@ -11,6 +11,18 @@ Guia de migração: [`utils/upgrade-versions/1.1.0-to-2.0.0.md`](utils/upgrade-v
 
 > **A faixa 1.x está encerrada, sem manutenção.** Não haverá correções, nem de segurança, para a 1.1.0 ou anterior. Quem depende da SDK sobe para a 2.0.0.
 
+> ⚠️ **Esta versão sai sem prova de não-regressão contra um consumidor real, e a lacuna é deliberada.**
+> O projeto de referência (ADACI) declara `^1.1.0`, faixa que **não alcança** a 2.0.0: rodar a suíte
+> dele como está prova a 1.1.0, não esta versão. A prova exigiria subir a dependência dentro do
+> repositório dele, e alterar o repositório do consumidor não é ato desta rodada. O product owner
+> decidiu em 2026-09-10 publicar assim, com a lacuna nomeada em vez de coberta por um teste que
+> mediria a versão errada.
+>
+> O que isso significa na prática: as duas mudanças BREAKING abaixo foram provadas por teste **dentro
+> da SDK** (62 provas, incluindo as de `auth/`, que antes nem eram executadas), e não foram provadas
+> contra a aplicação de outra pessoa. Quem migrar é o primeiro a exercitá-las em conjunto — comece
+> pelo guia de migração, e confira as rotas que dependem de `gemsRoleGuard`.
+
 ### BREAKING
 
 Duas razões, e nenhuma delas é cosmética:
