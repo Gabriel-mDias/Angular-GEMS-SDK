@@ -4,6 +4,22 @@
 > modelo/desenvolvedor. Cada fase é independente e verificável. Siga sempre as
 > [regras de código](../rules/CODING-STANDARDS.md).
 
+## Estado das fases após a `2.0.0` (2026-09-10)
+
+A `2.0.0` tocou **duas** fases, e nenhuma das duas fechou por inteiro. As demais permanecem
+exatamente como estavam — este plano não foi reescrito, apenas anotado.
+
+| Fase | Estado | O que a 2.0.0 fez |
+| :--- | :--- | :--- |
+| 0 · Enforcement | inalterada | — |
+| 1 · Padronização estrutural | inalterada | — |
+| 2 · Tipagem e superfície pública | inalterada | — |
+| 3 · Correções de comportamento | **parcial** | apenas o item 4, e só a parte do `gems-field-error` — ver a nota na fase |
+| 4 · Escalabilidade | inalterada | — |
+| 5 · UX, mobile e acessibilidade | inalterada | — |
+| 6 · PWA | inalterada | — |
+| 7 · Testes | **parcial** | mecanismo trocado e 8 arquivos de spec existem; a lista de alvos da fase segue majoritariamente aberta — ver a nota na fase |
+
 ## Contexto e objetivo
 
 A SDK foi criada (com apoio do Gemini) para padronizar componentes reutilizáveis
@@ -135,6 +151,15 @@ showcase renderiza cada componente igual a antes.
 **Verificação:** alertas de erro aparecem com a cor `danger` do tema; formulários
 mostram erros de validação de forma uniforme.
 
+> **Anotação da `2.0.0`:** só o item 4 foi tocado, e só em parte. `gems-field-error` **não exibia
+> mensagem alguma** — o `computed()` reavaliava uma única vez, na vinculação, com o campo intocado,
+> e memorizava `''`. Isso foi corrigido: a derivação passa a depender de um sinal incrementado pelos
+> eventos do próprio controle, com 2 provas. A padronização da *área de erro* nos demais inputs, que
+> é o resto do item 4, **continua aberta**. Itens 1, 2 e 3 não foram tocados.
+>
+> Registrado de uma tentativa que não deu certo: um getter simples no lugar do `computed()` **não**
+> corrige o defeito. A dependência precisa ser num sinal que os eventos do controle incrementem.
+
 ---
 
 ## Fase 4 — Escalabilidade (novos componentes e organização)
@@ -196,7 +221,8 @@ por teclado funciona; Lighthouse (Accessibility) ≥ 90.
 
 ## Fase 7 — Testes
 
-Hoje **não há `.spec.ts`** apesar do Karma/Jasmine configurado.
+~~Hoje **não há `.spec.ts`** apesar do Karma/Jasmine configurado.~~ **Desatualizado desde a `2.0.0`**
+— ver a anotação ao fim da fase.
 
 1. Testes unitários para a lógica pura crítica: máscaras
    (`input-date`/`-mask`/`-document`), `gems-palette.util`, `GemsBaseStore`
@@ -205,6 +231,18 @@ Hoje **não há `.spec.ts`** apesar do Karma/Jasmine configurado.
 3. Smoke tests de renderização dos componentes.
 
 **Verificação:** `npm test` roda verde; cobertura mínima acordada nos utilitários.
+
+> **Anotação da `2.0.0`:** o **mecanismo** mudou — Karma/Jasmine saíram, entrou **Vitest** pelo
+> construtor `@angular/build:unit-test` — e a suíte hoje tem **62 provas em 8 arquivos**
+> (`gems-field-error`, `gems-input-password`, `gems-role.guard`, `gems-role.util`,
+> `gems-loading.service` e os 3 specs que já existiam). Os itens 1, 2 e 3 acima seguem
+> **majoritariamente abertos**: máscaras, `gems-palette.util`, `GemsBaseStore`, `GemsDocumentPipe` e
+> os smoke tests continuam sem cobertura, e não há piso de cobertura acordado.
+>
+> **Armadilha que custou caro e vale registrar:** a opção `include` do construtor de teste é relativa
+> ao **`sourceRoot`**, não à raiz do projeto. Os specs do entry point `auth`, que fica fora dele,
+> rodavam como **zero arquivos** e a suíte reportava verde. Ao acrescentar spec em entry point
+> secundário, confira a **contagem de arquivos** da saída, não a cor dela.
 
 ---
 
