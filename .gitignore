@@ -8,8 +8,8 @@
 .angular/
 
 # Node modules and dependency files
+# package-lock.json é versionado: `npm ci` (instalação do CI e do gate) depende dele.
 /node_modules/
-/package-lock.json
 /yarn.lock
 
 # Environment files
