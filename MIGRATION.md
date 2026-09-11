@@ -4,16 +4,20 @@ Este guia serve para refatorar projetos antigos (ex: `meduc-frontend`) para adot
 
 ## 1. Instalação e Remoção do Código Antigo
 
+> **Já está na `1.1.0`?** Este guia não é o seu. Vá para
+> [`utils/upgrade-versions/1.1.0-to-2.0.0.md`](utils/upgrade-versions/1.1.0-to-2.0.0.md), que cobre
+> o salto de plataforma e os dois caminhos fail-open fechados na autorização.
+
 1. **Remova as pastas legadas:** Apague as pastas `src/app/shared/components`, `src/app/shared/services`, e `projects/gems-sdk` (se houver) locais do seu app que agora estão consolidadas neste pacote.
-2. **Instale a biblioteca oficial:**
+2. **Instale a biblioteca oficial** (a partir da `2.0.0`, **sem** `--legacy-peer-deps`; o pacote relaxa os peers do `keycloak-angular` por `overrides`):
 \`\`\`bash
-npm install @gabriel-mdias/angular-gems-sdk --legacy-peer-deps
+npm install @gabriel-mdias/angular-gems-sdk
 \`\`\`
 
 ## 2. Refatoração de Componentes (O Prefix `gems-`)
 
 Todos os componentes perderam as rotulagens antigas e agora obrigatoriamente iniciam com o prefixo **`gems-`**.
-Eles também utilizam as novas APIs de **Signals do Angular 20**.
+Eles também utilizam as APIs de **Signals do Angular 22**.
 
 ### O que mudou no template (HTML)?
 * Se usava `<lib-table>`, agora é `<gems-table>`.
