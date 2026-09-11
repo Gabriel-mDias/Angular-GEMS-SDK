@@ -20,13 +20,18 @@ jobs:
           node-version: '24'
           registry-url: 'https://npm.pkg.github.com'
       - name: 📥 Instalação de Dependências
-        run: npm install --legacy-peer-deps
+        run: npm ci
       - name: 🏗️ Build da Biblioteca GEMS SDK
         run: npm run build gems-sdk
       - name: 🚀 Empacotamento e Publicação (NPM Publish)
         run: |
           cd dist/gems-sdk
+          NAME=$(node -p "require('./package.json').name")
           VERSION=$(node -p "require('./package.json').version")
+          if npm view "$NAME@$VERSION" version --registry https://npm.pkg.github.com >/dev/null 2>&1; then
+            echo "::notice::$NAME@$VERSION já está publicada — nada a fazer."
+            exit 0
+          fi
           if [[ "$VERSION" == *"-"* ]]; then
             npm publish --tag next
           else

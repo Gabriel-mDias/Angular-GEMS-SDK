@@ -1,6 +1,6 @@
 {
   "name": "@gabriel-mdias/angular-gems-sdk",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Kit de desenvolvimento Angular para projetos G&Ms — componentes, serviços e theming configurável.",
   "license": "MIT",
   "author": "Gabriel Magalhães",
@@ -27,10 +27,10 @@
     "registry": "https://npm.pkg.github.com"
   },
   "peerDependencies": {
-    "@angular/common": "^20.0.0",
-    "@angular/core": "^20.0.0",
-    "@angular/forms": "^20.0.0",
-    "@angular/router": "^20.0.0",
+    "@angular/common": "^22.0.0",
+    "@angular/core": "^22.0.0",
+    "@angular/forms": "^22.0.0",
+    "@angular/router": "^22.0.0",
     "@fortawesome/fontawesome-free": "^6.0.0 || ^7.0.0",
     "rxjs": "^7.8.0"
   },

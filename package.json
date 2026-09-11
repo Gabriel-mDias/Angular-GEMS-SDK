@@ -1,13 +1,13 @@
 {
   "name": "angular-gems-sdk",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "build:lib": "ng build gems-sdk --configuration production",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "ng test gems-sdk",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
     "format": "prettier --write .",
@@ -16,14 +16,13 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^20.0.0",
-    "@angular/common": "^20.0.0",
-    "@angular/compiler": "^20.0.0",
-    "@angular/core": "^20.0.0",
-    "@angular/forms": "^20.0.0",
-    "@angular/platform-browser": "^20.0.0",
-    "@angular/platform-browser-dynamic": "^20.0.0",
-    "@angular/router": "^20.0.0",
+    "@angular/animations": "^22.1.5",
+    "@angular/common": "^22.1.5",
+    "@angular/compiler": "^22.1.5",
+    "@angular/core": "^22.1.5",
+    "@angular/forms": "^22.1.5",
+    "@angular/platform-browser": "^22.1.5",
+    "@angular/router": "^22.1.5",
     "@fortawesome/fontawesome-free": "^7.2.0",
     "keycloak-angular": "^16.0.0",
     "keycloak-js": "^24.0.0",
@@ -34,27 +33,29 @@
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^20.0.0",
-    "@angular/cli": "^20.0.0",
-    "@angular/compiler-cli": "^20.0.0",
+    "@angular/build": "^22.1.8",
+    "@angular/cli": "^22.1.8",
+    "@angular/compiler-cli": "^22.1.5",
     "@eslint/js": "^10.0.1",
-    "@types/jasmine": "~5.1.0",
     "@types/prismjs": "^1.26.4",
-    "angular-eslint": "^20.7.0",
-    "eslint": "^9.37.0",
+    "angular-eslint": "^22.5.0",
+    "eslint": "^10.0.0",
     "eslint-config-prettier": "^10.1.8",
     "husky": "^9.1.7",
-    "jasmine-core": "~5.6.0",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "~2.2.0",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0",
+    "jsdom": "^28.0.0",
     "lint-staged": "^17.0.7",
-    "ng-packagr": "^20.0.0",
+    "ng-packagr": "^22.1.1",
     "prettier": "^3.8.4",
-    "typescript": "~5.8.0",
-    "typescript-eslint": "^8.61.1"
+    "typescript": "~6.0.2",
+    "typescript-eslint": "^8.70.0",
+    "vitest": "^4.1.11"
+  },
+  "overrides": {
+    "keycloak-angular": {
+      "@angular/common": "$@angular/common",
+      "@angular/core": "$@angular/core",
+      "@angular/router": "$@angular/router"
+    }
   },
   "lint-staged": {
     "*.ts": [

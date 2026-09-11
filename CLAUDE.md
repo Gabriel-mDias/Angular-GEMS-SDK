@@ -16,7 +16,7 @@ npm start              # serve the showcase app (dev config) at localhost:4200
 npm run build:lib      # build the library (production, ng-packagr) -> dist/gems-sdk
 npm run build          # build the showcase app
 npm run watch          # rebuild on change (development config)
-npm test               # run Karma/Jasmine tests
+npm test               # run the gems-sdk suite (Vitest, @angular/build:unit-test)
 npm run lint           # eslint (angular-eslint) over both projects
 npm run lint:fix       # eslint with --fix
 npm run format         # prettier --write over the repo
@@ -24,7 +24,7 @@ npm run format         # prettier --write over the repo
 
 Single test: `ng test gems-sdk --include='**/<name>.spec.ts'`.
 
-Note: **no `.spec.ts` files exist yet** — the Karma config is in place but the suite is empty.
+The suite lives entirely under `projects/gems-sdk`; `gems-showcase` has no `.spec.ts`.
 
 A Husky `pre-commit` hook runs `lint-staged`, which applies `eslint --fix` + `prettier` to staged `.ts`/`.html` and `prettier` to staged `.css`. Don't bypass it (`--no-verify`) unless asked.
 
