@@ -2,56 +2,98 @@
   <div class="header">
     <div class="header-titles">
       <h2>Formulários Simples</h2>
-      <p class="subtitle">Apresentação de campos de entrada e formulários padrão utilizando o componente <code>gems-form-card</code>.</p>
+      <p class="subtitle">
+        Apresentação de campos de entrada e formulários padrão utilizando o componente
+        <code>gems-form-card</code>
+        .
+      </p>
     </div>
   </div>
-  
+
   <div class="demo-section">
     <div class="demo-preview">
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <gems-form-card title="Cadastro de Usuário" icon="fa-solid fa-user-plus">
           <div class="row mb-3">
             <div class="col-md-6 mb-3">
-              <gems-input-document 
-                label="CPF" 
+              <gems-input-document
+                label="CPF"
                 documentType="cpf"
                 formControlName="cpf"
-                required>
-              </gems-input-document>
+                required
+              ></gems-input-document>
             </div>
-      
+
             <div class="col-md-6 mb-3">
-              <gems-input-date 
+              <gems-input-date
                 label="Data de Nascimento"
                 formControlName="dataNascimento"
-                required>
-              </gems-input-date>
+                required
+              ></gems-input-date>
             </div>
-      
+
             <div class="col-md-6 mb-3">
-              <gems-input-password 
+              <gems-input-text
+                label="E-mail"
+                formControlName="email"
+                placeholder="nome@exemplo.com"
+                [required]="true"
+              ></gems-input-text>
+            </div>
+
+            <!-- Política de senha: com `enforcePolicy` (padrão) o controle recebe `passwordPolicy`
+                 enquanto os critérios não são atendidos e `passwordEqualsIdentity` se a senha
+                 repetir `username`/`email`; `showCriteria` (padrão) exibe a lista ao vivo. -->
+            <div class="col-md-6 mb-3">
+              <gems-input-password
                 label="Senha de Acesso"
                 formControlName="senha"
-                required>
-              </gems-input-password>
+                username="usuario.demo"
+                [email]="form.controls['email'].value"
+                required
+              ></gems-input-password>
+              <gems-field-error
+                [control]="form.controls['senha']"
+                [messages]="passwordMessages"
+              ></gems-field-error>
+            </div>
+
+            <!-- Confirmação: sem política nem critérios (já valem no campo de cima); `matchControl`
+                 marca `passwordMismatch` enquanto as duas não coincidirem. -->
+            <div class="col-md-6 mb-3">
+              <gems-input-password
+                label="Confirmação da Senha"
+                formControlName="confirmacaoSenha"
+                placeholder="Repita a senha"
+                [enforcePolicy]="false"
+                [showCriteria]="false"
+                [matchControl]="form.controls['senha']"
+                required
+              ></gems-input-password>
+              <gems-field-error
+                [control]="form.controls['confirmacaoSenha']"
+                [messages]="confirmationMessages"
+              ></gems-field-error>
             </div>
           </div>
-      
+
           <div class="row mb-4">
             <div class="col-12">
-              <gems-input-checkbox 
+              <gems-input-checkbox
                 label="Aceito os termos de uso e política de privacidade"
-                formControlName="aceitoTermos">
-              </gems-input-checkbox>
+                formControlName="aceitoTermos"
+              ></gems-input-checkbox>
             </div>
           </div>
-      
-          <div gems-form-card-footer style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+
+          <div gems-form-card-footer style="display: flex; gap: 0.5rem; justify-content: flex-end">
             <button type="button" class="btn-cancel" (click)="onCancel()">
-              Cancelar <i class="fa-solid fa-xmark"></i>
+              Cancelar
+              <i class="fa-solid fa-xmark"></i>
             </button>
             <button type="submit" class="btn-save" [disabled]="form.invalid">
-              Salvar <i class="fa-solid fa-check"></i>
+              Salvar
+              <i class="fa-solid fa-check"></i>
             </button>
           </div>
         </gems-form-card>
