@@ -27,6 +27,7 @@ import { gemsUniqueId } from '../../core/utils/gems-unique-id.util';
 import {
   GEMS_PASSWORD_MINIMUM_LENGTH,
   GEMS_PASSWORD_SPECIAL_CHARACTER_PATTERN,
+  GemsPasswordAutocomplete,
   GemsPasswordCriterion,
   GemsPasswordIdentityErrors,
   GemsPasswordPolicyErrors,
@@ -65,6 +66,11 @@ export class GemsInputPasswordComponent implements ControlValueAccessor, Validat
   readonly placeholder = input<string>('Digite sua senha');
   readonly id = input<string>(gemsUniqueId('password'));
   readonly required = input<boolean, boolean | string>(false, { transform: booleanAttribute });
+  /**
+   * Valor de `autocomplete` do `<input>`. `new-password` (padrão) é o cadastro ou a troca de senha;
+   * `current-password`, o login — o navegador só oferece a senha salva no segundo caso.
+   */
+  readonly autocomplete = input<GemsPasswordAutocomplete>('new-password');
   /** Aplica tamanho, letras, caractere especial, espaços e identidade. */
   readonly enforcePolicy = input<boolean, boolean | string>(true, { transform: booleanAttribute });
   /** Lista, em tempo real, somente os critérios ainda pendentes. */

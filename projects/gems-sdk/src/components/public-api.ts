@@ -36,6 +36,7 @@ export {
   GemsPasswordPolicyErrors,
   GemsPasswordIdentityErrors,
   GemsPasswordCriterion,
+  GemsPasswordAutocomplete,
   GEMS_PASSWORD_MINIMUM_LENGTH,
   GEMS_PASSWORD_SPECIAL_CHARACTER_PATTERN,
 } from '../lib/components/input-password/gems-input-password.model';

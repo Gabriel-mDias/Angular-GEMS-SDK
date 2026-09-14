@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  booleanAttribute,
   computed,
   forwardRef,
   input,
@@ -59,7 +60,8 @@ export class GemsInputTextComponent implements ControlValueAccessor {
   readonly type = input<GemsInputTextType>('text');
   readonly icon = input<string>('');
   readonly disabled = input<boolean>(false);
-  readonly required = input<boolean>(false);
+  /** Aceita `required` sem colchetes, como o `gems-input-password`. */
+  readonly required = input<boolean, boolean | string>(false, { transform: booleanAttribute });
   readonly maxlength = input<number | null>(null);
   readonly hint = input<string>('');
 
