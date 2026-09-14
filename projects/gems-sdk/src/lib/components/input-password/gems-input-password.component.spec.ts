@@ -21,6 +21,7 @@ import { GemsInputPasswordComponent } from './gems-input-password.component';
       [enforcePolicy]="false"
       [showCriteria]="false"
       [matchControl]="senha"
+      autocomplete="current-password"
     ></gems-input-password>
   `,
 })
@@ -161,5 +162,24 @@ describe('GemsInputPasswordComponent (C3)', () => {
     (fixture.nativeElement.querySelector('.gems-toggle-btn') as HTMLButtonElement).click();
     fixture.detectChanges();
     expect(inputs[0].type).toBe('text');
+  });
+
+  it('reflete o autocomplete no <input>: new-password por padrão e current-password quando pedido', () => {
+    const fixture = montar();
+    const inputs = fixture.nativeElement.querySelectorAll('input') as NodeListOf<HTMLInputElement>;
+
+    expect(inputs[0].getAttribute('autocomplete')).toBe('new-password');
+    expect(inputs[1].getAttribute('autocomplete')).toBe('current-password');
+  });
+
+  it('anuncia o estado do botão de visibilidade por aria-pressed', () => {
+    const fixture = montar();
+    const botao = fixture.nativeElement.querySelector('.gems-toggle-btn') as HTMLButtonElement;
+
+    expect(botao.getAttribute('aria-pressed')).toBe('false');
+
+    botao.click();
+    fixture.detectChanges();
+    expect(botao.getAttribute('aria-pressed')).toBe('true');
   });
 });

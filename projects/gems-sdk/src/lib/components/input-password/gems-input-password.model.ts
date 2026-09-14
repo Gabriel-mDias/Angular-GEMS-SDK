@@ -20,6 +20,9 @@ export interface GemsPasswordCriterion {
   valid: boolean;
 }
 
+/** Valores de `autocomplete` que fazem sentido num campo de senha. */
+export type GemsPasswordAutocomplete = 'new-password' | 'current-password';
+
 /** Tamanho mínimo exigido pela política do componente. */
 export const GEMS_PASSWORD_MINIMUM_LENGTH = 12;
 

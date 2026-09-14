@@ -16,6 +16,11 @@ export class GemsNavigationService {
   // ── Estado interno ────────────────────────────────────────────────
   private readonly HISTORY_KEY = 'gems_route_history';
   private readonly NEXT_ROUTE_DATA_KEY = 'gems_next_route_data';
+  /**
+   * Teto do histórico em `sessionStorage`. Ao exceder, a entrada mais antiga sai — sem teto, uma
+   * sessão longa cresce sem limite, e `back()` só precisa das mais recentes.
+   */
+  static readonly MAX_HISTORY = 50;
 
   // ── Construtor ────────────────────────────────────────────────────
   constructor(
@@ -78,6 +83,8 @@ export class GemsNavigationService {
       const url = (event as NavigationEnd).urlAfterRedirects;
       if (history.length === 0 || history[history.length - 1] !== url) {
         history.push(url);
+        const excedente = history.length - GemsNavigationService.MAX_HISTORY;
+        if (excedente > 0) history.splice(0, excedente);
         this.sessionService.setItem(this.HISTORY_KEY, history);
       }
     });

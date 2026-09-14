@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
-import Swal, { SweetAlertResult } from 'sweetalert2';
+import type { default as SwalApi, SweetAlertResult } from 'sweetalert2';
+// O `package.json` do sweetalert2 aponta `browser` para o UMD, e o Angular resolve `browser` antes
+// de `module`: importar pelo nome do pacote entrega CommonJS ao consumidor ("is not ESM"). O caminho
+// ESM é explícito; os tipos continuam vindo de 'sweetalert2', que não tipa este caminho.
+// @ts-expect-error: o arquivo ESM não tem .d.ts próprio — a tipagem é a de 'sweetalert2', abaixo.
+import SwalEsm from 'sweetalert2/dist/sweetalert2.esm.all.js';
+
+const Swal: typeof SwalApi = SwalEsm;
 
 /**
  * Serviço de alertas e confirmações baseado em SweetAlert2.
