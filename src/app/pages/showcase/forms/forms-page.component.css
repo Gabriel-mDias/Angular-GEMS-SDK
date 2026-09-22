@@ -40,7 +40,8 @@
   border-top: 1px solid var(--gems-border-color);
 }
 
-.gems-btn-primary, .gems-btn-secondary {
+.gems-btn-primary,
+.gems-btn-secondary {
   display: flex;
   align-items: center;
   gap: 8px;

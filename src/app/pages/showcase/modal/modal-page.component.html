@@ -9,7 +9,7 @@
   <div class="demo-section">
     <div class="demo-preview">
       <gems-form-card title="Exemplos de Modal" icon="fa-solid fa-window-restore">
-        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap">
           <button class="btn-primary" (click)="openSmall = true">Abrir Modal Pequeno</button>
           <button class="btn-save" (click)="openMedium = true">Abrir Modal Médio</button>
           <button class="btn-danger" (click)="openConfirm = true">Modal de Confirmação</button>
@@ -26,7 +26,7 @@
 
       <!-- Modal Médio -->
       <gems-modal [(open)]="openMedium" title="Formulário Rápido" size="md">
-        <div style="display: grid; gap: 1rem;">
+        <div style="display: grid; gap: 1rem">
           <gems-input-text label="Nome" placeholder="Digite o nome"></gems-input-text>
           <gems-input-text label="Descrição" placeholder="Digite a descrição"></gems-input-text>
         </div>
@@ -37,7 +37,12 @@
       </gems-modal>
 
       <!-- Modal de Confirmação -->
-      <gems-modal [(open)]="openConfirm" title="Confirmar Exclusão" size="sm" [closeOnBackdrop]="false">
+      <gems-modal
+        [(open)]="openConfirm"
+        title="Confirmar Exclusão"
+        size="sm"
+        [closeOnBackdrop]="false"
+      >
         <p>Tem certeza que deseja excluir este item? Esta ação não pode ser desfeita.</p>
         <div gems-modal-footer>
           <button class="btn-cancel" (click)="openConfirm = false">Cancelar</button>

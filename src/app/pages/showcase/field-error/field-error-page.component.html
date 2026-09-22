@@ -9,7 +9,7 @@
   <div class="demo-section">
     <div class="demo-preview">
       <gems-form-card title="Validação de Formulário" icon="fa-solid fa-triangle-exclamation">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()" style="display: grid; gap: 1.5rem;">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" style="display: grid; gap: 1.5rem">
           <div>
             <gems-input-text
               label="Nome (obrigatório)"
@@ -33,7 +33,7 @@
             ></gems-field-error>
           </div>
 
-          <div gems-form-card-footer style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+          <div gems-form-card-footer style="display: flex; gap: 0.5rem; justify-content: flex-end">
             <button type="button" class="btn-cancel" (click)="form.reset()">Limpar</button>
             <button type="submit" class="btn-save">Validar</button>
           </div>

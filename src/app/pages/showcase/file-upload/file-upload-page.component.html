@@ -2,14 +2,18 @@
   <div class="header">
     <div class="header-titles">
       <h2>File Upload</h2>
-      <p class="subtitle">Componente para upload de arquivos com preview e progresso, integrado ao <code>GemsS3Service</code>.</p>
+      <p class="subtitle">
+        Componente para upload de arquivos com preview e progresso, integrado ao
+        <code>GemsS3Service</code>
+        .
+      </p>
     </div>
   </div>
 
   <div class="demo-section">
     <div class="demo-preview">
       <gems-form-card title="Upload de Documentos" icon="fa-solid fa-cloud-arrow-up">
-        <div style="padding-bottom: 2rem;">
+        <div style="padding-bottom: 2rem">
           <gems-file-upload
             label="Anexar Documento"
             accept=".pdf,.png,.jpg,.jpeg"
@@ -19,12 +23,12 @@
         </div>
 
         @if (uploadedFileKey) {
-          <div class="file-list">
-            <h4>Arquivo enviado com sucesso!</h4>
-            <ul>
-              <li>Chave: {{ uploadedFileKey }}</li>
-            </ul>
-          </div>
+        <div class="file-list">
+          <h4>Arquivo enviado com sucesso!</h4>
+          <ul>
+            <li>Chave: {{ uploadedFileKey }}</li>
+          </ul>
+        </div>
         }
       </gems-form-card>
     </div>

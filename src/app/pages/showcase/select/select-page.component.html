@@ -2,14 +2,18 @@
   <div class="header">
     <div class="header-titles">
       <h2>Select</h2>
-      <p class="subtitle">Dropdown estilizado com acessibilidade nativa (<code>&lt;select&gt;</code>), suporte a CVA e Reactive Forms.</p>
+      <p class="subtitle">
+        Dropdown estilizado com acessibilidade nativa (
+        <code>&lt;select&gt;</code>
+        ), suporte a CVA e Reactive Forms.
+      </p>
     </div>
   </div>
 
   <div class="demo-section">
     <div class="demo-preview">
       <gems-form-card title="Exemplos de Select" icon="fa-solid fa-chevron-down">
-        <form [formGroup]="form" style="display: grid; gap: 1.5rem;">
+        <form [formGroup]="form" style="display: grid; gap: 1.5rem">
           <gems-select
             label="Estado"
             placeholder="Selecione um estado"
@@ -32,7 +36,7 @@
           ></gems-select>
         </form>
 
-        <div gems-form-card-footer style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+        <div gems-form-card-footer style="display: flex; gap: 0.5rem; justify-content: flex-end">
           <button type="button" class="btn-cancel" (click)="form.reset()">Limpar</button>
           <button type="button" class="btn-save" [disabled]="form.invalid">Confirmar</button>
         </div>

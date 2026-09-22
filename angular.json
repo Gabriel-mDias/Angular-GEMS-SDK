@@ -16,9 +16,7 @@
             "outputPath": "dist/gems-showcase",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
@@ -82,10 +80,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }
@@ -116,19 +111,13 @@
           "options": {
             "buildTarget": "gems-showcase:build:development",
             "tsConfig": "projects/gems-sdk/tsconfig.spec.json",
-            "include": [
-              "**/*.spec.ts",
-              "../auth/**/*.spec.ts"
-            ]
+            "include": ["**/*.spec.ts", "../auth/**/*.spec.ts"]
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "projects/gems-sdk/**/*.ts",
-              "projects/gems-sdk/**/*.html"
-            ]
+            "lintFilePatterns": ["projects/gems-sdk/**/*.ts", "projects/gems-sdk/**/*.html"]
           }
         }
       }

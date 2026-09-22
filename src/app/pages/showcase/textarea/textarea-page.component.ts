@@ -7,7 +7,12 @@ import { CodeSnippetComponent, CodeTab } from '../../../components/code-snippet'
 @Component({
   selector: 'app-textarea-page',
   standalone: true,
-  imports: [ReactiveFormsModule, GemsFormCardComponent, GemsTextareaComponent, CodeSnippetComponent],
+  imports: [
+    ReactiveFormsModule,
+    GemsFormCardComponent,
+    GemsTextareaComponent,
+    CodeSnippetComponent,
+  ],
   templateUrl: './textarea-page.component.html',
 })
 export class TextareaPageComponent {

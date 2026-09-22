@@ -2,7 +2,7 @@ name: 📦 Publicação GEMS SDK - GitHub Packages
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 jobs:

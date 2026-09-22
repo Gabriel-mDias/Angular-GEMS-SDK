@@ -8,7 +8,7 @@ import { CodeSnippetComponent, CodeTab } from '../../../components/code-snippet'
   standalone: true,
   imports: [CommonModule, GemsFormCardComponent, CodeSnippetComponent],
   templateUrl: './alerts-page.component.html',
-  styleUrls: ['./alerts-page.component.css']
+  styleUrls: ['./alerts-page.component.css'],
 })
 export class AlertsPageComponent {
   constructor(private alertService: GemsAlertService) {}
@@ -62,16 +62,22 @@ export class MeuComponente {
     };
     this.alertService.errorFromApi(apiError);
   }
-}`
-    }
+}`,
+    },
   ];
 
   showSuccess() {
-    this.alertService.success('Operação Concluída', 'Registro salvo com sucesso no banco de dados.');
+    this.alertService.success(
+      'Operação Concluída',
+      'Registro salvo com sucesso no banco de dados.',
+    );
   }
 
   showError() {
-    this.alertService.error('Falha de Sistema', 'Não foi possível conectar ao servidor. Tente novamente mais tarde.');
+    this.alertService.error(
+      'Falha de Sistema',
+      'Não foi possível conectar ao servidor. Tente novamente mais tarde.',
+    );
   }
 
   showWarning() {
@@ -83,7 +89,10 @@ export class MeuComponente {
   }
 
   async askConfirmation() {
-    const result = await this.alertService.confirm('Excluir Registro', 'Tem certeza que deseja excluir o paciente? Esta ação não pode ser desfeita.');
+    const result = await this.alertService.confirm(
+      'Excluir Registro',
+      'Tem certeza que deseja excluir o paciente? Esta ação não pode ser desfeita.',
+    );
     if (result.isConfirmed) {
       this.alertService.success('Excluído', 'O paciente foi excluído.');
     } else {
@@ -94,8 +103,8 @@ export class MeuComponente {
   handleApiError() {
     const apiError = {
       error: {
-        message: 'O CPF informado já está em uso por outro usuário.'
-      }
+        message: 'O CPF informado já está em uso por outro usuário.',
+      },
     };
     this.alertService.errorFromApi(apiError);
   }

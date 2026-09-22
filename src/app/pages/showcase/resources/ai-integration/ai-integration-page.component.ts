@@ -6,6 +6,6 @@ import { GemsFormCardComponent } from '@gabriel-mdias/angular-gems-sdk';
   selector: 'app-ai-integration-page',
   standalone: true,
   imports: [CommonModule, GemsFormCardComponent],
-  templateUrl: './ai-integration-page.component.html'
+  templateUrl: './ai-integration-page.component.html',
 })
 export class AiIntegrationPageComponent {}

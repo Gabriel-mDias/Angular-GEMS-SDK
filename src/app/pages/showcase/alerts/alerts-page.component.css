@@ -55,23 +55,47 @@
   color: white;
 }
 
-.gems-btn-success { background-color: #22c55e; }
-.gems-btn-success:hover { background-color: #16a34a; }
+.gems-btn-success {
+  background-color: #22c55e;
+}
+.gems-btn-success:hover {
+  background-color: #16a34a;
+}
 
-.gems-btn-error { background-color: #ef4444; }
-.gems-btn-error:hover { background-color: #dc2626; }
+.gems-btn-error {
+  background-color: #ef4444;
+}
+.gems-btn-error:hover {
+  background-color: #dc2626;
+}
 
-.gems-btn-warning { background-color: #f59e0b; }
-.gems-btn-warning:hover { background-color: #d97706; }
+.gems-btn-warning {
+  background-color: #f59e0b;
+}
+.gems-btn-warning:hover {
+  background-color: #d97706;
+}
 
-.gems-btn-info { background-color: #3b82f6; }
-.gems-btn-info:hover { background-color: #2563eb; }
+.gems-btn-info {
+  background-color: #3b82f6;
+}
+.gems-btn-info:hover {
+  background-color: #2563eb;
+}
 
-.gems-btn-confirm { background-color: #8b5cf6; }
-.gems-btn-confirm:hover { background-color: #7c3aed; }
+.gems-btn-confirm {
+  background-color: #8b5cf6;
+}
+.gems-btn-confirm:hover {
+  background-color: #7c3aed;
+}
 
-.gems-btn-api { background-color: #64748b; }
-.gems-btn-api:hover { background-color: #475569; }
+.gems-btn-api {
+  background-color: #64748b;
+}
+.gems-btn-api:hover {
+  background-color: #475569;
+}
 
 .alert-item code {
   font-size: var(--gems-font-size-xs);

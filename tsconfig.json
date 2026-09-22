@@ -14,17 +14,10 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
-    "lib": [
-      "ES2022",
-      "dom"
-    ],
+    "lib": ["ES2022", "dom"],
     "paths": {
-      "@gabriel-mdias/angular-gems-sdk": [
-        "./projects/gems-sdk/src/public-api.ts"
-      ],
-      "@gabriel-mdias/angular-gems-sdk/auth": [
-        "./projects/gems-sdk/auth/public-api.ts"
-      ]
+      "@gabriel-mdias/angular-gems-sdk": ["./projects/gems-sdk/src/public-api.ts"],
+      "@gabriel-mdias/angular-gems-sdk/auth": ["./projects/gems-sdk/auth/public-api.ts"]
     }
   },
   "angularCompilerOptions": {

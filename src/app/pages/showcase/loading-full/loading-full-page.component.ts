@@ -1,23 +1,29 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { 
+import {
   GemsFormCardComponent,
   GemsLoadingComponent,
-  GemsLoadingService
+  GemsLoadingService,
 } from '@gabriel-mdias/angular-gems-sdk';
 import { CodeSnippetComponent, CodeTab } from '../../../components/code-snippet';
 
 @Component({
   selector: 'app-loading-full-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, GemsFormCardComponent, GemsLoadingComponent, CodeSnippetComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    GemsFormCardComponent,
+    GemsLoadingComponent,
+    CodeSnippetComponent,
+  ],
   templateUrl: './loading-full-page.component.html',
-  styleUrls: ['./loading-full-page.component.css']
+  styleUrls: ['./loading-full-page.component.css'],
 })
 export class LoadingFullPageComponent {
   private loadingService = inject(GemsLoadingService);
-  
+
   durationSeconds = 3;
 
   codeTabs: CodeTab[] = [
@@ -28,7 +34,7 @@ export class LoadingFullPageComponent {
 <gems-loading></gems-loading>
 
 <!-- Outros componentes da sua aplicação -->
-<router-outlet></router-outlet>`
+<router-outlet></router-outlet>`,
     },
     {
       name: 'TypeScript',
@@ -54,7 +60,7 @@ export class MeuComponente {
       this.loadingService.hide();
     }, 2000);
   }
-}`
+}`,
     },
     {
       name: 'Configuração (Interceptor)',
@@ -71,8 +77,8 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([gemsLoadingInterceptor])
     )
   ]
-};`
-    }
+};`,
+    },
   ];
 
   triggerLoading() {

@@ -32,7 +32,6 @@ import { GemsFooModel } from './gems-foo.model';
   styleUrls: ['./gems-foo.component.css'],
 })
 export class GemsFooComponent implements OnInit {
-
   // ── Inputs / Outputs (a "API pública" do componente) ──────────────
   readonly titulo = input<string>('');
   readonly itemSelecionado = output<GemsFooModel>();
@@ -47,17 +46,24 @@ export class GemsFooComponent implements OnInit {
   constructor(private readonly fooService: GemsFooService) {}
 
   // ── Ciclo de vida ─────────────────────────────────────────────────
-  ngOnInit(): void { /* ... */ }
+  ngOnInit(): void {
+    /* ... */
+  }
 
   // ── Métodos públicos ──────────────────────────────────────────────
-  selecionar(item: GemsFooModel): void { /* ... */ }
+  selecionar(item: GemsFooModel): void {
+    /* ... */
+  }
 
   // ── Métodos privados ──────────────────────────────────────────────
-  private carregarDados(): void { /* ... */ }
+  private carregarDados(): void {
+    /* ... */
+  }
 }
 ```
 
 **Ordem canônica das seções:**
+
 1. Imports
 2. Tipos/constantes auxiliares (apenas se realmente locais)
 3. JSDoc + decorator + declaração da classe (`implements ...` sempre que houver hook/interface)
@@ -70,6 +76,7 @@ export class GemsFooComponent implements OnInit {
 10. Métodos privados
 
 **Regras adicionais:**
+
 - Se a classe usa um hook (`ngOnInit`, `ngOnChanges`, ...), **declare a interface** correspondente (`implements OnInit`). Hoje há casos com `ngOnInit` sem `implements OnInit` — corrigir.
 - Em componentes que implementam `ControlValueAccessor`/`Validator`, agrupe os métodos da interface numa subseção `// ── ControlValueAccessor ──` dentro dos métodos públicos.
 - Remova imports não utilizados (há vários `computed`/`OnInit` importados sem uso).
@@ -78,8 +85,7 @@ export class GemsFooComponent implements OnInit {
 
 ## 2. Templates e estilos sempre em arquivos separados
 
-- **PROIBIDO `template: \`...\`` inline.** Todo componente usa `templateUrl`
-  apontando para um `.component.html` ao lado do `.ts`.
+- **PROIBIDO `template: \`...\``inline.** Todo componente usa`templateUrl`apontando para um`.component.html`ao lado do`.ts`.
 - O mesmo vale para estilos: use `styleUrls` com `.component.css` (já é o padrão).
 - Ao migrar um componente com template inline, crie o `.html` correspondente e
   remova o bloco `template`. Componentes que hoje violam isso: `footer`,

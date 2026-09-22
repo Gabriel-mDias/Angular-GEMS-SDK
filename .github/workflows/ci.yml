@@ -2,7 +2,7 @@ name: 🚀 Integração Contínua (CI) - Validação de Pull Request
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:

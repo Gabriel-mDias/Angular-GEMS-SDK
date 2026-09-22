@@ -19,8 +19,7 @@
   (input)="onInput($event)"
   (blur)="onTouched()"
 >
-{{ value() }}</textarea
->
+{{ value() }}</textarea>
 
 @if (maxlength()) {
 <p class="gems-textarea-counter">{{ value().length }} / {{ maxlength() }}</p>

@@ -17,7 +17,8 @@ Você também precisará estar autenticado no npm com sua conta do GitHub (com p
 ```bash
 npm login --scope=@gabriel-mdias --registry=https://npm.pkg.github.com
 ```
-*(Utilize seu username do GitHub e um Personal Access Token (classic) com o escopo `read:packages` como senha).*
+
+_(Utilize seu username do GitHub e um Personal Access Token (classic) com o escopo `read:packages` como senha)._
 
 ## 2. Instalação do Pacote
 
@@ -48,17 +49,19 @@ Sem esse passo, os ícones não aparecerão. A fonte **Inter** é opcional — c
 
 ## 4. Configuração de Estilos e Theming
 
-A GEMS SDK utiliza CSS puro para as variáveis de design tokens, evitando dependências como SCSS ou pré-compiladores complexos. 
+A GEMS SDK utiliza CSS puro para as variáveis de design tokens, evitando dependências como SCSS ou pré-compiladores complexos.
 
 ### Importação dos Estilos Globais
+
 No arquivo de estilos globais da sua aplicação (ex: `src/styles.css` ou `src/styles.scss`), importe os tokens e utilitários básicos da SDK:
 
 ```css
 /* src/styles.css */
-@import "@gabriel-mdias/angular-gems-sdk/styles.css";
+@import '@gabriel-mdias/angular-gems-sdk/styles.css';
 ```
 
 ### Inicialização do Tema
+
 O sistema de temas da SDK requer que o tema base seja injetado no momento de bootstrap da aplicação. O `provideGemsTheme` gera uma paleta completa dinamicamente e a injeta nas variáveis CSS (`--gems-*`).
 
 No arquivo `app.config.ts`:
@@ -73,11 +76,11 @@ export const appConfig: ApplicationConfig = {
       primary: '#0B5FFF', // Sua cor primária
       secondary: '#4A5568', // Sua cor secundária
       tertiary: '#E2E8F0',
-      background: '#F7FAFC'
+      background: '#F7FAFC',
       // Cores de status opcionais: success, danger, warning, info
     }),
     // ... outros providers (router, http, etc)
-  ]
+  ],
 };
 ```
 
@@ -94,10 +97,8 @@ import { Component } from '@angular/core';
   selector: 'app-meu-componente',
   standalone: true,
   template: `
-    <button class="btn-primary" (click)="salvar()">
-      Salvar Alterações
-    </button>
-  `
+    <button class="btn-primary" (click)="salvar()">Salvar Alterações</button>
+  `,
 })
 export class MeuComponente {
   salvar() {
@@ -123,7 +124,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideGemsHttp('https://api.seuprojeto.com'),
     // ... outros providers
-  ]
+  ],
 };
 ```
 
@@ -150,7 +151,7 @@ export const appConfig: ApplicationConfig = {
         silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
       },
     }),
-  ]
+  ],
 };
 ```
 
@@ -180,7 +181,8 @@ Basta criar (ou editar) o arquivo `.cursorrules` (ou equivalente da sua IA) na r
 
 ```md
 # Integração GEMS SDK
-Este projeto consome a biblioteca de componentes GEMS SDK. 
+
+Este projeto consome a biblioteca de componentes GEMS SDK.
 Antes de criar formulários, tabelas ou interfaces, LEIA OBRIGATORIAMENTE o guia de uso nativo da biblioteca disponível no seu próprio node_modules:
 Caminho: \`node_modules/@gabriel-mdias/angular-gems-sdk/AI-CONSUMER-GUIDE.md\`
 
