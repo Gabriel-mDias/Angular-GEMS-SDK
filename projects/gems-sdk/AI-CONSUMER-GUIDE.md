@@ -10,18 +10,18 @@
 
 ## Mandatory Code Standards
 
-| Rule | Do | Don't |
-|---|---|---|
-| Components | `standalone: true` | `NgModule` |
-| Dependency injection | `constructor(private svc: MyService)` | `inject()` |
-| Component API | `input<T>()`, `output<T>()`, `model<T>()` | `@Input()`, `@Output()` |
-| Templates & styles | Separate `.html`/`.css` files (if > 5 lines) | Giant inline templates |
-| Colors | `var(--gems-primary-500)` | Hardcoded hex `#3b82f6` |
-| Form fields | `<gems-input-text>`, `<gems-select>`, etc. | `<input>`, `<select>` |
-| Forms approach | Reactive Forms (`[formGroup]`) | Template-driven `[(ngModel)]` |
-| Buttons | Native classes `btn-primary`, `btn-save`, `btn-cancel`, `btn-secondary`, `btn-danger`, `btn-info`, `btn-warning`, `btn-success`, `btn-novo` (from `gems-global.css`) | Custom `.my-btn` |
-| Cards | `<gems-form-card>` | Custom card markup |
-| Icons | Font Awesome 6 (`fa-solid fa-user`) | Material Icons |
+| Rule                 | Do                                                                                                                                                                   | Don't                         |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| Components           | `standalone: true`                                                                                                                                                   | `NgModule`                    |
+| Dependency injection | `constructor(private svc: MyService)`                                                                                                                                | `inject()`                    |
+| Component API        | `input<T>()`, `output<T>()`, `model<T>()`                                                                                                                            | `@Input()`, `@Output()`       |
+| Templates & styles   | Separate `.html`/`.css` files (if > 5 lines)                                                                                                                         | Giant inline templates        |
+| Colors               | `var(--gems-primary-500)`                                                                                                                                            | Hardcoded hex `#3b82f6`       |
+| Form fields          | `<gems-input-text>`, `<gems-select>`, etc.                                                                                                                           | `<input>`, `<select>`         |
+| Forms approach       | Reactive Forms (`[formGroup]`)                                                                                                                                       | Template-driven `[(ngModel)]` |
+| Buttons              | Native classes `btn-primary`, `btn-save`, `btn-cancel`, `btn-secondary`, `btn-danger`, `btn-info`, `btn-warning`, `btn-success`, `btn-novo` (from `gems-global.css`) | Custom `.my-btn`              |
+| Cards                | `<gems-form-card>`                                                                                                                                                   | Custom card markup            |
+| Icons                | Font Awesome 6 (`fa-solid fa-user`)                                                                                                                                  | Material Icons                |
 
 ---
 
@@ -103,22 +103,23 @@ import {
 Every form field implements `ControlValueAccessor`. Use with `formControlName`.
 **Always** add `<gems-field-error>` after fields with validators.
 
-| Component | Selector | Value Type | Key Inputs |
-|---|---|---|---|
-| Input Text | `<gems-input-text>` | `string` | `label`, `type`, `icon`, `placeholder`, `required`, `maxlength`, `hint` |
-| Input Password | `<gems-input-password>` | `string` | `label`, `placeholder`, `required` |
-| Input Date | `<gems-input-date>` | `string` (ISO) | `label`, `format` (dayMonthYear\|fullDate\|monthYear\|year), `required` |
-| Input Mask | `<gems-input-mask>` | `string` (raw) | `label`, `maskType` (cep\|phone\|rg\|email), `icon`, `required` |
-| Input Document | `<gems-input-document>` | `string` (raw) | `label`, `documentType` (auto\|cpf\|cnpj), `icon`, `required` |
-| Select | `<gems-select>` | `unknown` | `label`, `options: GemsSelectOption[]`, `placeholder`, `required` |
-| Textarea | `<gems-textarea>` | `string` | `label`, `rows`, `maxlength`, `autoResize`, `required` |
-| Checkbox | `<gems-input-checkbox>` | `boolean` | `label`, `topLabel`, `isSwitch` (default true), `alignWithInputs` |
-| Range | `<gems-input-range>` | `GemsRangeValue` | `type` (number\|date), `placeholderMin`, `placeholderMax`, `separator` |
-| Field Error | `<gems-field-error>` | — | `control: AbstractControl`, `messages: Record<string, string>` |
+| Component      | Selector                | Value Type       | Key Inputs                                                              |
+| -------------- | ----------------------- | ---------------- | ----------------------------------------------------------------------- |
+| Input Text     | `<gems-input-text>`     | `string`         | `label`, `type`, `icon`, `placeholder`, `required`, `maxlength`, `hint` |
+| Input Password | `<gems-input-password>` | `string`         | `label`, `placeholder`, `required`                                      |
+| Input Date     | `<gems-input-date>`     | `string` (ISO)   | `label`, `format` (dayMonthYear\|fullDate\|monthYear\|year), `required` |
+| Input Mask     | `<gems-input-mask>`     | `string` (raw)   | `label`, `maskType` (cep\|phone\|rg\|email), `icon`, `required`         |
+| Input Document | `<gems-input-document>` | `string` (raw)   | `label`, `documentType` (auto\|cpf\|cnpj), `icon`, `required`           |
+| Select         | `<gems-select>`         | `unknown`        | `label`, `options: GemsSelectOption[]`, `placeholder`, `required`       |
+| Textarea       | `<gems-textarea>`       | `string`         | `label`, `rows`, `maxlength`, `autoResize`, `required`                  |
+| Checkbox       | `<gems-input-checkbox>` | `boolean`        | `label`, `topLabel`, `isSwitch` (default true), `alignWithInputs`       |
+| Range          | `<gems-input-range>`    | `GemsRangeValue` | `type` (number\|date), `placeholderMin`, `placeholderMax`, `separator`  |
+| Field Error    | `<gems-field-error>`    | —                | `control: AbstractControl`, `messages: Record<string, string>`          |
 
 > The old PT-BR values (`formato="diaMesAno\|fullData\|mesAno\|ano"` and `maskType="telefone"`) still work but are **deprecated** — use the English names above in new code.
 
 ### Validation feedback
+
 All input components automatically turn **red** (border + label) via `:host.ng-invalid.ng-touched`.
 Default error messages are in **PT-BR**: required, email, minlength, maxlength, min, max, pattern.
 
@@ -127,7 +128,9 @@ Default error messages are in **PT-BR**: required, email, minlength, maxlength, 
 ## Layout Components
 
 ### gems-form-card
+
 Wrap forms and content in structured cards. Slots: `[gems-form-card-actions]`, `[gems-form-card-footer]`, default body.
+
 ```html
 <gems-form-card title="Título" icon="fa-solid fa-file" [isLoading]="loading">
   <!-- body -->
@@ -139,7 +142,9 @@ Wrap forms and content in structured cards. Slots: `[gems-form-card-actions]`, `
 ```
 
 ### gems-modal
+
 Two-way `[(open)]`. Sizes: `sm`, `md`, `lg`. Auto-closes on ESC.
+
 ```html
 <gems-modal [(open)]="showModal" title="Confirmar" size="sm">
   <p>Conteúdo</p>
@@ -155,31 +160,42 @@ Two-way `[(open)]`. Sizes: `sm`, `md`, `lg`. Auto-closes on ESC.
 ## Data Display
 
 ### gems-table
+
 Server-side paginated table with sorting, badge columns, skeleton loading, and row actions.
+
 ```html
-<gems-table [columns]="cols" [data]="rows" [actions]="actions"
-  [totalRecords]="total" [page]="page" [size]="size" [isLoading]="loading"
-  (pageChange)="onPage($event)" (actionClick)="onAction($event)">
-</gems-table>
+<gems-table
+  [columns]="cols"
+  [data]="rows"
+  [actions]="actions"
+  [totalRecords]="total"
+  [page]="page"
+  [size]="size"
+  [isLoading]="loading"
+  (pageChange)="onPage($event)"
+  (actionClick)="onAction($event)"
+></gems-table>
 ```
 
 ### gems-badge
+
 Inline status indicator. Variants: `neutral`, `success`, `warning`, `danger`, `info`, `primary`.
 
 ### gems-empty-state
+
 Empty-list placeholder with optional action button.
 
 ---
 
 ## Services
 
-| Service | Methods | Purpose |
-|---|---|---|
-| `GemsAlertService` | `success()`, `error()`, `errorFromApi()`, `warning()`, `info()`, `confirm()` | SweetAlert2 modals |
-| `GemsToastService` | `success()`, `error()`, `info()`, `warning()` | Inline toast notifications |
-| `GemsLoadingService` | `show()`, `hide()`, `forceHide()` | Full-page loading overlay |
-| `GemsNavigationService` | `navigate()`, `navigateWithData()`, `consumeRouteData()`, `back()` | Session-based routing |
-| `GemsSessionService` | `setItem()`, `getItem()`, `removeItem()`, `clear()` | SSR-safe sessionStorage |
+| Service                 | Methods                                                                      | Purpose                    |
+| ----------------------- | ---------------------------------------------------------------------------- | -------------------------- |
+| `GemsAlertService`      | `success()`, `error()`, `errorFromApi()`, `warning()`, `info()`, `confirm()` | SweetAlert2 modals         |
+| `GemsToastService`      | `success()`, `error()`, `info()`, `warning()`                                | Inline toast notifications |
+| `GemsLoadingService`    | `show()`, `hide()`, `forceHide()`                                            | Full-page loading overlay  |
+| `GemsNavigationService` | `navigate()`, `navigateWithData()`, `consumeRouteData()`, `back()`           | Session-based routing      |
+| `GemsSessionService`    | `setItem()`, `getItem()`, `removeItem()`, `clear()`                          | SSR-safe sessionStorage    |
 
 ---
 
@@ -190,24 +206,36 @@ Extend `GemsBaseStore` for API services. Auto-injects Keycloak Bearer token.
 ```typescript
 @Injectable({ providedIn: 'root' })
 export class UserStore extends GemsBaseStore {
-  constructor() { super('users'); }
+  constructor() {
+    super('users');
+  }
 
-  findAll(p: GemsPageable) { return this.get<Page<User>>('', { pageable: p }); }
-  findById(id: number)     { return this.get<User>(`${id}`); }
-  create(u: User)          { return this.post<User, User>('', u); }
-  update(id: number, u: User) { return this.put<User, User>(`${id}`, u); }
-  remove(id: number)       { return this.delete<void>(`${id}`); }
+  findAll(p: GemsPageable) {
+    return this.get<Page<User>>('', { pageable: p });
+  }
+  findById(id: number) {
+    return this.get<User>(`${id}`);
+  }
+  create(u: User) {
+    return this.post<User, User>('', u);
+  }
+  update(id: number, u: User) {
+    return this.put<User, User>(`${id}`, u);
+  }
+  remove(id: number) {
+    return this.delete<void>(`${id}`);
+  }
 }
 ```
 
 Provide the API base URL (in `app.config.ts`, imported from the package root):
+
 ```typescript
 import { provideGemsHttp } from '@gabriel-mdias/angular-gems-sdk';
 
-providers: [
-  provideGemsHttp('https://api.example.com'),
-]
+providers: [provideGemsHttp('https://api.example.com')];
 ```
+
 Equivalent to `{ provide: GEMS_API_URL, useValue: '...' }`, but with a descriptive error if you forget to configure it.
 
 ---
@@ -219,6 +247,7 @@ Equivalent to `{ provide: GEMS_API_URL, useValue: '...' }`, but with a descripti
 > `keycloak-angular` out of apps that don't use auth.
 
 Setup (`app.config.ts`):
+
 ```typescript
 import { provideGemsKeycloak } from '@gabriel-mdias/angular-gems-sdk/auth';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
@@ -236,6 +265,7 @@ export const appConfig: ApplicationConfig = {
   ],
 };
 ```
+
 The JWT bearer token is attached by the interceptor registered by `provideGemsKeycloak` (via `withInterceptorsFromDi()`) — it is **no longer** attached automatically by `GemsBaseStore`.
 
 - **Route guard:** `canActivate: [gemsRoleGuard]` with `data: { roles: ['ADMIN'], roleMode: 'any' }` (`roleMode` optional: `'any'` default | `'all'`)
@@ -248,7 +278,7 @@ The JWT bearer token is attached by the interceptor registered by `provideGemsKe
 1. `provideGemsTheme({ primary, secondary, tertiary, background })` in `app.config.ts` (imported from the package root — no `/core/theme` entry point exists)
 2. Import CSS in `styles.css`:
    ```css
-   @import "@gabriel-mdias/angular-gems-sdk/styles.css";
+   @import '@gabriel-mdias/angular-gems-sdk/styles.css';
    ```
 
 ---
@@ -261,18 +291,41 @@ The JWT bearer token is attached by the interceptor registered by `provideGemsKe
     <gems-input-text label="Nome" formControlName="name" [required]="true"></gems-input-text>
     <gems-field-error [control]="form.get('name')"></gems-field-error>
 
-    <gems-input-text label="E-mail" formControlName="email" type="email" [required]="true"></gems-input-text>
+    <gems-input-text
+      label="E-mail"
+      formControlName="email"
+      type="email"
+      [required]="true"
+    ></gems-input-text>
     <gems-field-error [control]="form.get('email')"></gems-field-error>
 
-    <gems-input-date label="Nascimento" formControlName="birthDate" format="dayMonthYear"></gems-input-date>
+    <gems-input-date
+      label="Nascimento"
+      formControlName="birthDate"
+      format="dayMonthYear"
+    ></gems-input-date>
 
-    <gems-input-mask label="Telefone" formControlName="phone" maskType="phone" [required]="true"></gems-input-mask>
+    <gems-input-mask
+      label="Telefone"
+      formControlName="phone"
+      maskType="phone"
+      [required]="true"
+    ></gems-input-mask>
     <gems-field-error [control]="form.get('phone')"></gems-field-error>
 
-    <gems-input-document label="CPF/CNPJ" formControlName="doc" [required]="true"></gems-input-document>
+    <gems-input-document
+      label="CPF/CNPJ"
+      formControlName="doc"
+      [required]="true"
+    ></gems-input-document>
     <gems-field-error [control]="form.get('doc')"></gems-field-error>
 
-    <gems-select label="Status" formControlName="status" [options]="statusOpts" [required]="true"></gems-select>
+    <gems-select
+      label="Status"
+      formControlName="status"
+      [options]="statusOpts"
+      [required]="true"
+    ></gems-select>
     <gems-field-error [control]="form.get('status')"></gems-field-error>
 
     <gems-textarea label="Obs" formControlName="notes" [rows]="4" [maxlength]="500"></gems-textarea>

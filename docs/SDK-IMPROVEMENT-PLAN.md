@@ -9,16 +9,16 @@
 A `2.0.0` tocou **duas** fases, e nenhuma das duas fechou por inteiro. As demais permanecem
 exatamente como estavam — este plano não foi reescrito, apenas anotado.
 
-| Fase | Estado | O que a 2.0.0 fez |
-| :--- | :--- | :--- |
-| 0 · Enforcement | inalterada | — |
-| 1 · Padronização estrutural | inalterada | — |
-| 2 · Tipagem e superfície pública | inalterada | — |
-| 3 · Correções de comportamento | **parcial** | apenas o item 4, e só a parte do `gems-field-error` — ver a nota na fase |
-| 4 · Escalabilidade | inalterada | — |
-| 5 · UX, mobile e acessibilidade | inalterada | — |
-| 6 · PWA | inalterada | — |
-| 7 · Testes | **parcial** | mecanismo trocado e 8 arquivos de spec existem; a lista de alvos da fase segue majoritariamente aberta — ver a nota na fase |
+| Fase                             | Estado      | O que a 2.0.0 fez                                                                                                           |
+| :------------------------------- | :---------- | :-------------------------------------------------------------------------------------------------------------------------- |
+| 0 · Enforcement                  | inalterada  | —                                                                                                                           |
+| 1 · Padronização estrutural      | inalterada  | —                                                                                                                           |
+| 2 · Tipagem e superfície pública | inalterada  | —                                                                                                                           |
+| 3 · Correções de comportamento   | **parcial** | apenas o item 4, e só a parte do `gems-field-error` — ver a nota na fase                                                    |
+| 4 · Escalabilidade               | inalterada  | —                                                                                                                           |
+| 5 · UX, mobile e acessibilidade  | inalterada  | —                                                                                                                           |
+| 6 · PWA                          | inalterada  | —                                                                                                                           |
+| 7 · Testes                       | **parcial** | mecanismo trocado e 8 arquivos de spec existem; a lista de alvos da fase segue majoritariamente aberta — ver a nota na fase |
 
 ## Contexto e objetivo
 
@@ -42,16 +42,18 @@ Este plano organiza a estabilização e o crescimento da SDK em fases.
 ## Diagnóstico atual (resumo)
 
 ### Inconsistências de padronização
-| Tema | Situação atual |
-|------|----------------|
-| Templates | Inline em ~10 componentes (`footer`, `form-card`, `summary-card`, `loading`, `file-upload`, `wizard`, `input-password/-document/-mask/-range`); separados nos demais |
+
+| Tema         | Situação atual                                                                                                                                                                     |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Templates    | Inline em ~10 componentes (`footer`, `form-card`, `summary-card`, `loading`, `file-upload`, `wizard`, `input-password/-document/-mask/-range`); separados nos demais               |
 | Injeção (DI) | Construtor em `file-upload`, `side-menu`, `session`, `navigation`, `s3`, `has-role`; `inject()` em `loading.component`. Interceptor e guard usam `inject()` (correto, são funções) |
-| Control flow | Mistura de `*ngIf`/`*ngFor` (antigos) com `@if`/`@for` (novos) |
-| Tipagem | `any` em `table` (`data: any[]`), `card-list-select` (`items: any[]`), callbacks CVA (`onChange: any`) |
-| Imports | Imports não usados (ex.: `computed`/`OnInit`) em vários componentes |
-| Hooks | `ngOnInit` sem `implements OnInit` (`file-upload`) |
+| Control flow | Mistura de `*ngIf`/`*ngFor` (antigos) com `@if`/`@for` (novos)                                                                                                                     |
+| Tipagem      | `any` em `table` (`data: any[]`), `card-list-select` (`items: any[]`), callbacks CVA (`onChange: any`)                                                                             |
+| Imports      | Imports não usados (ex.: `computed`/`OnInit`) em vários componentes                                                                                                                |
+| Hooks        | `ngOnInit` sem `implements OnInit` (`file-upload`)                                                                                                                                 |
 
 ### Problemas de consumibilidade (integração em projetos futuros)
+
 - **Tipos públicos não exportados**: `GemsDocumentType`, `GemsMaskType`,
   `GemsRangeValue`, `GemsDateFormat`, `GemsWizardStep`, `GemsBaseStepComponent`.
   O consumidor não consegue declarar variáveis desses tipos.
@@ -64,6 +66,7 @@ Este plano organiza a estabilização e o crescimento da SDK em fases.
   gera a paleta como `--gems-danger-*`. Botões de erro caem no fallback `#d33`.
 
 ### UX / Mobile / PWA
+
 - Só 4 componentes têm `@media` (`table`, `side-menu`, `footer`, `wizard`).
   Inputs, cards, file-upload e list-select não têm tratamento mobile.
 - `table` em telas pequenas precisa de layout empilhado (card) ou scroll com
@@ -154,7 +157,7 @@ mostram erros de validação de forma uniforme.
 > **Anotação da `2.0.0`:** só o item 4 foi tocado, e só em parte. `gems-field-error` **não exibia
 > mensagem alguma** — o `computed()` reavaliava uma única vez, na vinculação, com o campo intocado,
 > e memorizava `''`. Isso foi corrigido: a derivação passa a depender de um sinal incrementado pelos
-> eventos do próprio controle, com 2 provas. A padronização da *área de erro* nos demais inputs, que
+> eventos do próprio controle, com 2 provas. A padronização da _área de erro_ nos demais inputs, que
 > é o resto do item 4, **continua aberta**. Itens 1, 2 e 3 não foram tocados.
 >
 > Registrado de uma tentativa que não deu certo: um getter simples no lugar do `computed()` **não**

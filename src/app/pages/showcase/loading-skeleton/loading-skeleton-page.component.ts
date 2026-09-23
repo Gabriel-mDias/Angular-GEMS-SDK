@@ -1,20 +1,27 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { 
-  GemsFormCardComponent, 
-  GemsTableComponent, 
+import {
+  GemsFormCardComponent,
+  GemsTableComponent,
   GemsCardListSelectComponent,
-  GemsTableColumn 
+  GemsTableColumn,
 } from '@gabriel-mdias/angular-gems-sdk';
 import { CodeSnippetComponent, CodeTab } from '../../../components/code-snippet';
 
 @Component({
   selector: 'app-loading-skeleton',
   standalone: true,
-  imports: [CommonModule, FormsModule, GemsFormCardComponent, GemsTableComponent, GemsCardListSelectComponent, CodeSnippetComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    GemsFormCardComponent,
+    GemsTableComponent,
+    GemsCardListSelectComponent,
+    CodeSnippetComponent,
+  ],
   templateUrl: './loading-skeleton-page.component.html',
-  styleUrls: ['./loading-skeleton-page.component.css']
+  styleUrls: ['./loading-skeleton-page.component.css'],
 })
 export class LoadingSkeletonPageComponent {
   durationSeconds = 3;
@@ -23,21 +30,26 @@ export class LoadingSkeletonPageComponent {
   mockList = [
     { id: '1', name: 'João Silva', role: 'Administrador' },
     { id: '2', name: 'Maria Souza', role: 'Usuário' },
-    { id: '3', name: 'Pedro Santos', role: 'Editor' }
+    { id: '3', name: 'Pedro Santos', role: 'Editor' },
   ];
 
   tableColumns: GemsTableColumn[] = [
     { field: 'id', header: 'ID' },
     { field: 'name', header: 'Nome' },
-    { field: 'status', header: 'Status', type: 'badge', badgeColors: {
-      'Ativo': { bg: '#dcfce7', text: '#166534' }
-    }}
+    {
+      field: 'status',
+      header: 'Status',
+      type: 'badge',
+      badgeColors: {
+        Ativo: { bg: '#dcfce7', text: '#166534' },
+      },
+    },
   ];
 
   mockData = [
     { id: '100', name: 'Produto Alpha', status: 'Ativo' },
     { id: '101', name: 'Produto Beta', status: 'Ativo' },
-    { id: '102', name: 'Produto Gama', status: 'Ativo' }
+    { id: '102', name: 'Produto Gama', status: 'Ativo' },
   ];
 
   codeTabs: CodeTab[] = [
@@ -67,7 +79,7 @@ export class LoadingSkeletonPageComponent {
   [items]="list" 
   [isLoading]="isFetchingList"
   titleKey="name">
-</gems-card-list-select>`
+</gems-card-list-select>`,
     },
     {
       name: 'TypeScript',
@@ -97,8 +109,8 @@ export class MeuComponente implements OnInit {
       this.isFetchingData = false;
     }, 2000);
   }
-}`
-    }
+}`,
+    },
   ];
 
   triggerSkeleton() {

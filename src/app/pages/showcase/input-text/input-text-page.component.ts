@@ -1,16 +1,18 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
-import {
-  GemsFormCardComponent,
-  GemsInputTextComponent,
-} from '@gabriel-mdias/angular-gems-sdk';
+import { GemsFormCardComponent, GemsInputTextComponent } from '@gabriel-mdias/angular-gems-sdk';
 import { CodeSnippetComponent, CodeTab } from '../../../components/code-snippet';
 
 @Component({
   selector: 'app-input-text-page',
   standalone: true,
-  imports: [ReactiveFormsModule, GemsFormCardComponent, GemsInputTextComponent, CodeSnippetComponent],
+  imports: [
+    ReactiveFormsModule,
+    GemsFormCardComponent,
+    GemsInputTextComponent,
+    CodeSnippetComponent,
+  ],
   templateUrl: './input-text-page.component.html',
 })
 export class InputTextPageComponent {

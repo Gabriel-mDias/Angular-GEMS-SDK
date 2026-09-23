@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 
-import { GemsFormCardComponent, GemsCardListSelectComponent, GemsSelectItem } from '@gabriel-mdias/angular-gems-sdk';
+import {
+  GemsFormCardComponent,
+  GemsCardListSelectComponent,
+  GemsSelectItem,
+} from '@gabriel-mdias/angular-gems-sdk';
 import { CodeSnippetComponent, CodeTab } from '../../../components/code-snippet';
 
 @Component({
@@ -15,8 +19,16 @@ export class ListSelectPageComponent {
 
   readonly planItems: GemsSelectItem[] = [
     { value: 'basic', title: 'Básico', description: 'Ideal para iniciantes e pequenos projetos.' },
-    { value: 'pro', title: 'Profissional', description: 'Recursos avançados para equipes em crescimento.' },
-    { value: 'enterprise', title: 'Corporativo', description: 'Solução completa com suporte dedicado.' },
+    {
+      value: 'pro',
+      title: 'Profissional',
+      description: 'Recursos avançados para equipes em crescimento.',
+    },
+    {
+      value: 'enterprise',
+      title: 'Corporativo',
+      description: 'Solução completa com suporte dedicado.',
+    },
   ];
 
   readonly codeTabs: CodeTab[] = [

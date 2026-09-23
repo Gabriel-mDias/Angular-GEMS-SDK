@@ -54,10 +54,7 @@ export default tseslint.config(
   },
   {
     files: ['**/*.html'],
-    extends: [
-      ...angular.configs.templateRecommended,
-      ...angular.configs.templateAccessibility,
-    ],
+    extends: [...angular.configs.templateRecommended, ...angular.configs.templateAccessibility],
     rules: {
       // Proíbe *ngIf, *ngFor, *ngSwitch — use @if, @for, @switch
       '@angular-eslint/template/prefer-control-flow': 'error',

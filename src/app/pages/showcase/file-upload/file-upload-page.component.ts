@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { Observable, of, delay } from 'rxjs';
 
-import { GemsFormCardComponent, GemsFileUploadComponent, GemsS3Service } from '@gabriel-mdias/angular-gems-sdk';
+import {
+  GemsFormCardComponent,
+  GemsFileUploadComponent,
+  GemsS3Service,
+} from '@gabriel-mdias/angular-gems-sdk';
 import { CodeSnippetComponent, CodeTab } from '../../../components/code-snippet';
 
 /** Mock do serviço S3 para fins de demonstração. */

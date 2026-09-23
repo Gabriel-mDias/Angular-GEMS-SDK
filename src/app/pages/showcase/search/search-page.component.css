@@ -39,8 +39,6 @@
   gap: var(--gems-spacing-xs);
 }
 
-
-
 .gems-input {
   padding: 10px;
   border: 1px solid var(--gems-border-color);
@@ -64,4 +62,3 @@
   padding-top: var(--gems-spacing-lg);
   border-top: 1px solid var(--gems-border-color);
 }
-

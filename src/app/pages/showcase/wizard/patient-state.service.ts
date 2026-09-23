@@ -17,7 +17,7 @@ export class PatientStateService {
     dataNascimento: '',
     cep: '',
     logradouro: '',
-    numero: ''
+    numero: '',
   };
 
   updatePersonal(data: Partial<PacienteState>) {
@@ -35,7 +35,7 @@ export class PatientStateService {
       dataNascimento: '',
       cep: '',
       logradouro: '',
-      numero: ''
+      numero: '',
     };
   }
 }

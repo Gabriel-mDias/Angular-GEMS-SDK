@@ -32,11 +32,11 @@ body {
   --gems-primary-900: hsl(214, 100%, 7%);
   --gems-primary: hsl(214, 100%, 35%);
   --gems-primary-contrast: #ffffff;
-  
+
   --gems-success-50: hsl(142, 76%, 95%);
   --gems-success-200: hsl(142, 76%, 75%);
   --gems-success-600: hsl(142, 76%, 28%);
-  
+
   --gems-error: #ef4444;
 }
 
@@ -47,7 +47,7 @@ body {
   --gems-bg-muted: #f1f5f9;
   --gems-bg-emphasis: #e2e8f0;
   --gems-bg-inverse: #0f172a;
-  
+
   --gems-text-main: #0f172a;
   --gems-text-muted: #64748b;
 }
@@ -64,7 +64,6 @@ body {
     flex-direction: column;
   }
 }
-
 
 .showcase-content {
   flex: 1;

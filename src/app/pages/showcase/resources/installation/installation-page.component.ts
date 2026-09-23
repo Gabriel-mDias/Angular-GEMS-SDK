@@ -6,6 +6,6 @@ import { GemsFormCardComponent } from '@gabriel-mdias/angular-gems-sdk';
   selector: 'app-installation-page',
   standalone: true,
   imports: [CommonModule, GemsFormCardComponent],
-  templateUrl: './installation-page.component.html'
+  templateUrl: './installation-page.component.html',
 })
 export class InstallationPageComponent {}

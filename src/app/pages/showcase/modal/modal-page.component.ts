@@ -10,7 +10,12 @@ import { CodeSnippetComponent, CodeTab } from '../../../components/code-snippet'
 @Component({
   selector: 'app-modal-page',
   standalone: true,
-  imports: [GemsFormCardComponent, GemsModalComponent, GemsInputTextComponent, CodeSnippetComponent],
+  imports: [
+    GemsFormCardComponent,
+    GemsModalComponent,
+    GemsInputTextComponent,
+    CodeSnippetComponent,
+  ],
   templateUrl: './modal-page.component.html',
 })
 export class ModalPageComponent {

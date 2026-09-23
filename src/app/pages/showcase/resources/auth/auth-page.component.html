@@ -2,14 +2,21 @@
   <div class="header">
     <h1>Auth & Keycloak</h1>
     <p class="subtitle">
-      Autenticação via Keycloak é <strong>opcional</strong> — a SDK não exige a dependência.
-      Instale <code>keycloak-angular</code> apenas quando necessário.
+      Autenticação via Keycloak é
+      <strong>opcional</strong>
+      — a SDK não exige a dependência. Instale
+      <code>keycloak-angular</code>
+      apenas quando necessário.
     </p>
   </div>
 
   <gems-form-card title="Configurar Keycloak">
     <p class="resource-intro">
-      Configure o <code>KeycloakService</code> com um <code>APP_INITIALIZER</code> antes de usar o guard ou a diretiva.
+      Configure o
+      <code>KeycloakService</code>
+      com um
+      <code>APP_INITIALIZER</code>
+      antes de usar o guard ou a diretiva.
     </p>
     <app-code-snippet [tabs]="setupTabs" />
   </gems-form-card>
@@ -33,8 +40,13 @@
         <div>
           <strong>Totalmente opcional</strong>
           <p>
-            <code>GemsBaseStore</code> injeta <code>KeycloakService</code> com <code>&#123; optional: true &#125;</code>.
-            Sem o Keycloak instalado, as requisições são feitas sem token — ideal para APIs públicas ou autenticação própria.
+            <code>GemsBaseStore</code>
+            injeta
+            <code>KeycloakService</code>
+            com
+            <code>&#123; optional: true &#125;</code>
+            . Sem o Keycloak instalado, as requisições são feitas sem token — ideal para APIs
+            públicas ou autenticação própria.
           </p>
         </div>
       </div>
@@ -43,8 +55,13 @@
         <div>
           <strong>Instalação</strong>
           <p>
-            Use <code>npm install keycloak-angular keycloak-js --legacy-peer-deps</code>.
-            O <code>gemsRoleGuard</code> e <code>*HasRole</code> lançam erro em runtime se chamados sem o serviço presente.
+            Use
+            <code>npm install keycloak-angular keycloak-js --legacy-peer-deps</code>
+            . O
+            <code>gemsRoleGuard</code>
+            e
+            <code>*HasRole</code>
+            lançam erro em runtime se chamados sem o serviço presente.
           </p>
         </div>
       </div>

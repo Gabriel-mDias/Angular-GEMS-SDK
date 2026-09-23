@@ -1,6 +1,6 @@
 # @gabriel-mdias/angular-gems-sdk
 
-Kit de desenvolvimento Angular para os projetos G&Ms. 
+Kit de desenvolvimento Angular para os projetos G&Ms.
 Oferece componentes visuais modernos, utilitários HTTP, guards, serviços e um sistema de theming completo por CSS.
 
 ## Instalação
@@ -33,7 +33,7 @@ A fonte **Inter** é opcional — carregue-a via Google Fonts ou `@fontsource/in
 Importe o sistema de temas globais no seu `styles.css`:
 
 ```css
-@import "@gabriel-mdias/angular-gems-sdk/styles.css";
+@import '@gabriel-mdias/angular-gems-sdk/styles.css';
 ```
 
 Adicione o provedor global do tema no seu `app.config.ts`:
@@ -47,10 +47,10 @@ export const appConfig: ApplicationConfig = {
       primary: '#2563eb',
       secondary: '#4A5568',
       tertiary: '#E2E8F0',
-      background: '#F7FAFC'
+      background: '#F7FAFC',
       // Cores de status opcionais: success, danger, warning, info
-    })
-  ]
+    }),
+  ],
 };
 ```
 
@@ -62,11 +62,10 @@ Configure a URL base da API usada pelos `GemsBaseStore` com o helper `provideGem
 import { provideGemsHttp } from '@gabriel-mdias/angular-gems-sdk';
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideGemsHttp('https://api.seuprojeto.com'),
-  ]
+  providers: [provideGemsHttp('https://api.seuprojeto.com')],
 };
 ```
+
 Se essa URL não for configurada, um erro descritivo é lançado ao chamar os métodos do `GemsBaseStore`.
 
 ## Auth (Keycloak) — opcional

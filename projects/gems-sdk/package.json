@@ -1,6 +1,6 @@
 {
   "name": "@gabriel-mdias/angular-gems-sdk",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Kit de desenvolvimento Angular para projetos G&Ms — componentes, serviços e theming configurável.",
   "license": "MIT",
   "author": "Gabriel Magalhães",
@@ -51,13 +51,6 @@
   },
   "sideEffects": false,
   "exports": {
-    "./package.json": {
-      "default": "./package.json"
-    },
-    ".": {
-      "types": "./index.d.ts",
-      "default": "./fesm2022/gabriel-mdias-angular-gems-sdk.mjs"
-    },
     "./styles.css": {
       "style": "./src/lib/styles/gems-global.css",
       "default": "./src/lib/styles/gems-global.css"
