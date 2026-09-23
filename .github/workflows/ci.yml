@@ -1,22 +1,41 @@
-name: 🚀 Integração Contínua (CI) - Validação de Pull Request
+name: SDK Validation
 
 on:
   pull_request:
     branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sdk-validation-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  build:
+  validate:
     runs-on: ubuntu-latest
     steps:
-      - name: 📦 Checkout do Código-fonte
+      - name: Checkout
         uses: actions/checkout@v4
-      - name: ⚙️ Configuração Ambiente Node.js 24
+      - name: Setup Node.js 24
         uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - name: 📥 Instalação de Dependências (Angular)
-        run: npm install --legacy-peer-deps
-      - name: 🏗️ Build da Biblioteca GEMS SDK
-        run: npm run build gems-sdk
-      - name: 🏗️ Build do Showcase App
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Validate release metadata
+        run: npm run verify:versions
+      - name: Check formatting
+        run: npm run format:check
+      - name: Lint
+        run: npm run lint
+      - name: Test
+        run: npm test -- --watch=false
+      - name: Build library
+        run: npm run build:lib
+      - name: Build showcase
         run: npm run build gems-showcase

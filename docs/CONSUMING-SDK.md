@@ -22,10 +22,10 @@ _(Utilize seu username do GitHub e um Personal Access Token (classic) com o esco
 
 ## 2. Instalação do Pacote
 
-Instale o pacote com a flag `--legacy-peer-deps` (necessário devido à resolução estrita de pacotes pares do Angular 20):
+Instale o pacote em um projeto Angular 22; os `peerDependencies` são validados normalmente:
 
 ```bash
-npm install @gabriel-mdias/angular-gems-sdk --legacy-peer-deps
+npm install @gabriel-mdias/angular-gems-sdk
 ```
 
 ## 3. Ícones (Font Awesome)

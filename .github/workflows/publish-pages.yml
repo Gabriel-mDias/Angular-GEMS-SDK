@@ -30,7 +30,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: 📥 Instalação de Dependências (Angular)
-        run: npm install --legacy-peer-deps
+        run: npm ci
 
       - name: 🏗️ Build da Aplicação Showcase
         run: npm run build gems-showcase -- --base-href /Angular-GEMS-SDK/

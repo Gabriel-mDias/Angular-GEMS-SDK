@@ -1,41 +1,64 @@
-name: 📦 Publicação GEMS SDK - GitHub Packages
+name: SDK Release
 
 on:
   push:
-    branches: [main]
-  workflow_dispatch:
+    tags:
+      - 'v*.*.*'
+
+concurrency:
+  group: sdk-release-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  publish-gpr:
+  release:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
     steps:
-      - name: 📦 Checkout do Código-fonte
+      - name: Checkout
         uses: actions/checkout@v4
-      - name: ⚙️ Configuração Ambiente Node.js 24 e Registry
+      - name: Setup Node.js 24 and GitHub Packages
         uses: actions/setup-node@v4
         with:
           node-version: '24'
           registry-url: 'https://npm.pkg.github.com'
-      - name: 📥 Instalação de Dependências
+          cache: npm
+      - name: Install dependencies
         run: npm ci
-      - name: 🏗️ Build da Biblioteca GEMS SDK
-        run: npm run build gems-sdk
-      - name: 🚀 Empacotamento e Publicação (NPM Publish)
+      - name: Validate tag and package versions
+        run: npm run verify:versions -- --tag "$GITHUB_REF_NAME"
+      - name: Check formatting
+        run: npm run format:check
+      - name: Lint
+        run: npm run lint
+      - name: Test
+        run: npm test -- --watch=false
+      - name: Build library
+        run: npm run build:lib
+      - name: Reject an existing package version
         run: |
           cd dist/gems-sdk
           NAME=$(node -p "require('./package.json').name")
           VERSION=$(node -p "require('./package.json').version")
           if npm view "$NAME@$VERSION" version --registry https://npm.pkg.github.com >/dev/null 2>&1; then
-            echo "::notice::$NAME@$VERSION já está publicada — nada a fazer."
-            exit 0
+            echo "::error::$NAME@$VERSION já existe; versões publicadas são imutáveis."
+            exit 1
           fi
-          if [[ "$VERSION" == *"-"* ]]; then
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish package
+        run: |
+          cd dist/gems-sdk
+          VERSION=$(node -p "require('./package.json').version")
+          if [[ "$VERSION" == *-* ]]; then
             npm publish --tag next
           else
             npm publish
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create GitHub Release
+        run: gh release create "$GITHUB_REF_NAME" --verify-tag --generate-notes --title "$GITHUB_REF_NAME"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

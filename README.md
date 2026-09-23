@@ -1,7 +1,7 @@
 # 💎 Angular GEMS SDK
 
 > **Status:** Estável (v1.0.1)  
-> **Framework:** Angular 20+ (Standalone & Signals)
+> **Framework:** Angular 22+ (Standalone & Signals)
 
 Bem-vindo à **GEMS SDK**, a biblioteca front-end definitiva para os ecossistemas corporativos G&Ms (meduc-frontend, admin, etc).
 Construída com as mais recentes funcionalidades do Angular, a SDK entrega componentes visuais unificados, serviços essenciais e um sistema de temas dinâmico focado em performance, acessibilidade e beleza.
@@ -21,7 +21,7 @@ A página de documentação demonstra formulários, data-display (tabelas, badge
 ## 🚀 Propósito e Recursos
 
 - **Design Premium e PWA:** Foco absoluto em um visual corporativo moderno (bordas arredondadas, animações fluidas e micro-interações).
-- **Angular 20 "Strict":** Código 100% migrado para paradigma moderno: `standalone: true`, `input()`, `output()`, `computed()` e injeção por construtor. Não utilizamos NgModules nem bibliotecas UI terceiras vazadas.
+- **Angular 22 "Strict":** Código 100% migrado para paradigma moderno: `standalone: true`, `input()`, `output()`, `computed()` e injeção por construtor. Não utilizamos NgModules nem bibliotecas UI terceiras vazadas.
 - **Formulários Padronizados:** Todos os campos estendem `ControlValueAccessor` (CVA), suportam Reactive Forms (`[formGroup]`) nativamente e possuem validação interativa (ex: `<gems-field-error>`).
 - **Theming Dinâmico:** Sistema de Cores configurável em tempo de execução (`provideGemsTheme`) apoiado exclusivamente por CSS Variables (`var(--gems-primary-500)`).
 - **Serviços Utilitários:** Tratamento de HTTP unificado (`GemsBaseStore`), alertas elegantes com SweetAlert2, notificações Toast, interceptador de Loading e navegação session-based.
@@ -45,10 +45,10 @@ _Nota: Tenha certeza de que você possui permissão/token do GitHub para ler pac
 
 ### 2. Instalação
 
-Como a SDK é baseada estritamente no Angular 20, utilize a flag `--legacy-peer-deps` caso haja conflitos na árvore do seu projeto atual.
+A linha 2.x exige Angular 22. O gerenciador deve validar normalmente os `peerDependencies` publicados.
 
 ```bash
-npm install @gabriel-mdias/angular-gems-sdk --legacy-peer-deps
+npm install @gabriel-mdias/angular-gems-sdk
 ```
 
 ### 3. Setup de CSS
@@ -106,15 +106,26 @@ Se você está usando uma IA no seu projeto consumidor ou se você é uma IA len
 Para modificar o código da SDK ou testar o Showcase:
 
 ```bash
-# Instalar
-npm install --legacy-peer-deps
+# Instalar exatamente o lock versionado
+npm ci
 
 # Iniciar o Showcase App (Documentação visual)
 npm start
 
-# Fazer Build de Produção da SDK
-npm run build gems-sdk
+# Executar os gates locais
+npm run verify:versions
+npm run format:check
+npm run lint
+npm test -- --watch=false
+npm run build:lib
 ```
+
+### Release
+
+O merge na `main` apenas valida e atualiza o showcase. A publicação exige aprovação humana e uma
+tag imutável que corresponda aos dois manifests, por exemplo `v2.2.0`. O workflow da tag repete os
+gates, rejeita versão já existente, publica no GitHub Packages e cria o GitHub Release. Tags não
+devem ser movidas; uma correção posterior recebe nova versão patch.
 
 ---
 

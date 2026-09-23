@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2026-09-22
+
+### Changed
+
+- A validação remota passa a executar instalação reproduzível, consistência de versões, Prettier,
+  ESLint, as 68 provas Vitest e os builds da biblioteca e do showcase.
+- O repositório foi normalizado pelo Prettier para que o gate deixe de produzir falso verde.
+- Os manifests raiz e da biblioteca permanecem alinhados e são validados por script antes do build
+  ou release.
+
+### Fixed
+
+- A publicação deixa de ocorrer em todo push na `main`: somente uma tag imutável `vX.Y.Z`, cuja
+  versão corresponda aos manifests, publica no GitHub Packages e cria o GitHub Release.
+- Uma versão já existente agora falha fechada em vez de ser silenciosamente ignorada.
+- Remove condições de export que o `ng-packagr` sobrescrevia e que geravam avisos no build.
+
 ## [2.1.0] - 2026-09-14
 
 Quatro correções medidas pelo consumidor de referência (Meduc, rodada `009` §11). Todas aditivas:

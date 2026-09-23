@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-Angular 20 CLI **monorepo** with two projects (defined in `angular.json`):
+Angular 22 CLI **monorepo** with two projects (defined in `angular.json`):
 
 - **`gems-sdk`** (`projects/gems-sdk/`) — the publishable component library, `@gabriel-mdias/angular-gems-sdk`. This is the product.
 - **`gems-showcase`** (`src/`) — a demo/documentation SPA that consumes the library locally and renders one page per feature. Use it to exercise and visually verify components.
@@ -72,5 +72,5 @@ Coding standards live in [`rules/CODING-STANDARDS.md`](rules/CODING-STANDARDS.md
 - **Standalone components only**, with Angular signal APIs: `input()`, `output()`, `computed()`, `signal()` (see `lib/components/table/gems-table.component.ts`).
 - Selector/prefix `gems` for the library, `app` for the showcase.
 - Auth/Keycloak is **optional** — `keycloak-angular` is an optional peer/optionalDependency; never assume it is present.
-- Library peer deps: Angular 20, rxjs 7.8, sweetalert2 11 (used by `GemsAlertService`). Consumers install with `--legacy-peer-deps`.
+- Library peer deps: Angular 22, rxjs 7.8, sweetalert2 11 (used by `GemsAlertService`).
 - Doc comments in the library are written in Portuguese; match that style when editing existing files.
