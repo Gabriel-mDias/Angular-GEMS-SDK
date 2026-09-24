@@ -1,6 +1,6 @@
 {
   "name": "angular-gems-sdk",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "type": "module",
   "scripts": {
     "ng": "ng",
@@ -26,8 +26,8 @@
     "@angular/platform-browser": "^22.1.5",
     "@angular/router": "^22.1.5",
     "@fortawesome/fontawesome-free": "^7.2.0",
-    "keycloak-angular": "^16.0.0",
-    "keycloak-js": "^24.0.0",
+    "keycloak-angular": "^22.0.0",
+    "keycloak-js": "^26.2.4",
     "prismjs": "^1.29.0",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.26.24",
@@ -51,13 +51,6 @@
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.70.0",
     "vitest": "^4.1.11"
-  },
-  "overrides": {
-    "keycloak-angular": {
-      "@angular/common": "$@angular/common",
-      "@angular/core": "$@angular/core",
-      "@angular/router": "$@angular/router"
-    }
   },
   "lint-staged": {
     "*.ts": [

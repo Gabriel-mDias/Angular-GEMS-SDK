@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0] - 2026-09-24
+
+### Changed
+
+- O peer opcional `keycloak-angular` passa da linha 16 para a linha 22, compatível com o Angular 22
+  declarado pela própria SDK.
+- O ambiente de desenvolvimento usa `keycloak-js` 26 e deixa de depender de `overrides` para
+  mascarar peers Angular incompatíveis.
+
+### Fixed
+
+- Consumidores que instalam `keycloak-angular` 22 deixam de receber uma segunda cópia aninhada da
+  versão 16 por meio de `optionalDependencies`.
+
 ## [2.2.0] - 2026-09-22
 
 ### Changed
