@@ -11,6 +11,7 @@
       aria-label="Abrir seletor de data"
       (click)="toggleDatePicker()"
       (keydown.enter)="toggleDatePicker()"
+      (keydown.space)="$event.preventDefault(); toggleDatePicker()"
     ></i>
 
     <input

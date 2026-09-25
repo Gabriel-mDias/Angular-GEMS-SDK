@@ -31,4 +31,26 @@ describe('GemsInputDateComponent accessibility', () => {
 
     expect(nativeInput.getAttribute('aria-label')).toBe('Data');
   });
+
+  it('opens the native picker with Enter and Space without scrolling on Space', () => {
+    const fixture = TestBed.createComponent(GemsInputDateComponent);
+    fixture.detectChanges();
+
+    const icon = fixture.nativeElement.querySelector('.gems-input-icon') as HTMLElement;
+    const nativeInput = fixture.nativeElement.querySelector(
+      '.gems-hidden-native-input',
+    ) as HTMLInputElement;
+    let pickerCalls = 0;
+    nativeInput.showPicker = () => {
+      pickerCalls += 1;
+    };
+
+    icon.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    expect(pickerCalls).toBe(1);
+
+    const space = new KeyboardEvent('keydown', { key: ' ', bubbles: true, cancelable: true });
+    icon.dispatchEvent(space);
+    expect(space.defaultPrevented).toBe(true);
+    expect(pickerCalls).toBe(2);
+  });
 });
