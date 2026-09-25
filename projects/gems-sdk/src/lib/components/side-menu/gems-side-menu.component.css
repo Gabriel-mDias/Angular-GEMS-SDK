@@ -372,7 +372,7 @@
 
 .user-email {
   font-size: 0.75rem;
-  color: var(--gems-text-main, #1e293b);
+  color: var(--gems-bg-inverse, #1e293b);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

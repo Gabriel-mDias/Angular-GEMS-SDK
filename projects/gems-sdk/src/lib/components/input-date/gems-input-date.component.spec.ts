@@ -19,4 +19,16 @@ describe('GemsInputDateComponent accessibility', () => {
     expect(visibleLabel.htmlFor).toBe('birth-date');
     expect(nativeInput.getAttribute('aria-label')).toBe('Data de nascimento');
   });
+
+  it('keeps an accessible name when the visual label is empty', () => {
+    const fixture = TestBed.createComponent(GemsInputDateComponent);
+    fixture.componentRef.setInput('label', '');
+    fixture.detectChanges();
+
+    const nativeInput = fixture.nativeElement.querySelector(
+      '.gems-hidden-native-input',
+    ) as HTMLInputElement;
+
+    expect(nativeInput.getAttribute('aria-label')).toBe('Data');
+  });
 });
