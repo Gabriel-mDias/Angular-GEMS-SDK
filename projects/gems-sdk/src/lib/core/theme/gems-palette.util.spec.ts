@@ -1,11 +1,37 @@
 import {
   generateBackgroundPalette,
   generatePalette,
+  generateTextPalette,
   hexToHsl,
   hexToRgb,
   hslToString,
   rgbToHsl,
 } from './gems-palette.util';
+
+function cssHslToRgb(color: string): [number, number, number] {
+  const [, hueText, saturationText, lightnessText] = color.match(/hsl\((\d+), (\d+)%, (\d+)%\)/)!;
+  const hue = Number(hueText) / 360;
+  const saturation = Number(saturationText) / 100;
+  const lightness = Number(lightnessText) / 100;
+  const channel = (offset: number): number => {
+    const k = (offset + hue * 12) % 12;
+    const a = saturation * Math.min(lightness, 1 - lightness);
+    return Math.round(255 * (lightness - a * Math.max(-1, Math.min(k - 3, 9 - k, 1))));
+  };
+  return [channel(0), channel(8), channel(4)];
+}
+
+function contrastRatio(first: [number, number, number], second: [number, number, number]): number {
+  const luminance = ([r, g, b]: [number, number, number]): number => {
+    const linear = [r, g, b].map(channel => {
+      const value = channel / 255;
+      return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+    });
+    return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2];
+  };
+  const values = [luminance(first), luminance(second)].sort((a, b) => b - a);
+  return (values[0] + 0.05) / (values[1] + 0.05);
+}
 
 describe('gems-palette.util', () => {
   // ── hexToRgb ─────────────────────────────────────────────────────
@@ -106,6 +132,21 @@ describe('gems-palette.util', () => {
       expect(bg['--gems-bg-muted']).toMatch(/^hsl\(/);
       expect(bg['--gems-bg-emphasis']).toMatch(/^hsl\(/);
       expect(bg['--gems-bg-inverse']).toMatch(/^hsl\(/);
+    });
+
+    it('mantém contraste de texto contra o fundo sutil em temas claros e escuros', () => {
+      for (const background of ['#ffffff', '#101820', '#1452d7']) {
+        const palette = generateBackgroundPalette(background);
+        const textPalette = generateTextPalette(background);
+        const subtleBackground = cssHslToRgb(palette['--gems-bg-subtle']);
+        const inverseText = cssHslToRgb(palette['--gems-bg-inverse']);
+        const generatedMainText = hexToRgb(textPalette['--gems-text-main']);
+
+        expect(contrastRatio(inverseText, subtleBackground)).toBeGreaterThanOrEqual(4.5);
+        if (background === '#101820') {
+          expect(contrastRatio(generatedMainText, subtleBackground)).toBeLessThan(4.5);
+        }
+      }
     });
   });
 });

@@ -40,6 +40,8 @@ export class GemsSideMenuComponent implements OnInit, OnChanges {
   readonly logoutLabel = input<string>('Sair');
   readonly logoutTitle = input<string>('Sair do Sistema');
   readonly openMenuLabel = input<string>('Abrir menu');
+  readonly collapseMenuLabel = input<string>('Recolher menu');
+  readonly expandMenuLabel = input<string>('Expandir menu');
   readonly appName = input<string>('G&Ms SDK');
 
   // ── Outputs ───────────────────────────────────────────────────────
