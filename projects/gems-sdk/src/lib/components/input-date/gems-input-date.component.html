@@ -30,6 +30,7 @@
       #nativeInput
       [type]="getNativeType()"
       class="gems-hidden-native-input"
+      [attr.aria-label]="label()"
       [value]="value()"
       (change)="onNativeChange($event)"
     />

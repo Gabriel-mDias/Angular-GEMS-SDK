@@ -132,8 +132,10 @@
     class="menu-footer"
     role="button"
     tabindex="0"
+    [attr.aria-label]="isCollapsed() ? expandMenuLabel() : collapseMenuLabel()"
     (click)="toggleCollapse()"
     (keydown.enter)="toggleCollapse()"
+    (keydown.space)="$event.preventDefault(); toggleCollapse()"
   >
     <i
       class="fa-solid"
