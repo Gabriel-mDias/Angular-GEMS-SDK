@@ -5,27 +5,28 @@
         @for (col of columns(); track col.field) {
         <th
           [class.sortable]="col.sortable !== false && col.type !== 'actions'"
-          [attr.role]="col.sortable !== false && col.type !== 'actions' ? 'button' : null"
-          [attr.tabindex]="col.sortable !== false && col.type !== 'actions' ? 0 : null"
           [attr.aria-sort]="
-              sortField() === (col.sortParam || col.field)
-                ? (sortDirection() === 'asc' ? 'ascending' : 'descending')
-                : (col.sortable !== false && col.type !== 'actions' ? 'none' : null)
+              col.sortable === false || col.type === 'actions'
+                ? null
+                : sortField() === (col.sortParam || col.field)
+                  ? (sortDirection() === 'asc' ? 'ascending' : 'descending')
+                  : 'none'
             "
-          (click)="sortBy(col.field)"
-          (keydown.enter)="sortBy(col.field)"
-          (keydown.space)="sortBy(col.field)"
         >
-          {{ col.header }} @if (sortField() === (col.sortParam || col.field)) {
-          <i
-            class="fa-solid sort-icon"
-            [class.fa-sort-up]="sortDirection() === 'asc'"
-            [class.fa-sort-down]="sortDirection() === 'desc'"
-            aria-hidden="true"
-          ></i>
-          } @else if (col.sortable !== false && col.type !== 'actions') {
-          <i class="fa-solid fa-sort sort-icon text-muted" aria-hidden="true"></i>
-          }
+          @if (col.sortable !== false && col.type !== 'actions') {
+          <button type="button" class="sort-button" (click)="sortBy(col.field)">
+            {{ col.header }} @if (sortField() === (col.sortParam || col.field)) {
+            <i
+              class="fa-solid sort-icon"
+              [class.fa-sort-up]="sortDirection() === 'asc'"
+              [class.fa-sort-down]="sortDirection() === 'desc'"
+              aria-hidden="true"
+            ></i>
+            } @else {
+            <i class="fa-solid fa-sort sort-icon text-muted" aria-hidden="true"></i>
+            }
+          </button>
+          } @else { {{ col.header }} }
         </th>
         }
       </tr>
