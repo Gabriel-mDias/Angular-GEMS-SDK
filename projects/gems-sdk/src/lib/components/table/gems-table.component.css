@@ -229,12 +229,29 @@
 }
 
 th.sortable {
-  cursor: pointer;
-  user-select: none;
-  transition: background-color 0.2s;
+  padding: 0;
 }
-th.sortable:hover {
+.sort-button {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 1rem 1.5rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+.sort-button:hover {
   background-color: rgba(0, 0, 0, 0.03);
+}
+.sort-button:focus-visible {
+  outline: 2px solid var(--gems-primary-500);
+  outline-offset: -2px;
 }
 .sort-icon {
   margin-left: 0.5rem;
