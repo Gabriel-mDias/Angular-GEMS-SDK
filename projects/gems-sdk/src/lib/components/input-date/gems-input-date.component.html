@@ -7,7 +7,8 @@
     <i
       class="fa-regular fa-calendar gems-input-icon gems-clickable"
       role="button"
-      tabindex="0"
+      [attr.tabindex]="disabled() ? -1 : 0"
+      [attr.aria-disabled]="disabled()"
       aria-label="Abrir seletor de data"
       (click)="toggleDatePicker()"
       (keydown.enter)="toggleDatePicker()"
@@ -33,6 +34,7 @@
       class="gems-hidden-native-input"
       [attr.aria-label]="label().trim() || placeholder().trim() || 'Data'"
       [value]="value()"
+      [disabled]="disabled()"
       (change)="onNativeChange($event)"
     />
     }

@@ -80,9 +80,14 @@
   border-radius: var(--gems-radius-sm, 4px);
 }
 
-.gems-input-icon.gems-clickable:hover {
+.gems-input-icon.gems-clickable:hover:not([aria-disabled="true"]) {
   color: var(--gems-primary-600, #2563eb);
   background-color: var(--gems-bg-subtle, #f8fafc);
+}
+
+.gems-input-icon[aria-disabled="true"] {
+  cursor: default;
+  opacity: 0.5;
 }
 
 .gems-hidden-native-input {

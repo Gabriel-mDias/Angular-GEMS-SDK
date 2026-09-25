@@ -272,7 +272,7 @@ th.sortable {
 }
 .pagination-info {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: var(--gems-text-main, #1e293b);
 }
 .pagination-controls {
   display: flex;
