@@ -53,4 +53,26 @@ describe('GemsInputDateComponent accessibility', () => {
     expect(space.defaultPrevented).toBe(true);
     expect(pickerCalls).toBe(2);
   });
+
+  it('removes the picker from the tab order when the field is disabled', () => {
+    const fixture = TestBed.createComponent(GemsInputDateComponent);
+    fixture.componentInstance.setDisabledState(true);
+    fixture.detectChanges();
+
+    const icon = fixture.nativeElement.querySelector('.gems-input-icon') as HTMLElement;
+    const nativeInput = fixture.nativeElement.querySelector(
+      '.gems-hidden-native-input',
+    ) as HTMLInputElement;
+    let pickerCalls = 0;
+    nativeInput.showPicker = () => {
+      pickerCalls += 1;
+    };
+
+    expect(icon.getAttribute('tabindex')).toBe('-1');
+    expect(icon.getAttribute('aria-disabled')).toBe('true');
+    expect(nativeInput.disabled).toBe(true);
+    icon.click();
+    icon.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    expect(pickerCalls).toBe(0);
+  });
 });

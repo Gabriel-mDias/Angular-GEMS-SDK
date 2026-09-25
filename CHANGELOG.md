@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.4] - 2026-09-25
+
+### Fixed
+
+- `gems-table` usa a cor de texto principal na informação de paginação para manter contraste no fundo claro do Sample.
+- `gems-input-date` remove o acionador de data do foco e desabilita o input auxiliar quando o campo está desabilitado.
+
 ## [2.3.3] - 2026-09-25
 
 ### Fixed
